@@ -34,6 +34,7 @@
   width: 650px;
   height: 250px;
   border-radius: 5px 5px 0px 0px;
+  background-size: cover;
 }
 
 .caixanome {
@@ -67,6 +68,7 @@
   clip-path: circle(50%);
   margin-top: 10px;
   margin-left: 10px;
+  background-size: cover;
 }
 
 #ficha-opab input[type="radio"] {
