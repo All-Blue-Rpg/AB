@@ -132,7 +132,7 @@
   text-align: justify;
   }
   
-  #ficha-opab #geral:block ~ #zona1, #ficha-opab #teste1:checked ~ #zona2, #ficha-opab #teste2:checked ~ #zona3, #ficha-opab #teste3:checked ~ #zona4, #ficha-opab #teste4:checked ~ #zona5, #ficha-opab #teste5:checked ~ #zona6 {
+  #ficha-opab #geral:checked ~ #zona1, #ficha-opab #teste1:checked ~ #zona2, #ficha-opab #teste2:checked ~ #zona3, #ficha-opab #teste3:checked ~ #zona4, #ficha-opab #teste4:checked ~ #zona5, #ficha-opab #teste5:checked ~ #zona6 {
     display: block;
   }
   
