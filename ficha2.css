@@ -1,11 +1,11 @@
 :root {
---cor-ficha2: #D07D5A;
---pirata2: #b92222;
---agente2: #9C9C9C;
---marinheiro2: #6BB8DB;
---cacador2: #bfc342;
---revolucionario2: #B34B54;
---civil2: #c1ac75;
+--cor-ficha: #D07D5A;
+--pirata: #b92222;
+--agente: #9C9C9C;
+--marinheiro: #6BB8DB;
+--cacador: #bfc342;
+--revolucionario: #B34B54;
+--civil: #c1ac75;
 }
 
 #ficha2-opab {
@@ -22,7 +22,7 @@
 }
 
 #ficha2-opab strong {
-  color: var(--cor-ficha2);
+  color: var(--cor-ficha);
 }
 
 #ficha2-opab a {
