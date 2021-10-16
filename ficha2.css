@@ -132,7 +132,7 @@ color: var(--cor-ficha);
 text-align: justify;
 }
 
-#ficha2-opab #geral:checked ~ #teste1, #ficha2-opab #particularidades:checked ~ #teste2, #ficha2-opab #combate:checked ~ #teste3, #ficha2-opab #haki:checked ~ #teste4, #ficha2-opab #pertences:checked ~ #teste5, #ficha2-opab #popularidade:checked ~ #teste6 {
+#ficha2-opab #teste1:checked ~ #teste1, #ficha2-opab #teste2:checked ~ #teste2, #ficha2-opab #teste3:checked ~ #teste3, #ficha2-opab #teste4:checked ~ #teste4, #ficha2-opab #teste5:checked ~ #teste5, #ficha2-opab #teste6:checked ~ #teste6 {
   display: block;
 }
 
