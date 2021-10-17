@@ -29,7 +29,7 @@
 
 .caixanome {
   width: 610px;
-  height: 30px;
+  height: 60px;
   padding: 20px;
   background: var(--cor-ficha);
   font-family: poppins;
@@ -37,7 +37,7 @@
   font-weight: bold;
   text-transform: uppercase;
   text-align: left;
-  line-height: 30px;
+  line-height: 60px;
   letter-spacing: -1px;
   margin-top: -20px;
 }
