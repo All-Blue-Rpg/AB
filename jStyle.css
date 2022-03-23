@@ -1,9 +1,9 @@
-/*1.4*/
+/*1.5*/
 
 .jMainContainer{
     position: relative;
     /*width: 1200px;*/
-    height: 1895.09px;
+    height: 1701.09px;
 }
 
 .jSecondaryContainer{
@@ -12,7 +12,7 @@
     background-color: #232323;
     position: absolute;
     right: -18px;
-    top: -21px;
+    top: -215px;
     border: solid #333333 1px;
     display: flex;
 }
@@ -73,7 +73,7 @@
 }
 
 #jCapa:checked ~ .jMainContainer{
-    height: 1342.500px;
+    height: 1148.500px;
 }
 
 #basedopost .pcaixa2 .pcaixa2-3 .content{
@@ -97,5 +97,5 @@
     background: none;
 }
 
-/*#basedopost .pcaixa1 .avatarimg img {position: relative;top: -190px;}
-#basedopost .pcaixa1 .avatarimg {overflow: hidden;}*/
+#basedopost .pcaixa1 .avatarimg img {position: relative;top: -190px;}
+#basedopost .pcaixa1 .avatarimg {overflow: hidden;}
