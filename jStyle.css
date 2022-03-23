@@ -51,6 +51,7 @@
 .pagJornal:checked ~ .pagButton{
     z-index: 1 !important;
     background-color: #F3E3D3;
+    color: #232323;
 }
 
 .pagJornal:checked ~ .jornalMateria{
