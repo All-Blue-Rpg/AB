@@ -1,6 +1,8 @@
+/*1.0*/
+
 .jMainContainer{
     position: relative;
-    width: 1200px;
+    /*width: 1200px;*/
     height: 1935.09px;
 }
 
@@ -69,7 +71,7 @@
 }
 
 #jCapa:checked ~ .jMainContainer{
-    height: 1382.500px;
+    height: 1342.500px;
 }
 
 #basedopost .pcaixa2 .pcaixa2-3 .content{
