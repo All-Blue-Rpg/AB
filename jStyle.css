@@ -1,4 +1,4 @@
-/*1.5*/
+/*1.6*/
 
 .jMainContainer{
     position: relative;
@@ -80,7 +80,7 @@
     overflow: visible;
 }
 
-.caixa-avatar{
+/*.caixa-avatar{
     height: 175px;
     width: 200px;
     overflow: hidden;
@@ -98,4 +98,4 @@
 }
 
 #basedopost .pcaixa1 .avatarimg img {position: relative;top: -190px;}
-#basedopost .pcaixa1 .avatarimg {overflow: hidden;}
+#basedopost .pcaixa1 .avatarimg {overflow: hidden;}*/
