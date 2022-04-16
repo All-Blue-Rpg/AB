@@ -1,0 +1,274 @@
+@charset "UTF-8";
+:root {
+  --kembun: #f5ac24;
+  --vermelho: rgb(245, 72, 72);
+  --busou: #6ce8e6;
+}
+
+color {
+  color: #d07d5a;
+}
+
+.subTitulo {
+  font-size: 20px;
+  text-align: center;
+  color: #d07d5a;
+  font-weight: bold;
+}
+
+.chartConteiner {
+  width: 100%;
+  display: -ms-grid;
+  display: grid;
+  margin: auto;
+  position: relative;
+  -ms-grid-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
+  -ms-grid-rows: (1fr)[5];
+      grid-template-rows: repeat(5, 1fr);
+  row-gap: 40px;
+}
+
+.chartConteiner .chartLine {
+  position: absolute;
+  width: 66.1%;
+  height: 44%;
+  border: 3px solid var(--vermelho);
+  border-radius: 10px;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+.chartConteiner .chartLine hr {
+  border-color: var(--vermelho);
+  border: 1.5px solid var(--vermelho);
+  background-color: var(--vermelho);
+  width: 100%;
+  height: 0px;
+  position: absolute;
+  top: 50%;
+  left: -0.45%;
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+}
+
+.chartConteiner .chatObject {
+  width: 100px;
+  padding: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-radius: 5px;
+  background-color: var(--kembun);
+  margin: auto;
+  position: relative;
+  color: #232323;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.chartConteiner .one {
+  -ms-grid-column: 2;
+      grid-column-start: 2;
+  grid-column-end: 3;
+  -ms-grid-row: 1;
+  grid-row: 1;
+}
+
+.chartConteiner .two {
+  -ms-grid-column: 2;
+      grid-column-start: 2;
+  grid-column-end: 3;
+  -ms-grid-row: 2;
+  grid-row: 2;
+}
+
+.chartConteiner .three {
+  -ms-grid-row: 3;
+  grid-row: 3;
+}
+
+.chartConteiner .four {
+  -ms-grid-row: 3;
+  grid-row: 3;
+}
+
+.chartConteiner .five {
+  -ms-grid-row: 3;
+  grid-row: 3;
+}
+
+.chartConteiner .six {
+  -ms-grid-column: 2;
+      grid-column-start: 2;
+  grid-column-end: 3;
+  -ms-grid-row: 4;
+  grid-row: 4;
+}
+
+.chartConteiner .seven {
+  -ms-grid-column: 2;
+      grid-column-start: 2;
+  grid-column-end: 3;
+  -ms-grid-row: 5;
+  grid-row: 5;
+}
+
+.chartConteiner .up::before {
+  content: '▼';
+  position: absolute;
+  color: var(--vermelho);
+  font-size: 25px;
+  top: -15px;
+}
+
+.chartConteiner .side::after {
+  content: '►◄';
+  position: absolute;
+  color: var(--vermelho);
+  font-size: 25px;
+  letter-spacing: 120px;
+  left: -20px;
+  bottom: 14px;
+}
+
+#Hseis .chatObject {
+  background-color: var(--busou);
+}
+
+#Hseis .hBotao {
+  border-color: var(--busou);
+}
+
+#Hseis .hBotao:hover {
+  background-color: var(--busou);
+}
+
+#Hsete .chatObject {
+  background-color: var(--vermelho);
+}
+
+#Hsete .hBotao {
+  border-color: var(--vermelho);
+}
+
+#Hsete .hBotao:hover {
+  background-color: var(--vermelho);
+}
+
+.hEspecial {
+  width: 100%;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[3];
+      grid-template-columns: repeat(3, 1fr);
+  row-gap: 30px;
+}
+
+.hEspecial .hBotao {
+  width: 100px;
+  padding: 15px;
+  text-align: center;
+  margin: auto;
+  border: solid 4px var(--kembun);
+  border-radius: 15px;
+}
+
+.hEspecial .hBotao:hover {
+  background-color: #f5ac24;
+}
+
+.hEspecial a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.hEspecial a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+
+.hEspecial .hEspecialContent {
+  -ms-grid-column: 1;
+      grid-column-start: 1;
+  grid-column-end: 4;
+  display: none;
+  /*&:not(:focus) + #percep , &:not(:focus) + #emiss , &:not(:focus) + #opre{
+            display: initial;
+        }*/
+}
+
+.hEspecial .hEspecialContent:target {
+  display: initial;
+}
+
+.hEspecial .subTitulo {
+  padding: 40px;
+  position: relative;
+  color: white;
+}
+
+.fff {
+  width: 100%;
+  height: 100px;
+  margin: auto;
+  z-index: 0;
+  margin-bottom: -100px;
+  border-radius: 12px;
+  background-position: center;
+  background-size: cover;
+  -webkit-filter: brightness(60%);
+          filter: brightness(60%);
+}
+
+#percep .fff {
+  background-image: url(https://i.pinimg.com/564x/05/11/5b/05115ba71f0dc46f604887fcd6acfb57.jpg);
+  background-position-y: -80px;
+}
+
+#compre .fff {
+  background-image: url(https://i.pinimg.com/564x/f3/be/81/f3be8134ed2b209324e492bc91be87da.jpg);
+  background-position-y: -120px;
+}
+
+#premo .fff {
+  background-image: url(https://i.pinimg.com/564x/15/f8/bb/15f8bb9e9882bd5d673117addf53c876.jpg);
+  background-position-y: -90px;
+}
+
+#emiss .fff {
+  background-image: url(https://cdn.bhdw.net/im/one-piece-hyogoro-wano-kuni-arc-papel-de-parede-25346_w635.jpg);
+  background-position-y: -60px;
+}
+
+#exp .fff {
+  background-image: url(https://i.pinimg.com/564x/06/97/e3/0697e32358649b8f55594c8f53e36f06.jpg);
+  background-position-y: -20px;
+}
+
+#super .fff {
+  background-image: url(https://i.pinimg.com/564x/85/83/1c/85831cb22412f21493e47d35518a28d1.jpg);
+  background-position-y: -90px;
+}
+
+#opre .fff {
+  background-image: url(https://i.pinimg.com/564x/02/81/4c/02814cb68dbbe1f2c29d29672a6cca39.jpg);
+  background-position-y: -330px;
+}
+
+#prop .fff {
+  background-image: url(https://i.pinimg.com/564x/8f/60/c1/8f60c1edb2d90de2164ec683d913e2ad.jpg);
+  background-position-y: -70px;
+}
+
+#inspi .fff {
+  background-image: url(https://i.pinimg.com/564x/c1/a9/03/c1a9034890c2f19b238df293f941c3ce.jpg);
+  background-position-y: -170px;
+}
+/*# sourceMappingURL=haki.css.map */
