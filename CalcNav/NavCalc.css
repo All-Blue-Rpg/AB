@@ -1,0 +1,82 @@
+#NavCalc{
+    display: grid;
+    grid-template-areas: 
+        'principal extras'
+        'principal extras'
+        'resultados resultados'
+        'resultados resultados';
+    background: var(--bg1);
+}
+
+#Principal{
+    grid-area: principal;
+    display: grid;  
+    grid-template-areas: 
+        'estou vou'
+        'estou vou'
+        'estou vou'
+        'barco barco';
+    font-size: 14px;
+    gap: 1%;
+    margin: 1%;
+}
+
+#Principal .Estou{
+    grid-area: estou;
+    font-size: large;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#Principal .Vou{
+    grid-area: vou;
+    font-size: large;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#Principal .barco{
+    grid-area: barco;
+    font-size: large;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#Extras{
+    grid-area: extras;
+    display: grid;  
+    grid-template-areas: 
+        'navegacao cozinheiro'
+        'proficiencias qualidades-defeitos'
+        'fome fome';
+    font-size: 14px;
+    gap: 1%;
+    margin: 1%;
+}
+
+#Extras .navegacao{
+    grid-area: navegacao;
+}
+
+#Extras .cozinha{
+    grid-area: cozinheiro;
+}
+
+#Extras .proficiencias{
+    grid-area: proficiencias;
+}
+
+#Extras .qualEdefe{
+    grid-area: qualidades-defeitos;
+}
+
+#Extras .Faminto{
+    grid-area: fome;
+}
+
+#Resultados{
+    grid-area: resultados;
+    display: grid;
+}

@@ -1,0 +1,206 @@
+<html>
+    <head>
+        <script src="NavCalc.js"></script>
+        <link rel="stylesheet" href="NavCalc.css">
+    </head>
+    <body onload="qualBarco(0)">
+        <div id="NavCalc">
+            <div id="Principal">
+                <div class="Estou">
+                    <h3>Onde você está?</h3><br>
+
+                    <select name="oceanos" id="oceanos" onchange="qualMar(value,0)">
+                        <option value="0">Blues</option>
+                        <option value="1">Paradise</option>
+                        <option value="2">Novo Mundo</option>
+                    </select>
+    
+                    <h3>Onde neste lugar?</h3><br>
+    
+                    <div id="BluesEstou" style="display: block;">
+                        <select name="BluesEstouOpcoes" id="BluesEstouOpcoes" onchange="qualRota(value,0)">
+                            <option value="0">North Blue</option>
+                            <option value="1">West Blue</option>
+                            <option value="2">South Blue</option>
+                            <option value="3">East Blue</option>
+                        </select>
+                    </div>
+    
+                    <div id="ParadiseEstou" style="display:none">
+                        <select name="ParadiseEstouOpcoes" id="ParadiseEstouOpcoes" onchange="qualRota(value,0)">
+                            <option value="7">Farol</option>
+                            <option value="0">1ª rota</option>
+                            <option value="1">2ª rota</option>
+                            <option value="2">3ª rota</option>
+                            <option value="3">4ª rota</option>
+                            <option value="4">5ª rota</option>
+                            <option value="5">6ª rota</option>
+                            <option value="6">7ª rota</option>
+                            <option value="8">Sabaody</option>
+                        </select>
+                    </div>
+                    
+                    <div id="NovoMundoEstou" style="display:none">
+                        <select name="NovoMundoEstouOpcoes" id="NovoMundoEstouOpcoes" onchange="qualRota(value,0)">
+                            <option value="0">1ª rota</option>
+                            <option value="1">2ª rota</option>
+                            <option value="2">3ª rota</option>
+                        </select>
+                    </div>
+    
+                    <div id="IlhasEstou">
+                        <h3>Qual Ilha?</h3><br>
+                        <select name="IlhasEstouOpcoes" id="IlhasEstouOpcoes" onchange="qualIlha(value,0)">
+                            <option value=0 id="Ilha0Estou">Flevance</option>
+                            <option value=1 id="Ilha1Estou">Rubeck</option>
+                            <option value=2 id="Ilha2Estou">Swallow</option>
+                            <option value=3 id="Ilha3Estou">Kites</option>
+                            <option value=4 id="Ilha4Estou">Minion</option>
+                            <option value=5 id="Ilha5Estou">Stevelty</option>
+                            <option value=6 id="Ilha6Estou">Lvneel</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="Vou">
+                    <h3>Aonde você vai?</h3><br>
+
+                    <select name="oceanos" id="oceanos" onchange="qualMar(value,1)">
+                        <option value="0">Blues</option>
+                        <option value="1">Paradise</option>
+                        <option value="2">Novo Mundo</option>
+                    </select>
+    
+                    <h3>Aonde neste lugar?</h3><br>
+    
+                    <div id="BluesVou" style="display: block;">
+                        <select name="BluesVouOpcoes" id="BluesVouOpcoes" onchange="qualRota(value,1)">
+                            <option value="0">North Blue</option>
+                            <option value="1">West Blue</option>
+                            <option value="2">South Blue</option>
+                            <option value="3">East Blue</option>
+                        </select>
+                    </div>
+    
+                    <div id="ParadiseVou" style="display:none">
+                        <select name="ParadiseVouOpcoes" id="ParadiseVouOpcoes" onchange="qualRota(value,1)">
+                            <option value="7">Farol</option>
+                            <option value="0">1ª rota</option>
+                            <option value="1">2ª rota</option>
+                            <option value="2">3ª rota</option>
+                            <option value="3">4ª rota</option>
+                            <option value="4">5ª rota</option>
+                            <option value="5">6ª rota</option>
+                            <option value="6">7ª rota</option>
+                            <option value="8">Sabaody</option>
+                        </select>
+                    </div>
+    
+                    <div id="NovoMundoVou" style="display:none">
+                        <select name="NovoMundoVouOpcoes" id="NovoMundoVouOpcoes" onchange="qualRota(value,1)">
+                            <option value="0">1ª rota</option>
+                            <option value="1">2ª rota</option>
+                            <option value="2">3ª rota</option>
+                        </select>
+                    </div>
+    
+                    <div id="IlhasVou">
+                        <h3>Qual Ilha?</h3><br>
+                        <select name="IlhasVouOpcoes" id="IlhasVouOpcoes" onchange="qualIlha(value,1)">
+                            <option value=0 id="Ilha0Vou">Flevance</option>
+                            <option value=1 id="Ilha1Vou">Rubeck</option>
+                            <option value=2 id="Ilha2Vou">Swallow</option>
+                            <option value=3 id="Ilha3Vou">Kites</option>
+                            <option value=4 id="Ilha4Vou">Minion</option>
+                            <option value=5 id="Ilha5Vou">Stevelty</option>
+                            <option value=6 id="Ilha6Vou">Lvneel</option>
+                        </select>
+                    </div>
+                    <div id="CalmBelt" style="display:none">
+                        <h3>Vai viajar pelo Calm Belt?</h3>
+    
+                        <input type="radio" id="beltsim" name="belt" onclick="attMarine(1)"><label for="beltsim">Sim</label>
+                        <input type="radio" id="beltNao" name="belt" onclick="attMarine(0)" checked="True"><label for="beltNao">Não</label>
+                    </div></div>
+                <div class="barco">
+                    <h3>Qual o seu barco?</h3><br>
+                    <select name="Barco" id="Barco" onchange="qualBarco(value)">
+                        <option value=0>Barco Simples</option>
+                        <option value=1>Barco Simples Resistente</option>
+                        <option value=2>Escuna</option>
+                        <option value=3>Brigue</option>
+                        <option value=4>Chalupa</option>
+                        <option value=5>Calhoeira</option>
+                        <option value=6>Caravela</option>
+                        <option value=7>Galé</option>
+                        <option value=8>Fragata</option>
+                        <option value=9>Galeão</option>
+                        <option value=10>Mercantel</option>
+                        <option value=11>Carraca</option>
+                        <option value=12>Nau de Linha</option>
+                        <option value=13>Marinha/Governo - Cruzador</option>
+                        <option value=14>Marinha - Gaivota</option>
+                        <option value=15>Governo - Inquisidor</option>
+                        <option value=16>Revolucionários - Libertação</option>                        
+                        <option value=17>Personalizado</option>
+                    </select>
+                    <div id="auxBarco">
+                        <table>
+                            <tr><td><label for="autossuficiencia">Autossuficiência: </label></td><td><input type="number" id="autossuficiencia" min="100" value="150" onchange="attBarco()"></td></tr>
+                            <tr><td><label for="celeridade">Celeridade: </label></td><td><input type="number" id="celeridade" min="0" value="10" onchange="attBarco()"></td></tr>
+                            <tr><td><label for="Estrutura">Estrutura: </label></td><td><input type="number" id="estrutura" min="50" value="50" onchange="attBarco()"></td></tr>
+                        </table>
+                    </div><br>
+                </div>
+            </div>
+            <div id="Extras">
+                <div class="navegacao">
+                    <input type="radio" id="NavegacaoSim" name="Navegacao" onclick="attNav()"><label for="NavegacaoSim">Sim</label>
+                    <input type="radio" id="NavegacaoNao" name="Navegacao" onclick="attNav()" checked="True"><label for="NavegacaoNao">Não</label><br>
+    
+                    <div id="navegador" style="display: none;"><h4>Qual o nível deste Jogador/NPC companheiro?</h4><br>
+    
+                    <input type="number" id="nivelNavegacao" max="20" min="1" value="1" onchange="attValorNav()"></div>
+                </div>
+                <div class="cozinha">
+                    <input type="radio" id="CozinheiroSim" name="Cozinheiro" onclick="attCoz()"><label for="CozinheiroSim">Sim</label>
+                    <input type="radio" id="CozinheiroNao" name="Cozinheiro" onclick="attCoz()" checked="True"><label for="CozinheiroNão">Não</label><br>
+    
+                    <div id="cozinheiro" style="display: none;"><h4>Qual o nível deste Jogador/NPC companheiro?</h4><br>
+    
+                    <input type="number" id="nivelCozinheiro" max="20" min="1" value="1" onchange="attValorCoz()"></div>
+                </div>
+                <div class="proficiencias">
+                    <input type="checkbox" id="administracao" name="administracao" onchange="attAdm()"><label for="administracao">Administração</label><br>
+                    <input type="checkbox" id="Herbalismo" name="Herbalismo" onchange="attHer()"><label for="Herbalismo">Herbalismo</label><br>
+                    <input type="checkbox" id="pesca" name="pesca" onchange="attPes()"><label for="pesca">Pesca</label><br><br>
+                </div>
+                <div class="qualEdefe">
+                    <input type="checkbox" id="EstPeq" name="EstPeq" onchange="attEstPeq()"><label for="EstPeq">Estômago Pequeno</label>
+                    <div id="auxEstPeq" style="display: none">
+                        <label for="ValorEstPeq">Quantos?</label>
+                        <input id="ValorEstPeq" type="number" min="1" value="1" onchange="attValorEstPeq()">
+                    </div><br>
+                    <input type="checkbox" id="Guloso" name="Guloso" onchange="attGul()"><label for="Guloso">Guloso</label>
+                    <div id="auxGul" style="display: none">
+                        <label for="ValorGul">Quantos?</label>
+                        <input id="ValorGul" type="number" min="1" value="1" onchange="attValorGul()">
+                    </div><br>
+                </div>
+                <div class="Faminto">
+                    <h3>Meu grupo é louco e aceita passar fome até...</h3><br>
+
+                    <input type="radio" id="nemtaolouco" name="faminto" onclick="attFam(0)"><label for="nemtaolouco">Tá, talvez não sejamos loucos.</label><br>
+                    <input type="radio" id="poucolouco" name="faminto" onclick="attFam(1)"><label for="poucolouco">Um dia sem comer até vai... né?</label><br>
+                    <input type="radio" id="faminto1" name="faminto" onclick="attFam(2)"><label for="faminto1">Quem nunca passou fome uma vez na vida?</label><br>
+                    <input type="radio" id="faminto2" name="faminto" onclick="attFam(3)"><label for="faminto2">Passar fome ok, mas passar mal de fome foi a primeira vez.</label><br>
+                    <input type="radio" id="faminto3" name="faminto" onclick="attFam(4)"><label for="faminto3">Estou definhando? Talvez, mas valeu a pena.</label><br>
+                    <input type="radio" id="faminto4" name="faminto" onclick="attFam(5)"><label for="faminto4">Sou masoquista, gosto da dor de não comer nada.</label><br>
+                    <input type="radio" id="faminto5" name="faminto" onclick="attFam(6)"><label for="faminto5">Melhor morrer do que perder a vida</label><br><br>
+                </div>
+            </div>
+            <div id="Resultados">
+                Teste 3
+            </div>
+        </div>
+    </body>
+</html>
