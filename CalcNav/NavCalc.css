@@ -6,14 +6,14 @@
         'resultados resultados'
         'resultados resultados';
     background: var(--bg1);
-    height: 100%;
+    color: var(--font1);
     width: 100%;
 }
 
 #Resultados{
     grid-area: resultados;
     display: grid;
-    gap: 1%;
-    margin: 1%;
-    text-align: center;
+    margin-left: 5%;
+    margin-right: 5%;
+    text-align: justify;
 }
