@@ -9,6 +9,7 @@
     font-size: 14px;
     gap: 1%;
     margin: 1%;
+    color: var(--font1);
 }
 
 #Extras h3{
