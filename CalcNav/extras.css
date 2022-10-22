@@ -1,0 +1,36 @@
+#Extras{
+    grid-area: extras;
+    display: grid;  
+    grid-template-areas:
+        'titulo titulo'
+        'navegacao cozinheiro'
+        'proficiencias qualidades-defeitos'
+        'fome fome';
+    font-size: 14px;
+    gap: 1%;
+    margin: 1%;
+}
+
+#Extras h3{
+    grid-area: titulo;
+}
+
+#Extras .navegacao{
+    grid-area: navegacao;
+}
+
+#Extras .cozinha{
+    grid-area: cozinheiro;
+}
+
+#Extras .proficiencias{
+    grid-area: proficiencias;
+}
+
+#Extras .qualEdefe{
+    grid-area: qualidades-defeitos;
+}
+
+#Extras .Faminto{
+    grid-area: fome;
+}

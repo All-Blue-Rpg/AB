@@ -1,0 +1,42 @@
+#Principal{
+    grid-area: principal;
+    display: grid;  
+    grid-template-areas: 
+        'estou vou'
+        'estou vou'
+        'estou vou'
+        'tipo barco';
+    font-size: 14px;
+    gap: 1%;
+    margin: 1%;
+}
+
+#Principal .Estou{
+    grid-area: estou;
+    font-size: large;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#Principal .Vou{
+    grid-area: vou;
+    font-size: large;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#Principal .tipo{
+    grid-area: tipo;
+    font-size: large;
+    margin-left: auto;
+    margin-bottom: auto;
+}
+
+#Principal .barco{
+    grid-area: barco;
+    font-size: large;
+    margin-left: auto;
+    margin-right: auto;
+}
