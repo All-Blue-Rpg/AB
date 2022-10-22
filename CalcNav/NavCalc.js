@@ -109,6 +109,7 @@ function attTempoCarona(){
             //Submundo
             break
     }
+    parent.iframeLoaded();
 }
 
 function attTempoNormal(){
@@ -275,6 +276,7 @@ function attTempoNormal(){
     }
 
     document.getElementById('Resultados').innerHTML = txtResultado + txtDesgaste + txtExtra
+    parent.iframeLoaded();
 }
 
 function calcDesg(){

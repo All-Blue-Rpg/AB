@@ -1,3 +1,7 @@
+html, body {
+    height:100%;    
+}
+
 #NavCalc{
     display: grid;
     grid-template-areas: 
@@ -8,6 +12,7 @@
     background: var(--bg1);
     color: var(--font1);
     width: 100%;
+    height: 100%;
 }
 
 #Resultados{
