@@ -982,10 +982,12 @@ function attPes(){
 
 function attCarona(){
     if (document.getElementById('CaronaSim').checked == true){
+        document.getElementById("Extras").display = "none"
         carona = true
         attTempoCarona()
     }
     else{
+        document.getElementById("Extras").display = "block"
         carona = false
         attTempoNormal()
     }

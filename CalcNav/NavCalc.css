@@ -1,5 +1,5 @@
-html, body {
-    height:100%;    
+html, body{
+    margin: 0;
 }
 
 #NavCalc{
@@ -9,17 +9,13 @@ html, body {
         'principal extras'
         'resultados resultados'
         'resultados resultados';
-    background: var(--bg1);
-    color: var(--font1);
     width: 100%;
     height: 100%;
+    background-color: #718d99;
 }
 
 #Resultados{
     grid-area: resultados;
     display: grid;
-    margin-left: 5%;
-    margin-right: 5%;
     text-align: justify;
-    color: inherit;
 }
