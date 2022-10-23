@@ -1,5 +1,7 @@
 html, body{
     margin: 0;
+    background-color: var(--bg1);
+    color: var(--font1);
 }
 
 #NavCalc{
