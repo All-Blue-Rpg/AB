@@ -1,41 +1,70 @@
 #Principal{
     grid-area: principal;
     display: grid;  
-    grid-template-areas: 
-        'estou vou'
-        'estou vou'
-        'estou vou'
-        'tipo barco';
+    grid-template-areas:
+        'tipo tipo'
+        'estouO vouO'
+        'estouR vouR'
+        'estouI vouI'
+        'grupo barco';
     font-size: 14px;
-    padding: 20px;
+    height: 600px;
+    width: 540px;
 }
 
-#Principal .Estou{
-    grid-area: estou;
-    font-size: large;
+#Principal .bloco{
+    padding: 10px;
     align-items: center;
     margin-left: auto;
     margin-right: auto;
+    height: 100px;
+    width: 50%;
+}
+
+#Principal .bloco h3{
+    margin: 10px 0px;
+}
+
+#Principal .bloco select{
+    width: 200px;
+}
+
+#Principal .OceanoEstou{
+    grid-area: estouO;
+}
+
+#Principal #RotaEstou{
+    grid-area: estouR;
+}
+
+#Principal #IlhasEstou{
+    grid-area: estouI;
+}
+
+#Principal .OceanoVou{
+    grid-area: vouO;
+}
+
+#Principal #RotaVou{
+    grid-area: vouR;
+}
+
+#Principal #IlhasVou{
+    grid-area: vouI;
 }
 
 #Principal .Vou{
     grid-area: vou;
-    font-size: large;
-    align-items: center;
-    margin-left: auto;
-    margin-right: auto;
+}
+
+#Principal .grupo{
+    grid-area: grupo;
+}
+
+#Principal #barcoSelecao{
+    grid-area: barco;
 }
 
 #Principal .tipo{
     grid-area: tipo;
-    font-size: large;
-    margin-left: auto;
-    margin-bottom: auto;
-}
-
-#Principal .barco{
-    grid-area: barco;
-    font-size: large;
-    margin-left: auto;
-    margin-right: auto;
 }

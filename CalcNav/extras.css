@@ -9,8 +9,8 @@
     padding: 20px;
 }
 
-#Extras h3{
-    grid-area: titulo;
+#Extras h2{
+    grid-area: titulo; 
 }
 
 #Extras .navegacao{

@@ -4,11 +4,17 @@
         <link rel="stylesheet" href="NavCalc.css">
         <link rel="stylesheet" href="principal.css">
         <link rel="stylesheet" href="extras.css">
+        <link rel="stylesheet" href="resultados.css">
     </head>
-    <body onload="qualBarco(0)">
+    <body onload="carregando()">
         <div id="NavCalc">
             <div id="Principal">
-                <div class="Estou">
+                <div class="tipo bloco">
+                    <h3>Vou viajar por...</h3><br>                    
+                    <input type="radio" id="CaronaNao" name="Carona" onclick="attCarona()" checked="True"><label for="CaronaNao">Conta Própria</label>
+                    <input type="radio" id="CaronaSim" name="Carona" onclick="attCarona()"><label for="CaronaSim">Carona</label><br>
+                </div>
+                <div class="OceanoEstou bloco">
                     <h3>Onde você está?</h3><br>
 
                     <select name="oceanos" id="oceanos" onchange="qualMar(0,value)">
@@ -17,63 +23,10 @@
                         <option value="2">Novo Mundo</option>
                         <option value="3">Calm Belt</option>
                     </select>
-    
-                    <h3>Onde neste lugar?</h3><br>
-    
-                    <div id="BluesEstou" style="display: block;">
-                        <select name="BluesEstouOpcoes" id="BluesEstouOpcoes" onchange="qualRota(0,value)">
-                            <option value="0">North Blue</option>
-                            <option value="1">West Blue</option>
-                            <option value="2">South Blue</option>
-                            <option value="3">East Blue</option>
-                        </select>
-                    </div>
-    
-                    <div id="ParadiseEstou" style="display:none">
-                        <select name="ParadiseEstouOpcoes" id="ParadiseEstouOpcoes" onchange="qualRota(0,value)">
-                            <option value="0">Farol</option>
-                            <option value="1">1ª rota</option>
-                            <option value="2">2ª rota</option>
-                            <option value="3">3ª rota</option>
-                            <option value="4">4ª rota</option>
-                            <option value="5">5ª rota</option>
-                            <option value="6">6ª rota</option>
-                            <option value="7">7ª rota</option>
-                            <option value="8">Sabaody</option>
-                        </select>
-                    </div>
-                    
-                    <div id="NovoMundoEstou" style="display:none">
-                        <select name="NovoMundoEstouOpcoes" id="NovoMundoEstouOpcoes" onchange="qualRota(0,value)">
-                            <option value="0">Ilha dos Homens-Peixe</option>
-                            <option value="1">Mary Geoise</option>
-                            <option value="2">Red Port</option>
-                            <option value="3">1ª rota</option>
-                            <option value="4">2ª rota</option>
-                            <option value="5">3ª rota</option>
-                        </select>
-                    </div>
-                
-                    <div id="CalmBeltEstou" style="display:none">
-                        <select name="CalmBeltEstouOpcoes" id="CalmBeltEstouOpcoes" onchange="qualRota(0,value)">
-                            <option value="0">Amazon Lily</option>
-                        </select>
-                    </div>
-    
-                    <div id="IlhasEstou">
-                        <h3>Qual Ilha?</h3><br>
-                        <select name="IlhasEstouOpcoes" id="IlhasEstouOpcoes" onchange="qualIlha(0,value)">
-                            <option value=0 id="Ilha0Estou">Flevance</option>
-                            <option value=1 id="Ilha1Estou">Rubeck</option>
-                            <option value=2 id="Ilha2Estou">Swallow</option>
-                            <option value=3 id="Ilha3Estou">Kites</option>
-                            <option value=4 id="Ilha4Estou">Minion</option>
-                            <option value=5 id="Ilha5Estou">Stevelty</option>
-                            <option value=6 id="Ilha6Estou">Lvneel</option>
-                        </select>
-                    </div>
                 </div>
-                <div class="Vou">
+                <div id="RotaEstou" class="bloco"></div>
+                <div id="IlhasEstou" class="bloco"></div>
+                <div class="OceanoVou bloco">
                     <h3>Aonde você vai?</h3><br>
 
                     <select name="oceanos" id="oceanos" onchange="qualMar(1,value)">
@@ -82,63 +35,10 @@
                         <option value="2">Novo Mundo</option>
                         <option value="3">Calm Belt</option>
                     </select>
-    
-                    <h3>Aonde neste lugar?</h3><br>
-    
-                    <div id="BluesVou" style="display: block;">
-                        <select name="BluesVouOpcoes" id="BluesVouOpcoes" onchange="qualRota(1,value)">
-                            <option value="0">North Blue</option>
-                            <option value="1">West Blue</option>
-                            <option value="2">South Blue</option>
-                            <option value="3">East Blue</option>
-                        </select>
-                    </div>
-    
-                    <div id="ParadiseVou" style="display:none">
-                        <select name="ParadiseVouOpcoes" id="ParadiseVouOpcoes" onchange="qualRota(1,value)">
-                            <option value="0">Farol</option>
-                            <option value="1">1ª rota</option>
-                            <option value="2">2ª rota</option>
-                            <option value="3">3ª rota</option>
-                            <option value="4">4ª rota</option>
-                            <option value="5">5ª rota</option>
-                            <option value="6">6ª rota</option>
-                            <option value="7">7ª rota</option>
-                            <option value="8">Sabaody</option>
-                        </select>
-                    </div>
-    
-                    <div id="NovoMundoVou" style="display:none">
-                        <select name="NovoMundoVouOpcoes" id="NovoMundoVouOpcoes" onchange="qualRota(1,value)">
-                            <option value="0">Ilha dos Homens-Peixe</option>
-                            <option value="1">Mary Geoise</option>
-                            <option value="2">Red Port</option>
-                            <option value="3">1ª rota</option>
-                            <option value="4">2ª rota</option>
-                            <option value="5">3ª rota</option>
-                        </select>
-                    </div>
-
-                    <div id="CalmBeltVou" style="display:none">
-                        <select name="CalmBeltVouOpcoes" id="CalmBeltVouOpcoes" onchange="qualRota(1,value)">
-                            <option value="0">Amazon Lily</option>
-                        </select>
-                    </div>
-    
-                    <div id="IlhasVou">
-                        <h3>Qual Ilha?</h3><br>
-                        <select name="IlhasVouOpcoes" id="IlhasVouOpcoes" onchange="qualIlha(1,value)">
-                            <option value=0 id="Ilha0Vou">Flevance</option>
-                            <option value=1 id="Ilha1Vou">Rubeck</option>
-                            <option value=2 id="Ilha2Vou">Swallow</option>
-                            <option value=3 id="Ilha3Vou">Kites</option>
-                            <option value=4 id="Ilha4Vou">Minion</option>
-                            <option value=5 id="Ilha5Vou">Stevelty</option>
-                            <option value=6 id="Ilha6Vou">Lvneel</option>
-                        </select>
-                    </div>
                 </div>
-                <div class="tipo">
+                <div id="RotaVou" class="bloco"></div>
+                <div id="IlhasVou" class="bloco"></div>            
+                <div class="grupo bloco">
                     <h3>Grupo?</h3><br>
                     <select name="FaccaoOpcoes" id="FaccaoOpcoes" onchange="attFaccao(value)">
                         <option value=0>Agente</option>
@@ -149,12 +49,8 @@
                         <option value=5>Revolucionário</option>
                         <option value=6>Submundo</option>
                     </select>
-                    <br>
-                    <h3>Vou viajar por...</h3><br>                    
-                    <input type="radio" id="CaronaNao" name="Carona" onclick="attCarona()" checked="True"><label for="CaronaNao">Conta Própria</label>
-                    <input type="radio" id="CaronaSim" name="Carona" onclick="attCarona()"><label for="CaronaSim">Carona</label><br>
                 </div>
-                <div class="barco">
+                <div id="barcoSelecao" class="bloco">
                     <h3>Qual o seu barco?</h3><br>
                     <select name="Barco" id="Barco" onchange="qualBarco(value)">
                         <option value=0>Barco Simples</option>
@@ -186,9 +82,9 @@
                 </div>
             </div>
             <div id="Extras">
-                <h3>Personagens/NPCs Companheiros no Navio</h3>
+                <h2>Extras que alteram a viagem</h2>
                 <div class="navegacao">
-                    <h4>Navegador</h4>
+                    <h4>Tem navegador?</h4>
                     <input type="radio" id="NavegacaoSim" name="Navegacao" onclick="attNav()"><label for="NavegacaoSim">Sim</label>
                     <input type="radio" id="NavegacaoNao" name="Navegacao" onclick="attNav()" checked="True"><label for="NavegacaoNao">Não</label><br>
     
@@ -197,7 +93,7 @@
                     <input type="number" id="nivelNavegacao" max="20" min="1" value="1" onchange="attValorNav()"></div>
                 </div>
                 <div class="cozinha">
-                    <h4>Cozinheiro</h4>
+                    <h4>Tem cozinheiro?</h4>
                     <input type="radio" id="CozinheiroSim" name="Cozinheiro" onclick="attCoz()"><label for="CozinheiroSim">Sim</label>
                     <input type="radio" id="CozinheiroNao" name="Cozinheiro" onclick="attCoz()" checked="True"><label for="CozinheiroNão">Não</label><br>
     
@@ -228,15 +124,15 @@
                     </div><br>
                 </div>
                 <div class="Faminto">
-                    <h3>Meu grupo é louco e aceita passar fome até...</h3><br>
+                    <h4>Meu grupo é louco e aceita passar fome até...</h4><br>
 
-                    <input type="radio" id="nemtaolouco" name="faminto" onclick="attFam(0)"><label for="nemtaolouco">Tá, talvez não sejamos loucos.</label><br>
-                    <input type="radio" id="poucolouco" name="faminto" onclick="attFam(1)"><label for="poucolouco">Um dia sem comer até vai... né?</label><br>
-                    <input type="radio" id="faminto1" name="faminto" onclick="attFam(2)"><label for="faminto1">Quem nunca passou fome uma vez na vida?</label><br>
-                    <input type="radio" id="faminto2" name="faminto" onclick="attFam(3)"><label for="faminto2">Passar fome ok, mas passar mal de fome foi a primeira vez.</label><br>
-                    <input type="radio" id="faminto3" name="faminto" onclick="attFam(4)"><label for="faminto3">Estou definhando? Talvez, mas valeu a pena.</label><br>
-                    <input type="radio" id="faminto4" name="faminto" onclick="attFam(5)"><label for="faminto4">Sou masoquista, gosto da dor de não comer nada.</label><br>
-                    <input type="radio" id="faminto5" name="faminto" onclick="attFam(6)"><label for="faminto5">Melhor morrer do que perder a vida</label><br><br>
+                    <input type="radio" id="nemtaolouco" name="faminto" onclick="attFam(0)"><label for="nemtaolouco">Tá, talvez não sejamos loucos (viagem normal).</label><br>
+                    <input type="radio" id="poucolouco" name="faminto" onclick="attFam(1)"><label for="poucolouco">Um dia sem comer até vai... né? (um dia sem comer como tolerância)</label><br>
+                    <input type="radio" id="faminto1" name="faminto" onclick="attFam(2)"><label for="faminto1">Quem nunca passou fome uma vez na vida? (ficar com faminto I a cada pausa)</label><br>
+                    <input type="radio" id="faminto2" name="faminto" onclick="attFam(3)"><label for="faminto2">Passar fome ok, mas passar mal de fome foi a primeira vez. (ficar com faminto II a cada pausa)</label><br>
+                    <input type="radio" id="faminto3" name="faminto" onclick="attFam(4)"><label for="faminto3">Estou definhando? Talvez, mas valeu a pena. (ficar com faminto III a cada pausa)</label><br>
+                    <input type="radio" id="faminto4" name="faminto" onclick="attFam(5)"><label for="faminto4">Sou masoquista, gosto da dor de não comer nada. (ficar com faminto IV a cada pausa)</label><br>
+                    <input type="radio" id="faminto5" name="faminto" onclick="attFam(6)"><label for="faminto5">Melhor morrer do que perder a vida (ficar com faminto V a cada pausa)</label><br><br>
                 </div>
             </div>
             <div id="Resultados">

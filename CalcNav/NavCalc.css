@@ -2,6 +2,8 @@ html, body{
     margin: 0;
     background-color: var(--bg1);
     color: var(--font1);
+    height: 950px;
+    padding: 0px 49px;
 }
 
 #NavCalc{
@@ -11,11 +13,4 @@ html, body{
         'extras extras';
     width: 100%;
     height: 100%;
-}
-
-#Resultados{
-    grid-area: resultados;
-    display: grid;
-    text-align: justify;
-    padding: 20px;
 }

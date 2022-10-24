@@ -85,6 +85,14 @@ var auxDesgaste = [0, 0, 0, 0] // Desgaste em dias de distância passando por ca
 var auxDesgaste2 = [0, 0, 0, 0]
 var desgaste = 0
 
+// Função chamada unicamente ao carregar a página
+function carregando(){
+    qualBarco(0)
+    qualMar(0,0)
+    qualMar(1,0)
+}
+
+// Funções de atualização do tempo
 function attTempo(){
     if (carona == false){
         attTempoNormal()
@@ -426,6 +434,7 @@ function attTempoNormal(){
     document.getElementById('Resultados').innerHTML = txtResultado + txtDesgaste + txtExtra
 }
 
+// Calculando Desgaste
 function calcDesg(){
     sum = 0
     if(dis > 0){
@@ -537,14 +546,15 @@ function calcDesg(){
     }
 }
 
+// Atualizando Distância
 function attDis(){
-    console.log("Mar Estou: " + localizacao.MarEstou)
-    console.log("Rota Estou: " + localizacao.RotaEstou)
-    console.log("Ilha Estou: " + localizacao.IlhaEstou)
-    console.log("Mar Vou: " + localizacao.MarVou)
-    console.log("Rota Vou: " + localizacao.RotaVou)
-    console.log("Ilha Vou: " + localizacao.IlhaVou)
-    console.log("\n")
+    // console.log("Mar Estou: " + localizacao.MarEstou)
+    // console.log("Rota Estou: " + localizacao.RotaEstou)
+    // console.log("Ilha Estou: " + localizacao.IlhaEstou)
+    // console.log("Mar Vou: " + localizacao.MarVou)
+    // console.log("Rota Vou: " + localizacao.RotaVou)
+    // console.log("Ilha Vou: " + localizacao.IlhaVou)
+    // console.log("\n")
     switch(localizacao.MarEstou){
         case 0: // Estando nos Blues
             switch(localizacao.MarVou){
@@ -673,7 +683,6 @@ function attDis(){
         }
         // Partindo para Sabaody/Tritão
         else if(localizacao.MarVou == 1 && localizacao.RotaVou == 8){
-            console.log("Entrei no primeiro if")
             dis = 12*8
             disC = 8
             auxDesgaste = [0,0,dis,0]
@@ -852,6 +861,7 @@ function attDis(){
     attTempo()
 }
 
+// Funções do Barco
 function qualBarco(valor){
     valor = Number(valor)
     document.getElementById('auxBarco').style.display = "none"
@@ -921,90 +931,95 @@ function attBarcoPersonalizado(){
     attTempoNormal()
 }
 
-function qualMar(identificador, valor){ 
+// Funções para atualizar a localização e o HTML
+function qualMar(identificador, valor){
     valor = parseInt(valor)
     if(identificador == 0){
-        auxMar = ['BluesEstou','ParadiseEstou','NovoMundoEstou','CalmBeltEstou','IlhasEstou']
-        if (valor==0){
-            auxRes = ["block", "none", "none","none","block"]
-            auxIlha = ['BluesEstouOpcoes', 'IlhasEstouOpcoes','IlhasEstou']
-            auxResIlha = ["0", "0"]
-        }
-        else if (valor==1){
-            auxRes = ["none", "block", "none","none", "block"]
-            auxIlha = ['ParadiseEstouOpcoes','IlhasEstouOpcoes','IlhasEstou']
-            auxResIlha =["1", "0"]
-        }
-        else if (valor==2){
-            auxRes = ["none", "none", "block","none","block"]
-            auxIlha = ['NovoMundoEstouOpcoes', 'IlhasEstouOpcoes','IlhasEstou']
-            auxResIlha = ["3", "0"]
-        }
-        else{
-            auxRes = ["none", "none", "none","block","none"]
-            auxIlha = ['CalmBeltEstouOpcoes', 'IlhasEstouOpcoes','IlhasEstou']
-            auxResIlha = ["0", "0"]
-        }
+        local = "RotaEstou"
+        local2 = "IlhasEstou"
+        idLocal = "RotaEstouOpcoes"
+        palavra = "Onde"
     }
     else{
-        auxMar = ['BluesVou','ParadiseVou','NovoMundoVou','CalmBeltVou','IlhasVou']
-        if (valor==0){
-            auxRes = ["block", "none", "none", "none", "block"]
-            auxIlha = ['BluesVouOpcoes', 'IlhasVouOpcoes','IlhasVou']
-            auxResIlha = ["0", "0"]
-        }
-        else if (valor==1){
-            auxRes = ["none", "block", "none", "none", "block"]
-            auxIlha = ['ParadiseVouOpcoes','IlhasVouOpcoes','IlhasVou']
-            auxResIlha =["1", "0"]
-        }
-        else if (valor==2){
-            auxRes = ["none", "none", "block", "none", "block"]
-            auxIlha = ['NovoMundoVouOpcoes', 'IlhasVouOpcoes','IlhasVou']
-            auxResIlha = ["3", "0"]
-        }
-        else{
-            auxRes = ["none", "none", "none", "block", "none"]
-            auxIlha = ['CalmBeltVouOpcoes', 'IlhasVouOpcoes','IlhasVou']
-            auxResIlha = ["0", "0"]
-        }
+        local = "RotaVou"
+        local2 = "IlhasVou"
+        idLocal = "RotaVouOpcoes"
+        palavra = "Aonde"
     }
-    localizacao.setLoc(identificador,valor,parseInt(auxResIlha[0]),0) 
-    for(let i=0; i<2; i++){ 
-        document.getElementById([auxIlha[i]]).value = auxResIlha[i] // Atualização dos valores para onde quero que apareça primeiro
-        document.getElementById(auxMar[i]).style.display = auxRes[i] // Aparecer o mar correto
-    }
-    for(let i=2; i<5; i++){
-        document.getElementById(auxMar[i]).style.display = auxRes[i] // Aparecer o mar correto
-    }
-    if(valor != 3){
-        attNomesIlhas(identificador,parseInt(auxResIlha[0]))
+    txtLocal = "<h3>" + palavra + " neste lugar?</h3><br>"
+    txtLocal = txtLocal + '<select name="' + idLocal + '" id="' + idLocal + '" onchange="qualRota('  + identificador + ',value)">'
+    switch(valor){
+        case 0: // nos blues
+            valorR = 0
+            txtLocal = txtLocal + '<option value="0">North Blue</option>'
+            txtLocal = txtLocal + '<option value="1">West Blue</option>'
+            txtLocal = txtLocal + '<option value="2">South Blue</option>'
+            txtLocal = txtLocal + '<option value="3">East Blue</option>'
+            txtLocal = txtLocal + '</select>'
+            break
+        case 1: // na paradise
+            valorR = 1
+            txtLocal = txtLocal + '<option value="0">Farol</option>'
+            txtLocal = txtLocal + '<option value="1">1ª rota</option>'
+            txtLocal = txtLocal + '<option value="2">2ª rota</option>'
+            txtLocal = txtLocal + '<option value="3">3ª rota</option>'
+            txtLocal = txtLocal + '<option value="4">4ª rota</option>'
+            txtLocal = txtLocal + '<option value="5">5ª rota</option>'
+            txtLocal = txtLocal + '<option value="6">6ª rota</option>'
+            txtLocal = txtLocal + '<option value="7">7ª rota</option>'
+            txtLocal = txtLocal + '<option value="8">Sabaody</option>'
+            txtLocal = txtLocal + '</select>'
+            break
+        case 2: // no novo mundo
+            valorR = 1
+            txtLocal = txtLocal + '<option value="0">Ilha dos Homens-Peixe</option>'
+            txtLocal = txtLocal + '<option value="1">1ª rota</option>'
+            txtLocal = txtLocal + '<option value="2">2ª rota</option>'
+            txtLocal = txtLocal + '<option value="3">3ª rota</option>'
+            txtLocal = txtLocal + '</select>'
+            break
+        case 3: // no calm belt
+            valorR = 0
+            txtLocal = txtLocal + '<option value="0">Amazon Lily</option>'
+            txtLocal = txtLocal + '</select>'
+            break
     }
 
+    document.getElementById(local).innerHTML = txtLocal
+    document.getElementById(idLocal).value = valorR
+    localizacao.setLoc(identificador,valor,valorR,0)
+
+    qualRota(identificador,valorR)
     attDis()
 }
 
 function qualRota(identificador, valor){
     valor = parseInt(valor)
     if(identificador == 0){
-        localizacao.setLoc(identificador,localizacao.MarEstou,valor,0,0)
-        if(localizacao.MarEstou == 1 && (valor == 0 || valor == 8)){
-            document.getElementById('IlhasEstou').style.display = "none"
-        }
-        else{
-            document.getElementById('IlhasEstou').style.display = "block"
-        }
+        auxMar = localizacao.MarEstou
+        local = "IlhasEstou"
+        idLocal = "IlhaEstouOpcoes"
     }
     else{
-        localizacao.setLoc(identificador,localizacao.MarVou,valor,0,0)
-        if(localizacao.MarVou == 1 && (valor == 0 || valor == 8)){
-            document.getElementById('IlhasVou').style.display = "none"
-        }
-        else{
-            document.getElementById('IlhasVou').style.display = "block"
-        }
+        auxMar = localizacao.MarVou
+        local = "IlhasVou"
+        idLocal = "IlhaVouOpcoes"
     }
-    attNomesIlhas(identificador,valor)
+
+    localizacao.setLoc(identificador,auxMar,valor,0)
+    if((auxMar == 1 && (valor == 0 || valor == 8)) || (auxMar == 2 && valor == 0) || (auxMar == 3)){ // Não aparece ilhas quando as opções são farol/sabaody/ilha dos tritões
+        document.getElementById(local).innerHTML = ""
+        return
+    }
+
+    txtIlhas = "<h3>Qual Ilha?</h3><br>"
+    txtIlhas = txtIlhas + '<select name="' + idLocal + '" id="' + idLocal +'" onchange="qualIlha(' + identificador + ',value)">'
+    vetor = attNomesIlhas(auxMar,valor)
+    for (let i=0; i<7; i++){
+        txtIlhas = txtIlhas + '<option value=' + i + '>' + vetor[i] +'</option>'
+    }
+    txtIlhas = txtIlhas + "</select>"
+    document.getElementById(local).innerHTML = txtIlhas 
     attDis()
 }
 
@@ -1018,17 +1033,8 @@ function qualIlha(identificador, valor){
     attDis()
 }
 
-function attNomesIlhas(identificador,valor){
-    if (identificador == 0){
-        aux = localizacao.MarEstou
-        document.getElementById("IlhasEstouOpcoes").value = "0"
-
-    }
-    else{
-        aux = localizacao.MarVou
-        document.getElementById("IlhasVouOpcoes").value = "0"
-    }
-    switch(aux){
+function attNomesIlhas(mar,valor){
+    switch(mar){
         case 0: // Blues
             switch(valor){
                 case 0: // North Blue
@@ -1072,37 +1078,43 @@ function attNomesIlhas(identificador,valor){
             break
         case 2: // Novo Mundo
             switch(valor){
-                case 3: // Primeira Rota
+                case 1: // Primeira Rota
                     vetor = ["Ilha 1","Ilha 2","Ilha 3","Ilha 4","Ilha 5","Ilha 6","Ilha 7"]
                     break
-                case 4: // Segunda Rota
+                case 2: // Segunda Rota
                     vetor = ["Ilha 1","Ilha 2","Ilha 3","Ilha 4","Ilha 5","Ilha 6","Ilha 7"]
                     break
-                case 5: // Terceira Rota
+                case 3: // Terceira Rota
                     vetor = ["Ilha 1","Ilha 2","Ilha 3","Ilha 4","Ilha 5","Ilha 6","Ilha 7"]
                     break            
             }
             break
     }
-    attNomesIlhasHTML(identificador,vetor)
+    return vetor
 }
 
-function attNomesIlhasHTML(identificador,vetor){
-    if(identificador == 0){
-        auxIlhas = ['Ilha0Estou','Ilha1Estou','Ilha2Estou','Ilha3Estou','Ilha4Estou','Ilha5Estou','Ilha6Estou']
+// Funções importantes para Carona
+function attCarona(){
+    if (document.getElementById('CaronaSim').checked == true){
+        document.getElementById("Extras").style.display = "none"
+        document.getElementById("barcoSelecao").style.display = "none"
+        carona = true
+        attTempoCarona()
     }
     else{
-        auxIlhas = ['Ilha0Vou','Ilha1Vou','Ilha2Vou','Ilha3Vou','Ilha4Vou','Ilha5Vou','Ilha6Vou']
+        document.getElementById("Extras").style.display = "grid"
+        document.getElementById("barcoSelecao").style.display = "grid"
+        carona = false
+        attTempoNormal()
     }
-    document.getElementById(auxIlhas[0]).innerHTML = vetor[0]
-    document.getElementById(auxIlhas[1]).innerHTML = vetor[1]
-    document.getElementById(auxIlhas[2]).innerHTML = vetor[2]
-    document.getElementById(auxIlhas[3]).innerHTML = vetor[3]
-    document.getElementById(auxIlhas[4]).innerHTML = vetor[4]
-    document.getElementById(auxIlhas[5]).innerHTML = vetor[5]
-    document.getElementById(auxIlhas[6]).innerHTML = vetor[6]
 }
 
+function attFaccao(valor){
+    faccao = parseInt(valor)
+    attDis()
+}
+
+// Daqui para baixa são funções dos Extras
 function attAdm(){
     if (document.getElementById('administracao').checked == true){
         adm = 1
@@ -1206,11 +1218,6 @@ function attValorGul(){
     attTempoNormal()
 }
 
-function attFaccao(valor){
-    faccao = parseInt(valor)
-    attDis()
-}
-
 function attFam(valor){
     fam = valor
     barco.setComida()
@@ -1225,17 +1232,4 @@ function attPes(){
         pes = 0
     }
     attTempoNormal()
-}
-
-function attCarona(){
-    if (document.getElementById('CaronaSim').checked == true){
-        document.getElementById("Extras").style.display = "none"
-        carona = true
-        attTempoCarona()
-    }
-    else{
-        document.getElementById("Extras").style.display = "inherit"
-        carona = false
-        attTempoNormal()
-    }
 }
