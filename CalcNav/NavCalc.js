@@ -73,6 +73,7 @@ var carona = false
 
 // Auxiliares cálculo
 const BlueDistance = [[0,6,8,10,16,18,24],[6,0,10,8,18,16,26],[8,10,0,6,8,10,16],[10,8,6,0,10,8,18],[16,18,8,10,0,6,8],[18,16,10,8,6,0,10],[24,26,16,18,8,10,0]]
+const BlueDistanceC = [[0,1,1,1,2,2,3],[1,0,1,1,2,2,3],[1,1,0,1,1,1,2],[1,1,1,0,1,1,2],[2,2,1,1,0,1,1],[2,2,1,1,1,0,1],[3,3,2,2,1,1,0]]
 var dis = 0 // Distância em dias totais
 var disC = 0 // Distância em ilhas, para Carona
 var posts = 0
@@ -80,33 +81,181 @@ var duracao = 0
 
 // Desgaste
 const desgasteTabela = [[250,150,0,0,0,0],[500, 300, 180, 0, 0, 0],[1000,600,300,220,0,0],[3000,1800,1000,600,360,200],[4500,2700,1500,900,600,300]]
-var auxDesgaste = [0, 0, 0, 0]
+var auxDesgaste = [0, 0, 0, 0] // Desgaste em dias de distância passando por cada localização: calm belt, blues, paradise, novo mundo
 var auxDesgaste2 = [0, 0, 0, 0]
 var desgaste = 0
 
+function attTempo(){
+    if (carona == false){
+        attTempoNormal()
+    }
+    else{
+        attTempoCarona()
+    }
+}
+
 function attTempoCarona(){
+    if (disC == 0){
+        txtResultado = "Você já está no seu objetivo, tá nas dorgas mermão?"
+        document.getElementById('Resultados').innerHTML = txtResultado 
+        return
+    }
     switch(faccao){
-        case 0:
-            qualBarco(13)
-            document.getElementById('Barco').value = "13"
+        case 0:  // Agente
+            if(localizacao.RotaEstou == 0 && localizacao.RotaVou > 0){
+                qualBarco(13)
+                document.getElementById('Barco').value = "13"
+                txtResultado = "Por ser um agente que está passando pelo Calm Belt, o barco que você está pegando carona é obrigatoriamente um Cruzador.<br>"
+                txtResultado = txtResultado + "Pelo menos você não precisa se preocupar com nada da viagem além de agradar a pessoa que está te dando carona.<br>"
+                txtResultado = txtResultado + "Você vai precisar de " +  Math.ceil(disC/2) + " viagens, já que cada carona sua só pode avançar 2 ilhas.<br>"
+                txtResultado = txtResultado + "Esse número de viagens na sua facção demora " +  Math.ceil(disC/2) + " turnos, já que não existe espera entre viagens.<br>"
+                txtResultado = txtResultado + "Divirta-se.<br>"
+                document.getElementById('Resultados').innerHTML = txtResultado
+            }
+            else{
+                qualBarco(15)
+                document.getElementById('Barco').value = "15"
+                txtResultado = "Por ser um agente que está em uma viagem comum, o barco que você está pegando carona é obrigatoriamente um Iquisidor.<br>"
+                txtResultado = txtResultado + "Pelo menos você não precisa se preocupar com nada da viagem além de agradar a pessoa que está te dando carona.<br>"
+                txtResultado = txtResultado + "Você vai precisar de " +  Math.ceil(disC/2) + " viagens, já que cada carona sua só pode avançar 2 ilhas.<br>"
+                txtResultado = txtResultado + "Esse número de viagens na sua facção demora " +  Math.ceil(disC/2) + " turnos, já que não existe espera entre viagens.<br>"
+                txtResultado = txtResultado + "Divirta-se.<br>"
+                document.getElementById('Resultados').innerHTML = txtResultado
+            }
             break
-        case 1:
-            //Caçador de Recompensas
+        case 1:  //Caçador de Recompensas
+            if(localizacao.RotaEstou == 0 && localizacao.RotaVou > 0){
+                qualBarco(13)
+                document.getElementById('Barco').value = "13"
+                txtResultado = "Por ser um civil que está passando pelo Calm Belt, o barco que você está pegando carona é obrigatoriamente um Cruzador.<br>"
+                txtResultado = txtResultado + "Pelo menos você não precisa se preocupar com nada da viagem além de agradar a pessoa que está te dando carona.<br>"
+                txtResultado = txtResultado + "Você vai precisar de " + disC + " viagens, já que cada carona sua só pode avançar 1 ilha por viagem.<br>"
+                if(disC > 1){
+                    txtResultado = txtResultado + "Esse número de viagens na sua facção demora " + 3*(disC-1) + " aventuras de 20 turnos cada.<br>"
+                    txtResultado = txtResultado + "Sendo o esquema de Viagem/3 aventuras/Viagem, e por favor, lembre-se de fazer a viagem após as 3 aventuras, ou vai acabar fazendo ainda mais do que o necessário.<br>" 
+                }
+                txtResultado = txtResultado + "Divirta-se.<br>"
+                document.getElementById('Resultados').innerHTML = txtResultado
+            }
+            else{
+                qualBarco(2)
+                document.getElementById('Barco').value = "2"
+                txtResultado = "Por ser um civil que está em uma viagem comum, o barco que você está pegando carona é obrigatoriamente uma Escuna.<br>"
+                txtResultado = txtResultado + "Pelo menos você não precisa se preocupar com nada da viagem além de agradar a pessoa que está te dando carona.<br>"
+                txtResultado = txtResultado + "Você vai precisar de " + disC + " viagens, já que cada carona sua só pode avançar 1 ilha.<br>"                
+                if(disC > 1){
+                    txtResultado = txtResultado + "Esse número de viagens na sua facção demora " + 3*(disC-1) + " aventuras de 20 turnos cada.<br>"
+                    txtResultado = txtResultado + "Sendo o esquema de Viagem/3 aventuras/Viagem, e por favor, lembre-se de fazer a viagem após as 3 aventuras, ou vai acabar fazendo ainda mais do que o necessário.<br>" 
+                }
+                txtResultado = txtResultado + "Divirta-se.<br>"
+                document.getElementById('Resultados').innerHTML = txtResultado
+            }
             break
-        case 2:
-            //Civil
+        case 2:  //Civil
+            if(localizacao.RotaEstou == 0 && localizacao.RotaVou > 0){
+                qualBarco(13)
+                document.getElementById('Barco').value = "13"
+                txtResultado = "Por ser um civil que está passando pelo Calm Belt, o barco que você está pegando carona é obrigatoriamente um Cruzador.<br>"
+                txtResultado = txtResultado + "Pelo menos você não precisa se preocupar com nada da viagem além de agradar a pessoa que está te dando carona.<br>"
+                txtResultado = txtResultado + "Você vai precisar de " + disC + " viagens, já que cada carona sua só pode avançar 1 ilha por viagem.<br>"
+                if(disC > 1){
+                    txtResultado = txtResultado + "Esse número de viagens na sua facção demora " + 2*(disC-1) + " aventuras de 20 turnos cada.<br>"
+                    txtResultado = txtResultado + "Sendo o esquema de Viagem/2 aventuras/Viagem, e por favor, lembre-se de fazer a viagem após as 2 aventuras, ou vai acabar fazendo ainda mais do que o necessário.<br>" 
+                }
+                txtResultado = txtResultado + "Divirta-se.<br>"
+                document.getElementById('Resultados').innerHTML = txtResultado
+            }
+            else{
+                qualBarco(2)
+                document.getElementById('Barco').value = "2"
+                txtResultado = "Por ser um civil que está em uma viagem comum, o barco que você está pegando carona é obrigatoriamente uma Escuna.<br>"
+                txtResultado = txtResultado + "Pelo menos você não precisa se preocupar com nada da viagem além de agradar a pessoa que está te dando carona.<br>"
+                txtResultado = txtResultado + "Você vai precisar de " + disC + " viagens, já que cada carona sua só pode avançar 1 ilha.<br>"
+                if(disC > 1){
+                    txtResultado = txtResultado + "Esse número de viagens na sua facção demora " + 2*(disC-1) + " aventuras de 20 turnos cada.<br>"
+                    txtResultado = txtResultado + "Sendo o esquema de Viagem/2 aventuras/Viagem, e por favor, lembre-se de fazer a viagem após as 2 aventuras, ou vai acabar fazendo ainda mais do que o necessário.<br>" 
+                }
+                txtResultado = txtResultado + "Divirta-se.<br>"
+                document.getElementById('Resultados').innerHTML = txtResultado
+            }
             break
-        case 3:
-            //Marinha
+        case 3:  //Marinha
+            if(localizacao.RotaEstou == 0 && localizacao.RotaVou > 0){
+                qualBarco(13)
+                document.getElementById('Barco').value = "13"
+                txtResultado = "Por ser um marinheiro que está passando pelo Calm Belt, o barco que você está pegando carona é obrigatoriamente um Cruzador.<br>"
+                txtResultado = txtResultado + "Pelo menos você não precisa se preocupar com nada da viagem além de agradar a pessoa que está te dando carona.<br>"
+                txtResultado = txtResultado + "Você vai precisar de " + disC + " viagens, já que cada carona sua só pode avançar 1 ilha.<br>"
+                txtResultado = txtResultado + "Esse número de viagens na sua facção demora " + disC + " turnos, já que não existe espera entre viagens.<br>"
+                txtResultado = txtResultado + "Divirta-se.<br>"
+                document.getElementById('Resultados').innerHTML = txtResultado
+            }
+            else{
+                qualBarco(14)
+                document.getElementById('Barco').value = "14"
+                txtResultado = "Por ser um marinheiro que está em uma viagem comum, o barco que você está pegando carona é obrigatoriamente um Inquisidor.<br>"
+                txtResultado = txtResultado + "Pelo menos você não precisa se preocupar com nada da viagem além de agradar a pessoa que está te dando carona.<br>"
+                txtResultado = txtResultado + "Você vai precisar de " + disC + " viagens, já que cada carona sua só pode avançar 1 ilha.<br>"
+                txtResultado = txtResultado + "Esse número de viagens na sua facção demora " + disC + " turnos, já que não existe espera entre viagens.<br>"
+                txtResultado = txtResultado + "Divirta-se.<br>"
+                document.getElementById('Resultados').innerHTML = txtResultado
+            }
             break
-        case 4:
-            //Pirata
+        case 4:  //Pirata
+            if(localizacao.RotaEstou == 0 && localizacao.RotaVou > 0){
+                txtResultado = "Se você quer pegar uma carona desse tipo sendo pirata... recomendo que se finja de civil.<br>"
+                document.getElementById('Resultados').innerHTML = txtResultado 
+                return
+            }
+            qualBarco(2)
+            document.getElementById('Barco').value = "2"
+            txtResultado = "Parabéns, você está no pior grupo para se pegar uma carona<br>"
+            txtResultado = txtResultado + "Por isso o barco que você está pegando carona é obrigatoriamente uma Escuna.<br>"
+            txtResultado = txtResultado + "Pelo menos você não precisa se preocupar com nada da viagem além de agradar a pessoa que está te dando carona.<br>"
+            txtResultado = txtResultado + "Você vai precisar de " + disC + " viagens, já que cada carona sua só pode avançar 1 ilha.<br>"
+            txtResultado = txtResultado + "Esse número de viagens na sua facção demora " + 4*(disC - 1) + " aventuras de 20 turnos cada.<br>"
+            if (disC > 1){
+                txtResultado = txtResultado + "Sendo o esquema de Viagem/4 aventuras/Viagem, e por favor, lembre-se de fazer a viagem após as 4 aventuras, ou vai acabar fazendo ainda mais do que o necessário.<br>" 
+                txtResultado = txtResultado + "Divirta-se.<br>"
+            }
+            document.getElementById('Resultados').innerHTML = txtResultado 
             break
-        case 5:
-            //Revolucionário
+        case 5:  //Revolucionário
+            if(localizacao.RotaEstou == 0 && localizacao.RotaVou > 0){
+                txtResultado = "Se você quer pegar uma carona desse tipo sendo revolucionário... recomendo que se finja de civil.<br>"
+                document.getElementById('Resultados').innerHTML = txtResultado 
+                return
+            }
+            qualBarco(16)
+            document.getElementById('Barco').value = "16"
+            txtResultado = "Por ser um revolucionário, o barco que você está pegando carona é obrigatoriamente da Libertação.<br>"
+            txtResultado = txtResultado + "Pelo menos você não precisa se preocupar com nada da viagem além de agradar a pessoa que está te dando carona.<br>"
+            txtResultado = txtResultado + "Você vai precisar de " + disC + " viagens, já que cada carona sua só pode avançar 1 ilha.<br>"
+            txtResultado = txtResultado + "Esse número de viagens na sua facção demora " + disC + " turnos, já que não existe espera entre viagens.<br>"
+            txtResultado = txtResultado + "Divirta-se.<br>"
+            document.getElementById('Resultados').innerHTML = txtResultado 
             break
-        case 6:
-            //Submundo
+        case 6:  //Submundo
+            if(localizacao.RotaEstou == 0 && localizacao.RotaVou > 0){
+                qualBarco(13)
+                document.getElementById('Barco').value = "13"
+                txtResultado = "Por ser um civil que está passando pelo Calm Belt, o barco que você está pegando carona é obrigatoriamente um Cruzador.<br>"
+                txtResultado = txtResultado + "Pelo menos você não precisa se preocupar com nada da viagem além de agradar a pessoa que está te dando carona.<br>"
+                txtResultado = txtResultado + "Você vai precisar de " + disC + " viagens, já que cada carona sua só pode avançar 1 ilha por viagem.<br>"
+                txtResultado = txtResultado + "Esse número de viagens na sua facção demora " + disC + " turnos, já que não existe espera entre viagens.<br>"
+                txtResultado = txtResultado + "Divirta-se.<br>"
+                document.getElementById('Resultados').innerHTML = txtResultado
+            }
+            else{
+                qualBarco(2)
+                document.getElementById('Barco').value = "2"
+                txtResultado = "Por ser um civil que está em uma viagem comum, o barco que você está pegando carona é obrigatoriamente uma Escuna.<br>"
+                txtResultado = txtResultado + "Pelo menos você não precisa se preocupar com nada da viagem além de agradar a pessoa que está te dando carona.<br>"
+                txtResultado = txtResultado + "Você vai precisar de " + disC + " viagens, já que cada carona sua só pode avançar 1 ilha.<br>"
+                txtResultado = txtResultado + "Esse número de viagens na sua facção demora " + disC + " turnos, já que não existe espera entre viagens.<br>"
+                txtResultado = txtResultado + "Divirta-se.<br>"
+                document.getElementById('Resultados').innerHTML = txtResultado
+            }
             break
     }
 }
@@ -389,114 +538,217 @@ function calcDesg(){
 }
 
 function attDis(){
-    //Situações envolvendo o Farol
+    console.log("Mar Estou: " + localizacao.MarEstou)
+    console.log("Rota Estou: " + localizacao.RotaEstou)
+    console.log("Ilha Estou: " + localizacao.IlhaEstou)
+    console.log("Mar Vou: " + localizacao.MarVou)
+    console.log("Rota Vou: " + localizacao.RotaVou)
+    console.log("Ilha Vou: " + localizacao.IlhaVou)
+    console.log("\n")
+    switch(localizacao.MarEstou){
+        case 0: // Estando nos Blues
+            switch(localizacao.MarVou){
+                case 0: // Indo para os Blues
+                    // No mesmo Blue
+                    if(localizacao.RotaEstou == localizacao.RotaVou){
+                        dis = BlueDistance[localizacao.IlhaEstou][localizacao.IlhaVou]
+                        disC = BlueDistanceC[localizacao.IlhaEstou][localizacao.IlhaVou]
+                        auxDesgaste = [0,dis,0,0]
+                    }
+                    // Em Blues diferentes
+                    else{
+                        dis = BlueDistance[localizacao.IlhaEstou][6] + 10 + BlueDistance[6][localizacao.IlhaVou]
+                        disC = 1 + BlueDistanceC[localizacao.IlhaEstou][6] + BlueDistanceC[6][localizacao.IlhaVou]
+                        auxDesgaste = [0,dis,0,0]
+                    }
+                    break
+                case 1: // Indo para a Paradise
+                    // Indo para o farol
+                    if(localizacao.RotaVou == 0){
+                        if ((faccao != 0 && faccao != 3)){ // Sem ser marinheiro/agente
+                            dis = BlueDistance[localizacao.IlhaEstou][6]
+                            disC = 6 - localizacao.IlhaEstou
+                            auxDesgaste = [0,dis,0,0]
+                        }
+                        else{
+                            dis = BlueDistance[localizacao.IlhaEstou][6] + 6 + 12 + 12
+                            disC = BlueDistanceC[localizacao.IlhaEstou][6] + 2 // Ir para o Farol não conta como carona 
+                            auxDesgaste = [6,BlueDistance[localizacao.IlhaEstou][6],24,0]
+                        }
+                    }
+                    // Indo para Sabaody
+                    else if(localizacao.RotaVou == 8){
+
+                    }
+                    // Qualquer outra ilha
+                    else{
+
+                    }
+                    break
+                case 2: // Indo para o Novo Mundo
+                    break
+                case 3: // Indo para o Calm Belt
+                    break
+            }
+            break
+        case 1: // Estando na Paradise
+            switch(localizacao.MarVou){
+                case 0: // Indo para os Blues
+                    break
+                case 1: // Indo para a Paradise
+                    break
+                case 2: // Indo para o Novo Mundo
+                    break
+                case 3: // Indo para o Calm Belt
+                    break
+            }
+            break
+        case 2: // Estando no Novo Mundo
+            switch(localizacao.MarVou){
+                case 0: // Indo para os Blues
+                    break
+                case 1: // Indo para a Paradise
+                    break
+                case 2: // Indo para o Novo Mundo
+                    break
+                case 3: // Indo para o Calm Belt
+                    break
+            }
+            break
+        case 3: // Estando no Calm Belt
+                switch(localizacao.MarVou){
+                    case 0: // Indo para os Blues
+                        break
+                    case 1: // Indo para a Paradise
+                        break
+                    case 2: // Indo para o Novo Mundo
+                        break
+                    case 3: // Indo para o Calm Belt
+                        break
+                }
+            break
+    }
+
+
+    // Chegando no Farol
     if(localizacao.MarVou == 1 && localizacao.RotaVou == 0){
         //Partindo de Sabaody/Tritão
         if(localizacao.MarEstou == 1 && localizacao.RotaEstou == 8){
             dis = 12*8
+            disC = 12
             auxDesgaste = [0,0,dis,0]
         }
         // Partindo dos Blues
         else if(localizacao.MarEstou == 0){
             if ((faccao != 0 && faccao != 3)){
                 dis = BlueDistance[localizacao.IlhaEstou][6]
+                disC = 7 - localizacao.IlhaEstou
                 auxDesgaste = [0,dis,0,0]
             }
             else{
-                dis = dis = BlueDistance[localizacao.IlhaEstou][6] + 6 + 12 + 12
-                auxDesgaste = [6,dis = BlueDistance[localizacao.IlhaEstou][6],24,0]
+                dis = BlueDistance[localizacao.IlhaEstou][6] + 6 + 12 + 12
+                disC = 2
+                auxDesgaste = [6,BlueDistance[localizacao.IlhaEstou][6],24,0]
             }
         }
         //Partindo da Paradise
         else if(localizacao.MarEstou == 1){
             dis = 12*Math.abs(localizacao.IlhaEstou - 0) + 12
+            disC = localizacao.IlhaEstou + 1
             auxDesgaste = [0,0,dis,0]
         }
         //Partindo do novo mundo
         else if(localizacao.MarEstou == 2){
             dis = 12*8 + 18 + 18*localizacao.IlhaEstou
+            disC = 9 + localizacao.IlhaEstou
             auxDesgaste = [0,0,12*8,18 + 18*localizacao.IlhaEstou]
         }
     }
+    //Partindo do próprio Farol
     else if(localizacao.MarEstou == 1 && localizacao.RotaEstou == 0){
-        //Partindo do próprio Farol
+        // Para o próprio Farol
         if(localizacao.MarVou == 1 && localizacao.RotaVou == 0){
             dis = 0
+            disC = 0
         }
-        //Partindo para Sabaody/Tritão
+        // Partindo para Sabaody/Tritão
         else if(localizacao.MarVou == 1 && localizacao.RotaVou == 8){
+            console.log("Entrei no primeiro if")
             dis = 12*8
+            disC = 8
             auxDesgaste = [0,0,dis,0]
         }
-        //Partindo para os Blues
+        // Partindo para os Blues
         else if(localizacao.MarVou == 0){
-            dis = 12 + 18 + BlueDistance[localizacao.IlhaEstou][6]
-            auxDesgaste = [6,BlueDistance[localizacao.IlhaEstou][6],12+12,0]
+            dis = 12 + 18 + BlueDistance[localizacao.IlhaVou][6]
+            disC = 1 + (6 - localizacao.IlhaVou)
+            auxDesgaste = [6,BlueDistance[localizacao.IlhaVou][6],12+12,0]
         }
-        //Partindo para a Paradise
+        // Partindo para a Paradise
         else if(localizacao.MarVou == 1){
             dis = 12 + 12*localizacao.IlhaVou
+            disC = localizacao.IlhaVou
             auxDesgaste = [0,0,dis,0]
         }
-        //Partindo para o Novo Mundo
+        // Partindo para o Novo Mundo
         else if(localizacao.MarVou == 2){
             dis = 12*8 + 18 + 18*localizacao.IlhaVou
+            disC = 9 + localizacao.IlhaVou
             auxDesgaste = [0,0,12*8,18+18*localizacao.IlhaVou]
         }
     }
-    //Situações envolvendo Sabaody
+    // Chegando em Sabaody
     else if(localizacao.MarVou == 1 && localizacao.RotaVou == 8){
-        //Partindo do Farol
-        if(localizacao.MarEstou == 1 && localizacao.RotaEstou == 0){
-            dis = 12*8
-            auxDesgaste = [0,0,dis,0]
-        }
         // Partindo dos Blues
-        else if(localizacao.MarEstou == 0){
+        if(localizacao.MarEstou == 0){
             if((faccao != 0 && faccao != 3)){
                 dis = BlueDistance[localizacao.IlhaEstou][6]+ 12*8
+                disC = 15 - localizacao.IlhaEstou
                 auxDesgaste = [0,BlueDistance[localizacao.IlhaEstou][6],12*8,0]
 
             }
             else{
                 dis = BlueDistance[localizacao.IlhaEstou][6] + 18 + 12*7
+                disC = 14 - localizacao.IlhaEstou
                 auxDesgaste = [6,BlueDistance[localizacao.IlhaEstou][6],12*8,0]
             }
         }
         //Partindo da Paradise
-        else if(localizacao.MarEstou == 1){
-            dis = 12*(7 - localizacao.IlhaEstou)
+        else if(localizacao.MarEstou == 1){            
+            disC = 7 - localizacao.IlhaEstou
+            dis = 12*disC
             auxDesgaste = [0,0,dis,0]
         }
         //Partindo do novo mundo
         else if(localizacao.MarEstou == 2){
             dis = 18 + 18*Math.abs(localizacao.IlhaEstou)
+            disC = localizacao.IlhaEstou + 1
             auxDesgaste = [0,0,0,dis]
         }
     }
+    // Partindo de Sabaody
     else if(localizacao.MarEstou == 1 && localizacao.RotaEstou == 8){
-        //Partindo para o Farol
-        if(localizacao.MarVou == 1 && localizacao.RotaVou == 0){
-            dis = 12*8
-            auxDesgaste = [0,0,dis,0]
-        }
         //Partindo para Sabaody/Tritão
-        else if(localizacao.MarVou == 1 && localizacao.RotaVou == 8){
+        if(localizacao.MarVou == 1 && localizacao.RotaVou == 8){
             dis = 0
+            disC = 0
         }
         //Partindo para os Blues
         else if(localizacao.MarVou == 0){
             dis = 12*7 + 18 + BlueDistance[6][localizacao.IlhaVou]
-            auxDesgaste = [0,0,12*7,0]
+            disC = 14 - localizacao.IlhaVou
+            auxDesgaste = [6,BlueDistance[6][localizacao.IlhaVou],12*7,0]
         }
         //Partindo para a Paradise
         else if(localizacao.MarVou == 1){
-            dis = 12*Math.abs(localizacao.IlhaVou-7)
+            disC = 7 - localizacao.IlhaVou
+            dis = 12*disC
             auxDesgaste = [0,0,dis,0]
         }
         //Partindo para o Novo Mundo
         else if(localizacao.MarVou == 2){
             dis = 18 + 18*localizacao.IlhaVou
+            disC = localizacao.IlhaVou
             auxDesgaste = [0,0,0,dis]
         }
     }
@@ -507,24 +759,25 @@ function attDis(){
             // No mesmo Blue
             if(localizacao.RotaEstou == localizacao.RotaVou){
                 dis = BlueDistance[localizacao.IlhaEstou][localizacao.IlhaVou]
+                disC = Math.abs(localizacao.IlhaEstou - localizacao.IlhaVou)
                 auxDesgaste = [0,dis,0,0]
             }
             // Em Blues diferentes
             else{
                 dis = BlueDistance[localizacao.IlhaEstou][6] + 10 + BlueDistance[6][localizacao.IlhaVou]
+                disC = 13 - localizacao.IlhaEstou - localizacao.IlhaVou
                 auxDesgaste = [0,dis,0,0]
             }
         }
         //Segundo caso, viagem da Paradise para a Paradise
         else if(localizacao.MarEstou == 1){ 
             dis = 12*Math.abs(localizacao.RotaEstou - localizacao.RotaVou) + 12*Math.abs(localizacao.IlhaEstou - localizacao.IlhaVou)
-            if (localizacao.RotaEstou != localizacao.RotaVou){
-                if (localizacao.IlhaEstou >= 4 || localizacao.IlhaVou >=4){
-                    if(localizacao.RotaEstou > 5 || localizacao.RotaVou > 5){
+            disC = Math.abs(localizacao.RotaEstou - localizacao.RotaVou) + Math.abs(localizacao.IlhaEstou - localizacao.IlhaVou)
+            if (localizacao.RotaEstou != localizacao.RotaVou){ // Caso tenha troca de rota
+                if (localizacao.IlhaEstou >= 4 || localizacao.IlhaVou >=4){ // Checando se as ilhas são da 5ª para frente
+                    if((localizacao.RotaEstou > 5 || localizacao.RotaVou > 5) || (localizacao.RotaEstou <= 1 && localizacao.RotaVou >= 2) || (localizacao.RotaVou <= 1 && localizacao.RotaEstou >= 2)){
                         dis = dis - 12
-                    }
-                    if((localizacao.RotaEstou <= 1 && localizacao.RotaVou >= 2) || (localizacao.RotaVou <= 1 && localizacao.RotaEstou >= 2)){
-                        dis = dis - 12
+                        disC = disC - 1
                     }
                 }
             }
@@ -533,6 +786,7 @@ function attDis(){
         //Terceiro caso, viagem do Novo Mundo para o Novo Mundo
         else if(localizacao.MarEstou == 2){
             dis = 12*Math.abs(localizacao.RotaEstou - localizacao.RotaVou) + 18*Math.abs(localizacao.IlhaEstou-localizacao.IlhaVou)
+            disC = Math.abs(localizacao.RotaEstou - localizacao.RotaVou) + Math.abs(localizacao.IlhaEstou-localizacao.IlhaVou)
             auxDesgaste = [0,0,0,dis]
         }
     }
@@ -542,10 +796,12 @@ function attDis(){
         if (localizacao.MarEstou == 0 && localizacao.MarVou == 1){
             if((faccao != 0 && faccao != 3)){
                 dis = BlueDistance[localizacao.IlhaEstou][6] + 12 + 12*localizacao.IlhaVou
+                disC = 7 - localizacao.IlhaEstou + localizacao.IlhaVou
                 auxDesgaste = [0,BlueDistance[localizacao.IlhaEstou][6],12+12*localizacao.IlhaVou,0]
             }
             else{
                 dis = BlueDistance[localizacao.IlhaEstou][6] + 18 + 12*localizacao.IlhaVou
+                disC = 6 + localizacao.IlhaVou - localizacao.IlhaEstou
                 auxDesgaste = [6,BlueDistance[localizacao.IlhaEstou][6],12+12*localizacao.IlhaVou,0]
             }
         }
@@ -553,45 +809,47 @@ function attDis(){
         else if (localizacao.MarEstou == 0 && localizacao.MarVou == 2){
             if((faccao != 0 && faccao != 3)){
                 dis = BlueDistance[localizacao.IlhaEstou][6] + 12*8 + 18 + 18*localizacao.IlhaVou
+                disC = 15 - localizacao.IlhaEstou + localizacao.IlhaVou
                 auxDesgaste = [0,BlueDistance[localizacao.IlhaEstou][6],12*8,18+18*localizacao.IlhaVou]
             }
             else{
                 dis = BlueDistance[localizacao.IlhaEstou][6] + 18 + 12*7 + 18 + 18*localizacao.IlhaVou
+                disC = 14 - localizacao.IlhaEstou + localizacao.IlhaVou
                 auxDesgaste = [6,BlueDistance[localizacao.IlhaEstou][6],12*8,18+18*localizacao.IlhaVou]
             }
         }
         //Terceiro caso, viagem da Paradise para os Blues
         else if(localizacao.MarEstou == 1 && localizacao.MarVou == 0){
             dis = BlueDistance[6][localizacao.IlhaVou] + 18 + 12*localizacao.IlhaEstou
+            disC = 7 - localizacao.IlhaVou + localizacao.IlhaEstou
             auxDesgaste = [6,BlueDistance[6][localizacao.IlhaVou],12*(localizacao.IlhaEstou + 1),0]
         }
         //Quarto caso, viagem da Paradise para o Novo Mundo
         else if(localizacao.MarEstou == 1 && localizacao.MarVou == 2){
             dis = 12*Math.abs(localizacao.IlhaEstou - 7) + 18 + 18*localizacao.IlhaVou
+            disC = 8 + localizacao.IlhaVou - localizacao.IlhaEstou
             auxDesgaste = [0,0,12*Math.abs(localizacao.IlhaEstou - 7),18*(1+localizacao.IlhaVou)]
         }
         //Quinto caso, viagem do Novo Mundo para os Blues
         else if(localizacao.MarEstou == 2 && localizacao.MarVou == 0){
             dis = 18*localizacao.IlhaEstou + 18 + 12*7 + 18 + BlueDistance[6][localizacao.IlhaVou]
+            disC = 15 - localizacao.IlhaVou + localizacao.IlhaEstou
             auxDesgaste = [6,BlueDistance[6][localizacao.IlhaVou],12*8,18*(1+localizacao.IlhaEstou)]
         }
         //Sexto caso, viagem do Novo Mundo para a Paradise
         else if(localizacao.MarEstou == 2 && localizacao.MarVou == 1){
             dis = 18*localizacao.IlhaEstou + 18 + 12*Math.abs(7 - localizacao.IlhaVou)
+            disC = 8 + localizacao.IlhaEstou - localizacao.IlhaVou
             auxDesgaste = [0,0,12*Math.abs(7 - localizacao.IlhaVou),18*(1+localizacao.IlhaEstou)]
         } 
     }
+
     // Adversidade Florian Triangle
     if (((localizacao.MarVou == 1 && localizacao.RotaVou == 8) || localizacao.MarVou == 2) && localizacao.RotaEstou > 5 && localizacao.MarEstou == 1){
         dis = dis + 2
         auxDesgaste[2] = auxDesgaste[2] + 2
     }
-    if (carona == false){
-        attTempoNormal()
-    }
-    else{
-        attTempoCarona()
-    }
+    attTempo()
 }
 
 function qualBarco(valor){
@@ -665,49 +923,64 @@ function attBarcoPersonalizado(){
 
 function qualMar(identificador, valor){ 
     valor = parseInt(valor)
-    localizacao.setLoc(identificador,valor,0,0)
     if(identificador == 0){
-        auxMar = ['BluesEstou','ParadiseEstou','NovoMundoEstou','IlhasEstou']
+        auxMar = ['BluesEstou','ParadiseEstou','NovoMundoEstou','CalmBeltEstou','IlhasEstou']
         if (valor==0){
-            auxRes = ["block", "none", "none", "block"]
-            auxIlha = ['BluesEstou', 'IlhasEstouOpcoes']
+            auxRes = ["block", "none", "none","none","block"]
+            auxIlha = ['BluesEstouOpcoes', 'IlhasEstouOpcoes','IlhasEstou']
             auxResIlha = ["0", "0"]
         }
         else if (valor==1){
-            auxRes = ["none", "block", "none", "block"]
-            auxIlha = ['ParadiseEstouOpcoes','IlhasEstouOpcoes']
+            auxRes = ["none", "block", "none","none", "block"]
+            auxIlha = ['ParadiseEstouOpcoes','IlhasEstouOpcoes','IlhasEstou']
             auxResIlha =["1", "0"]
         }
         else if (valor==2){
-            auxRes = ["none", "none", "block", "block"]
-            auxIlha = ['NovoMundoEstou', 'IlhasEstouOpcoes']
+            auxRes = ["none", "none", "block","none","block"]
+            auxIlha = ['NovoMundoEstouOpcoes', 'IlhasEstouOpcoes','IlhasEstou']
+            auxResIlha = ["3", "0"]
+        }
+        else{
+            auxRes = ["none", "none", "none","block","none"]
+            auxIlha = ['CalmBeltEstouOpcoes', 'IlhasEstouOpcoes','IlhasEstou']
             auxResIlha = ["0", "0"]
         }
     }
     else{
-        auxMar = ['BluesVou','ParadiseVou','NovoMundoVou','IlhasVou']
+        auxMar = ['BluesVou','ParadiseVou','NovoMundoVou','CalmBeltVou','IlhasVou']
         if (valor==0){
-            auxRes = ["block", "none", "none", "block"]
-            auxIlha = ['BluesVou', 'IlhasVouOpcoes']
+            auxRes = ["block", "none", "none", "none", "block"]
+            auxIlha = ['BluesVouOpcoes', 'IlhasVouOpcoes','IlhasVou']
             auxResIlha = ["0", "0"]
         }
         else if (valor==1){
-            auxRes = ["none", "block", "none", "block"]
-            auxIlha = ['ParadiseVouOpcoes','IlhasVouOpcoes']
+            auxRes = ["none", "block", "none", "none", "block"]
+            auxIlha = ['ParadiseVouOpcoes','IlhasVouOpcoes','IlhasVou']
             auxResIlha =["1", "0"]
         }
         else if (valor==2){
-            auxRes = ["none", "none", "block", "block"]
-            auxIlha = ['NovoMundoVou', 'IlhasVouOpcoes']
+            auxRes = ["none", "none", "block", "none", "block"]
+            auxIlha = ['NovoMundoVouOpcoes', 'IlhasVouOpcoes','IlhasVou']
+            auxResIlha = ["3", "0"]
+        }
+        else{
+            auxRes = ["none", "none", "none", "block", "none"]
+            auxIlha = ['CalmBeltVouOpcoes', 'IlhasVouOpcoes','IlhasVou']
             auxResIlha = ["0", "0"]
         }
     }
-    for(let i=0; i<4; i++){
-        document.getElementById(auxMar[i]).style.display = auxRes[i]
+    localizacao.setLoc(identificador,valor,parseInt(auxResIlha[0]),0) 
+    for(let i=0; i<2; i++){ 
+        document.getElementById([auxIlha[i]]).value = auxResIlha[i] // Atualização dos valores para onde quero que apareça primeiro
+        document.getElementById(auxMar[i]).style.display = auxRes[i] // Aparecer o mar correto
     }
-    document.getElementById([auxIlha[0]]).value = auxResIlha[0]
-    document.getElementById([auxIlha[1]]).value = auxResIlha[1]
-    attNomesIlhas(identificador,0)
+    for(let i=2; i<5; i++){
+        document.getElementById(auxMar[i]).style.display = auxRes[i] // Aparecer o mar correto
+    }
+    if(valor != 3){
+        attNomesIlhas(identificador,parseInt(auxResIlha[0]))
+    }
+
     attDis()
 }
 
@@ -774,38 +1047,38 @@ function attNomesIlhas(identificador,valor){
             break
         case 1: // Grand Line
             switch(valor){
-                case 0: // 1ª rota
+                case 1: // 1ª rota
                     vetor = ["Hasagt Altai","República de Hoxter","Wagon Island","Dust Howl","Ilha Wojna","Ilha 6","Ilha 7"]
                     break
-                case 1: // 2ª rota
+                case 2: // 2ª rota
                     vetor = ["Caffeine","Dragora","Reino de Lódta","Ilha Krishi","Arquipélago de Milville","Ilha 6","Ilha 7"]
                     break
-                case 2: // 3ª rota
+                case 3: // 3ª rota
                     vetor = ["Reino Iceblood","Ilha Kinamasi","Tenebra","Fhuilbaid","Arquipélago de Milville","Ilha 6","Ilha 7"]
                     break
-                case 3: // 4ª rota
+                case 4: // 4ª rota
                     vetor = ["Masquerade","Holzlig","Dodstein","Reino de Qa'ahmar","Ilha 5","Ilha 6","Ilha 7"]
                     break
-                case 4: // 5ª rota
+                case 5: // 5ª rota
                     vetor = ["Clamoris","Uttara Mimamsa","Ilha Satsujin","Okeanos","Coronet","Ilha 6","Ilha 7"]
                     break
-                case 5: // 6ª rota
+                case 6: // 6ª rota
                     vetor = ["Kephar Nicos","Pyatidrov","Vera Cruz","Ilha Verde","Império Yuezhao","Ilha 6","Ilha 7"]
                     break
-                case 6: // 7ª rota
+                case 7: // 7ª rota
                     vetor = ["Ilha Cactus","Little Garden","Ilha Drum","Alabasta","Império Yuezhao","Ilha 6","Ilha 7"]
                     break
             }
             break
         case 2: // Novo Mundo
             switch(valor){
-                case 0: // Primeira Rota
+                case 3: // Primeira Rota
                     vetor = ["Ilha 1","Ilha 2","Ilha 3","Ilha 4","Ilha 5","Ilha 6","Ilha 7"]
                     break
-                case 1: // Segunda Rota
+                case 4: // Segunda Rota
                     vetor = ["Ilha 1","Ilha 2","Ilha 3","Ilha 4","Ilha 5","Ilha 6","Ilha 7"]
                     break
-                case 2: // Terceira Rota
+                case 5: // Terceira Rota
                     vetor = ["Ilha 1","Ilha 2","Ilha 3","Ilha 4","Ilha 5","Ilha 6","Ilha 7"]
                     break            
             }
@@ -838,12 +1111,8 @@ function attAdm(){
         adm = 0
     }
     barco.setComida()
-    if (carona == false){
-        attTempoNormal()
-    }
-    else{
-        attTempoCarona()
-    }}
+    attTempo()
+}
 
 function attHer(){
     if (document.getElementById('Herbalismo').checked == true){
@@ -853,12 +1122,8 @@ function attHer(){
         her = 0
     }
     barco.setComida()
-    if (carona == false){
-        attTempoNormal()
-    }
-    else{
-        attTempoCarona()
-    }}
+    attTempo()
+}
 
 function attCoz(){
     if (document.getElementById('CozinheiroSim').checked == true){
@@ -879,12 +1144,8 @@ function attCoz(){
 function attValorCoz(){
     coz = Math.ceil(document.getElementById('nivelCozinheiro').value/2)
     barco.setComida()
-    if (carona == false){
-        attTempoNormal()
-    }
-    else{
-        attTempoCarona()
-    }}
+    attTempo()
+}
 
 function attNav(){
     if (document.getElementById('NavegacaoSim').checked == true){
@@ -906,12 +1167,8 @@ function attNav(){
 function attValorNav(){
     nav = Math.ceil(document.getElementById('nivelNavegacao').value/2)
     barco.setVel()
-    if (carona == false){
-        attTempoNormal()
-    }
-    else{
-        attTempoCarona()
-    }}
+    attTempo()
+}
 
 function attEstPeq(){
     if (document.getElementById('EstPeq').checked == true){
@@ -921,23 +1178,15 @@ function attEstPeq(){
     else{
         document.getElementById('auxEstPeq').style.display = "none"
         estPeq = 0
-        if (carona == false){
-            attTempoNormal()
-        }
-        else{
-            attTempoCarona()
-        }    }
+        attTempoNormal()  
+    }
 }
 
 function attValorEstPeq(){
     estPeq = parseInt(document.getElementById('ValorEstPeq').value)
     barco.setComida()
-    if (carona == false){
-        attTempoNormal()
-    }
-    else{
-        attTempoCarona()
-    }}
+    attTempoNormal()
+}
 
 function attGul(){
     if (document.getElementById('Guloso').checked == true){

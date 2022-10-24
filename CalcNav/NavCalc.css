@@ -7,10 +7,8 @@ html, body{
 #NavCalc{
     display: grid;
     grid-template-areas: 
-        'principal extras'
-        'principal extras'
-        'resultados resultados'
-        'resultados resultados';
+        'principal resultados'
+        'extras extras';
     width: 100%;
     height: 100%;
 }
@@ -19,4 +17,5 @@ html, body{
     grid-area: resultados;
     display: grid;
     text-align: justify;
+    padding: 20px;
 }

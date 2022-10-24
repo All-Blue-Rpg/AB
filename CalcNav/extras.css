@@ -2,11 +2,11 @@
     grid-area: extras;
     display: grid;  
     grid-template-areas:
-        'titulo titulo'
-        'navegacao cozinheiro'
-        'proficiencias qualidades-defeitos'
-        'fome fome';
+        'titulo titulo titulo'
+        'navegacao cozinheiro proficiencias'
+        'qualidades defeitos fome';
     font-size: 14px;
+    padding: 20px;
 }
 
 #Extras h3{
@@ -25,8 +25,12 @@
     grid-area: proficiencias;
 }
 
-#Extras .qualEdefe{
-    grid-area: qualidades-defeitos;
+#Extras .qualidades{
+    grid-area: qualidades;
+}
+
+#Extras .defeitos{
+    grid-area: defeitos;
 }
 
 #Extras .Faminto{

@@ -45,9 +45,18 @@
                     
                     <div id="NovoMundoEstou" style="display:none">
                         <select name="NovoMundoEstouOpcoes" id="NovoMundoEstouOpcoes" onchange="qualRota(0,value)">
-                            <option value="0">1ª rota</option>
-                            <option value="1">2ª rota</option>
-                            <option value="2">3ª rota</option>
+                            <option value="0">Ilha dos Homens-Peixe</option>
+                            <option value="1">Mary Geoise</option>
+                            <option value="2">Red Port</option>
+                            <option value="3">1ª rota</option>
+                            <option value="4">2ª rota</option>
+                            <option value="5">3ª rota</option>
+                        </select>
+                    </div>
+                
+                    <div id="CalmBeltEstou" style="display:none">
+                        <select name="CalmBeltEstouOpcoes" id="CalmBeltEstouOpcoes" onchange="qualRota(0,value)">
+                            <option value="0">Amazon Lily</option>
                         </select>
                     </div>
     
@@ -101,9 +110,18 @@
     
                     <div id="NovoMundoVou" style="display:none">
                         <select name="NovoMundoVouOpcoes" id="NovoMundoVouOpcoes" onchange="qualRota(1,value)">
-                            <option value="0">1ª rota</option>
-                            <option value="1">2ª rota</option>
-                            <option value="2">3ª rota</option>
+                            <option value="0">Ilha dos Homens-Peixe</option>
+                            <option value="1">Mary Geoise</option>
+                            <option value="2">Red Port</option>
+                            <option value="3">1ª rota</option>
+                            <option value="4">2ª rota</option>
+                            <option value="5">3ª rota</option>
+                        </select>
+                    </div>
+
+                    <div id="CalmBeltVou" style="display:none">
+                        <select name="CalmBeltVouOpcoes" id="CalmBeltVouOpcoes" onchange="qualRota(1,value)">
+                            <option value="0">Amazon Lily</option>
                         </select>
                     </div>
     
@@ -193,13 +211,16 @@
                     <input type="checkbox" id="Herbalismo" name="Herbalismo" onchange="attHer()"><label for="Herbalismo">Herbalismo</label><br>
                     <input type="checkbox" id="pesca" name="pesca" onchange="attPes()"><label for="pesca">Pesca</label><br><br>
                 </div>
-                <div class="qualEdefe">
-                    <h4>Qualidades/Defeitos presentes no navio</h4>
+                <div class="qualidades">
+                    <h4>Qualidades presentes no navio</h4>
                     <input type="checkbox" id="EstPeq" name="EstPeq" onchange="attEstPeq()"><label for="EstPeq">Estômago Pequeno</label>
                     <div id="auxEstPeq" style="display: none">
                         <label for="ValorEstPeq">Quantos?</label>
                         <input id="ValorEstPeq" type="number" min="1" value="1" onchange="attValorEstPeq()">
                     </div><br>
+                </div>
+                <div class="defeitos">
+                    <h4>Defeitos presentes no navio</h4>
                     <input type="checkbox" id="Guloso" name="Guloso" onchange="attGul()"><label for="Guloso">Guloso</label>
                     <div id="auxGul" style="display: none">
                         <label for="ValorGul">Quantos?</label>
