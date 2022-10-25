@@ -83,31 +83,33 @@
             </div>
             <div id="Extras">
                 <h2>Extras que alteram a viagem</h2>
-                <div class="navegacao">
+                <div class="navegacao bloco">
                     <h4>Tem navegador?</h4>
                     <input type="radio" id="NavegacaoSim" name="Navegacao" onclick="attNav()"><label for="NavegacaoSim">Sim</label>
                     <input type="radio" id="NavegacaoNao" name="Navegacao" onclick="attNav()" checked="True"><label for="NavegacaoNao">Não</label><br>
     
-                    <div id="navegador" style="display: none;"><h4>Qual o nível deste Jogador/NPC companheiro?</h4><br>
-    
-                    <input type="number" id="nivelNavegacao" max="20" min="1" value="1" onchange="attValorNav()"></div>
+                    <div id="navegador" style="display: none;">
+                        <h4>Qual o nível deste Jogador/NPC companheiro?</h4><br>
+                        <input type="number" id="nivelNavegacao" max="20" min="1" value="1" onchange="attValorNav()">
+                    </div>
                 </div>
-                <div class="cozinha">
+                <div class="cozinha bloco">
                     <h4>Tem cozinheiro?</h4>
                     <input type="radio" id="CozinheiroSim" name="Cozinheiro" onclick="attCoz()"><label for="CozinheiroSim">Sim</label>
                     <input type="radio" id="CozinheiroNao" name="Cozinheiro" onclick="attCoz()" checked="True"><label for="CozinheiroNão">Não</label><br>
     
-                    <div id="cozinheiro" style="display: none;"><h4>Qual o nível deste Jogador/NPC companheiro?</h4><br>
-    
-                    <input type="number" id="nivelCozinheiro" max="20" min="1" value="1" onchange="attValorCoz()"></div>
+                    <div id="cozinheiro" style="display: none;">
+                        <h4>Qual o nível deste Jogador/NPC companheiro?</h4><br>
+                        <input type="number" id="nivelCozinheiro" max="20" min="1" value="1" onchange="attValorCoz()">
+                    </div>
                 </div>
-                <div class="proficiencias">
+                <div class="proficiencias bloco">
                     <h4>Proficiências presentes no navio</h4>
                     <input type="checkbox" id="administracao" name="administracao" onchange="attAdm()"><label for="administracao">Administração</label><br>
                     <input type="checkbox" id="Herbalismo" name="Herbalismo" onchange="attHer()"><label for="Herbalismo">Herbalismo</label><br>
                     <input type="checkbox" id="pesca" name="pesca" onchange="attPes()"><label for="pesca">Pesca</label><br><br>
                 </div>
-                <div class="qualidades">
+                <div class="qualidades bloco">
                     <h4>Qualidades presentes no navio</h4>
                     <input type="checkbox" id="EstPeq" name="EstPeq" onchange="attEstPeq()"><label for="EstPeq">Estômago Pequeno</label>
                     <div id="auxEstPeq" style="display: none">
@@ -115,7 +117,7 @@
                         <input id="ValorEstPeq" type="number" min="1" value="1" onchange="attValorEstPeq()">
                     </div><br>
                 </div>
-                <div class="defeitos">
+                <div class="defeitos bloco">
                     <h4>Defeitos presentes no navio</h4>
                     <input type="checkbox" id="Guloso" name="Guloso" onchange="attGul()"><label for="Guloso">Guloso</label>
                     <div id="auxGul" style="display: none">
@@ -123,7 +125,7 @@
                         <input id="ValorGul" type="number" min="1" value="1" onchange="attValorGul()">
                     </div><br>
                 </div>
-                <div class="Faminto">
+                <div class="Faminto bloco">
                     <h4>Meu grupo é louco e aceita passar fome até...</h4><br>
 
                     <input type="radio" id="nemtaolouco" name="faminto" onclick="attFam(0)"><label for="nemtaolouco">Tá, talvez não sejamos loucos (viagem normal).</label><br>

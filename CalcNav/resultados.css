@@ -1,6 +1,12 @@
 #Resultados{
     grid-area: resultados;
-    display: grid;
     text-align: justify;
     padding: 20px;
+    padding-top: 50px;
+    font-size: 15px;
+}
+
+#Resultados h3{
+    margin: 10px 0px;
+    height: 1em;
 }

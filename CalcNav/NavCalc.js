@@ -108,12 +108,13 @@ function attTempoCarona(){
         document.getElementById('Resultados').innerHTML = txtResultado 
         return
     }
+    txtResultado = "<h3>Duração:</h3><br>A distância da sua viagem é de " + disC + "  ilhas<br>"
     switch(faccao){
         case 0:  // Agente
-            if(localizacao.RotaEstou == 0 && localizacao.RotaVou > 0){
+            if(localizacao.MarEstou == 0 && localizacao.MarVou > 0){
                 qualBarco(13)
                 document.getElementById('Barco').value = "13"
-                txtResultado = "Por ser um agente que está passando pelo Calm Belt, o barco que você está pegando carona é obrigatoriamente um Cruzador.<br>"
+                txtResultado = txtResultado + "Por ser um agente que está passando pelo Calm Belt, o barco que você está pegando carona é obrigatoriamente um Cruzador.<br>"
                 txtResultado = txtResultado + "Pelo menos você não precisa se preocupar com nada da viagem além de agradar a pessoa que está te dando carona.<br>"
                 txtResultado = txtResultado + "Você vai precisar de " +  Math.ceil(disC/2) + " viagens, já que cada carona sua só pode avançar 2 ilhas.<br>"
                 txtResultado = txtResultado + "Esse número de viagens na sua facção demora " +  Math.ceil(disC/2) + " turnos, já que não existe espera entre viagens.<br>"
@@ -123,7 +124,7 @@ function attTempoCarona(){
             else{
                 qualBarco(15)
                 document.getElementById('Barco').value = "15"
-                txtResultado = "Por ser um agente que está em uma viagem comum, o barco que você está pegando carona é obrigatoriamente um Iquisidor.<br>"
+                txtResultado = txtResultado + "Por ser um agente que está em uma viagem comum, o barco que você está pegando carona é obrigatoriamente um Iquisidor.<br>"
                 txtResultado = txtResultado + "Pelo menos você não precisa se preocupar com nada da viagem além de agradar a pessoa que está te dando carona.<br>"
                 txtResultado = txtResultado + "Você vai precisar de " +  Math.ceil(disC/2) + " viagens, já que cada carona sua só pode avançar 2 ilhas.<br>"
                 txtResultado = txtResultado + "Esse número de viagens na sua facção demora " +  Math.ceil(disC/2) + " turnos, já que não existe espera entre viagens.<br>"
@@ -132,10 +133,10 @@ function attTempoCarona(){
             }
             break
         case 1:  //Caçador de Recompensas
-            if(localizacao.RotaEstou == 0 && localizacao.RotaVou > 0){
+            if(localizacao.MarEstou == 0 && localizacao.MarVou > 0){
                 qualBarco(13)
                 document.getElementById('Barco').value = "13"
-                txtResultado = "Por ser um civil que está passando pelo Calm Belt, o barco que você está pegando carona é obrigatoriamente um Cruzador.<br>"
+                txtResultado = txtResultado + "Por ser um caçador de recompensas que está passando pelo Calm Belt, o barco que você está pegando carona é obrigatoriamente um Cruzador.<br>"
                 txtResultado = txtResultado + "Pelo menos você não precisa se preocupar com nada da viagem além de agradar a pessoa que está te dando carona.<br>"
                 txtResultado = txtResultado + "Você vai precisar de " + disC + " viagens, já que cada carona sua só pode avançar 1 ilha por viagem.<br>"
                 if(disC > 1){
@@ -148,7 +149,7 @@ function attTempoCarona(){
             else{
                 qualBarco(2)
                 document.getElementById('Barco').value = "2"
-                txtResultado = "Por ser um civil que está em uma viagem comum, o barco que você está pegando carona é obrigatoriamente uma Escuna.<br>"
+                txtResultado = txtResultado + "Por ser um caçador de recompensas que está em uma viagem comum, o barco que você está pegando carona é obrigatoriamente uma Escuna.<br>"
                 txtResultado = txtResultado + "Pelo menos você não precisa se preocupar com nada da viagem além de agradar a pessoa que está te dando carona.<br>"
                 txtResultado = txtResultado + "Você vai precisar de " + disC + " viagens, já que cada carona sua só pode avançar 1 ilha.<br>"                
                 if(disC > 1){
@@ -160,10 +161,10 @@ function attTempoCarona(){
             }
             break
         case 2:  //Civil
-            if(localizacao.RotaEstou == 0 && localizacao.RotaVou > 0){
+            if(localizacao.MarEstou == 0 && localizacao.MarVou > 0){
                 qualBarco(13)
                 document.getElementById('Barco').value = "13"
-                txtResultado = "Por ser um civil que está passando pelo Calm Belt, o barco que você está pegando carona é obrigatoriamente um Cruzador.<br>"
+                txtResultado = txtResultado + "Por ser um civil que está passando pelo Calm Belt, o barco que você está pegando carona é obrigatoriamente um Cruzador.<br>"
                 txtResultado = txtResultado + "Pelo menos você não precisa se preocupar com nada da viagem além de agradar a pessoa que está te dando carona.<br>"
                 txtResultado = txtResultado + "Você vai precisar de " + disC + " viagens, já que cada carona sua só pode avançar 1 ilha por viagem.<br>"
                 if(disC > 1){
@@ -176,7 +177,7 @@ function attTempoCarona(){
             else{
                 qualBarco(2)
                 document.getElementById('Barco').value = "2"
-                txtResultado = "Por ser um civil que está em uma viagem comum, o barco que você está pegando carona é obrigatoriamente uma Escuna.<br>"
+                txtResultado = txtResultado + "Por ser um civil que está em uma viagem comum, o barco que você está pegando carona é obrigatoriamente uma Escuna.<br>"
                 txtResultado = txtResultado + "Pelo menos você não precisa se preocupar com nada da viagem além de agradar a pessoa que está te dando carona.<br>"
                 txtResultado = txtResultado + "Você vai precisar de " + disC + " viagens, já que cada carona sua só pode avançar 1 ilha.<br>"
                 if(disC > 1){
@@ -188,10 +189,10 @@ function attTempoCarona(){
             }
             break
         case 3:  //Marinha
-            if(localizacao.RotaEstou == 0 && localizacao.RotaVou > 0){
+            if(localizacao.MarEstou == 0 && localizacao.MarVou > 0){
                 qualBarco(13)
                 document.getElementById('Barco').value = "13"
-                txtResultado = "Por ser um marinheiro que está passando pelo Calm Belt, o barco que você está pegando carona é obrigatoriamente um Cruzador.<br>"
+                txtResultado = txtResultado + "Por ser um marinheiro que está passando pelo Calm Belt, o barco que você está pegando carona é obrigatoriamente um Cruzador.<br>"
                 txtResultado = txtResultado + "Pelo menos você não precisa se preocupar com nada da viagem além de agradar a pessoa que está te dando carona.<br>"
                 txtResultado = txtResultado + "Você vai precisar de " + disC + " viagens, já que cada carona sua só pode avançar 1 ilha.<br>"
                 txtResultado = txtResultado + "Esse número de viagens na sua facção demora " + disC + " turnos, já que não existe espera entre viagens.<br>"
@@ -201,7 +202,7 @@ function attTempoCarona(){
             else{
                 qualBarco(14)
                 document.getElementById('Barco').value = "14"
-                txtResultado = "Por ser um marinheiro que está em uma viagem comum, o barco que você está pegando carona é obrigatoriamente um Inquisidor.<br>"
+                txtResultado = txtResultado + "Por ser um marinheiro que está em uma viagem comum, o barco que você está pegando carona é obrigatoriamente um Inquisidor.<br>"
                 txtResultado = txtResultado + "Pelo menos você não precisa se preocupar com nada da viagem além de agradar a pessoa que está te dando carona.<br>"
                 txtResultado = txtResultado + "Você vai precisar de " + disC + " viagens, já que cada carona sua só pode avançar 1 ilha.<br>"
                 txtResultado = txtResultado + "Esse número de viagens na sua facção demora " + disC + " turnos, já que não existe espera entre viagens.<br>"
@@ -211,13 +212,13 @@ function attTempoCarona(){
             break
         case 4:  //Pirata
             if(localizacao.RotaEstou == 0 && localizacao.RotaVou > 0){
-                txtResultado = "Se você quer pegar uma carona desse tipo sendo pirata... recomendo que se finja de civil.<br>"
+                txtResultado = txtResultado + "Se você quer pegar uma carona desse tipo sendo pirata... recomendo que se finja de civil.<br>"
                 document.getElementById('Resultados').innerHTML = txtResultado 
                 return
             }
             qualBarco(2)
             document.getElementById('Barco').value = "2"
-            txtResultado = "Parabéns, você está no pior grupo para se pegar uma carona<br>"
+            txtResultado = txtResultado + "Parabéns, você está no pior grupo para se pegar uma carona<br>"
             txtResultado = txtResultado + "Por isso o barco que você está pegando carona é obrigatoriamente uma Escuna.<br>"
             txtResultado = txtResultado + "Pelo menos você não precisa se preocupar com nada da viagem além de agradar a pessoa que está te dando carona.<br>"
             txtResultado = txtResultado + "Você vai precisar de " + disC + " viagens, já que cada carona sua só pode avançar 1 ilha.<br>"
@@ -230,13 +231,13 @@ function attTempoCarona(){
             break
         case 5:  //Revolucionário
             if(localizacao.RotaEstou == 0 && localizacao.RotaVou > 0){
-                txtResultado = "Se você quer pegar uma carona desse tipo sendo revolucionário... recomendo que se finja de civil.<br>"
+                txtResultado = txtResultado + "Se você quer pegar uma carona desse tipo sendo revolucionário... recomendo que se finja de civil.<br>"
                 document.getElementById('Resultados').innerHTML = txtResultado 
                 return
             }
             qualBarco(16)
             document.getElementById('Barco').value = "16"
-            txtResultado = "Por ser um revolucionário, o barco que você está pegando carona é obrigatoriamente da Libertação.<br>"
+            txtResultado = txtResultado + "Por ser um revolucionário, o barco que você está pegando carona é obrigatoriamente da Libertação.<br>"
             txtResultado = txtResultado + "Pelo menos você não precisa se preocupar com nada da viagem além de agradar a pessoa que está te dando carona.<br>"
             txtResultado = txtResultado + "Você vai precisar de " + disC + " viagens, já que cada carona sua só pode avançar 1 ilha.<br>"
             txtResultado = txtResultado + "Esse número de viagens na sua facção demora " + disC + " turnos, já que não existe espera entre viagens.<br>"
@@ -244,10 +245,10 @@ function attTempoCarona(){
             document.getElementById('Resultados').innerHTML = txtResultado 
             break
         case 6:  //Submundo
-            if(localizacao.RotaEstou == 0 && localizacao.RotaVou > 0){
+            if(localizacao.MarEstou == 0 && localizacao.MarVou > 0){
                 qualBarco(13)
                 document.getElementById('Barco').value = "13"
-                txtResultado = "Por ser um civil que está passando pelo Calm Belt, o barco que você está pegando carona é obrigatoriamente um Cruzador.<br>"
+                txtResultado = txtResultado + "Por ser um civil que está passando pelo Calm Belt, o barco que você está pegando carona é obrigatoriamente um Cruzador.<br>"
                 txtResultado = txtResultado + "Pelo menos você não precisa se preocupar com nada da viagem além de agradar a pessoa que está te dando carona.<br>"
                 txtResultado = txtResultado + "Você vai precisar de " + disC + " viagens, já que cada carona sua só pode avançar 1 ilha por viagem.<br>"
                 txtResultado = txtResultado + "Esse número de viagens na sua facção demora " + disC + " turnos, já que não existe espera entre viagens.<br>"
@@ -257,7 +258,7 @@ function attTempoCarona(){
             else{
                 qualBarco(2)
                 document.getElementById('Barco').value = "2"
-                txtResultado = "Por ser um civil que está em uma viagem comum, o barco que você está pegando carona é obrigatoriamente uma Escuna.<br>"
+                txtResultado = txtResultado + "Por ser um civil que está em uma viagem comum, o barco que você está pegando carona é obrigatoriamente uma Escuna.<br>"
                 txtResultado = txtResultado + "Pelo menos você não precisa se preocupar com nada da viagem além de agradar a pessoa que está te dando carona.<br>"
                 txtResultado = txtResultado + "Você vai precisar de " + disC + " viagens, já que cada carona sua só pode avançar 1 ilha.<br>"
                 txtResultado = txtResultado + "Esse número de viagens na sua facção demora " + disC + " turnos, já que não existe espera entre viagens.<br>"
