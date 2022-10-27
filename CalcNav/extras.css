@@ -24,7 +24,7 @@
 }
 
 #Extras .bloco h4{
-    margin: 5px 0px;
+    margin: 10px 0px;
 }
 
 #Extras .navegacao{
@@ -49,6 +49,7 @@
 
 #Extras .Faminto{
     grid-area: fome;
+    height: 200px;
 }
 
 #Extras .bloco input[type="number"]{

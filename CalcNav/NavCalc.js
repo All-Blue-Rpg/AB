@@ -669,12 +669,39 @@ function attDis(){
         case 3: // Estando no Calm Belt
                 switch(localizacao.MarVou){
                     case 0: // Indo para os Blues
+                        dis = BlueDistance[6][localizacao.IlhaVou] + 6
+                        disC = BlueDistanceC[6][localizacao.IlhaVou] + 1
+                        auxDesgaste = [6,BlueDistance[6][localizacao.IlhaVou],0,0]
                         break
                     case 1: // Indo para a Paradise
+                        dis = 6 + 12*(localizacao.IlhaVou + 1)
+                        disC = 1 + localizacao.IlhaVou
+                        auxDesgaste = [6,0,12*(localizacao.IlhaVou + 1),0]
+                        if(localizacao.RotaVou == 0){
+                            dis = 30
+                            disC = 1
+                            auxDesgaste[2] = 24
+                        }
+                        else if(localizacao.RotaVou == 8){
+                            dis = 102
+                            disC = 7
+                            auxDesgaste[2] = 96
+                        }
                         break
                     case 2: // Indo para o Novo Mundo
+                        dis = 102 + 18*(localizacao.IlhaVou + 1)
+                        disC = 8 + localizacao.IlhaVou
+                        auxDesgaste = [6,0,96,18*(localizacao.IlhaVou + 1)]
+                        if(localizacao.RotaVou == 0){
+                            dis = 102
+                            disC = 7
+                            auxDesgaste[3] = 0
+                        }
                         break
                     case 3: // Indo para o Calm Belt
+                        dis = 0
+                        disC = 0
+                        auxDesgaste = [0,0,0,0]
                         break
                 }
             break
