@@ -1,8 +1,7 @@
 #Resultados{
     grid-area: resultados;
     text-align: justify;
-    padding: 20px;
-    padding-top: 50px;
+    padding: 50px 20px 0px 0px;
     font-size: 15px;
 }
 

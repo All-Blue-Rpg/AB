@@ -108,7 +108,10 @@ function attTempoCarona(){
         document.getElementById('Resultados').innerHTML = txtResultado 
         return
     }
-    txtResultado = "<h3>Duração:</h3><br>A distância da sua viagem é de " + disC + "  ilhas<br>"
+    if (disC > 1 && (faccao == 1 || faccao == 2 || faccao == 4)){
+        txtResultado = "<h3>Aviso:</h3><br>Recomendo que coloque uma única ilha de distância já que está pegando carona sendo caçador/civil/pirata.<br>"
+    }
+    txtResultado = txtResultado + "<h3>Duração:</h3><br>A distância da sua viagem é de " + disC + "  ilhas<br>"
     switch(faccao){
         case 0:  // Agente
             if(localizacao.MarEstou == 0 && localizacao.MarVou > 0){
@@ -576,29 +579,66 @@ function attDis(){
                 case 1: // Indo para a Paradise
                     // Indo para o farol
                     if(localizacao.RotaVou == 0){
-                        if ((faccao != 0 && faccao != 3)){ // Sem ser marinheiro/agente
-                            dis = BlueDistance[localizacao.IlhaEstou][6]
-                            disC = 6 - localizacao.IlhaEstou
-                            auxDesgaste = [0,dis,0,0]
-                        }
-                        else{
-                            dis = BlueDistance[localizacao.IlhaEstou][6] + 6 + 12 + 12
-                            disC = BlueDistanceC[localizacao.IlhaEstou][6] + 2 // Ir para o Farol não conta como carona 
-                            auxDesgaste = [6,BlueDistance[localizacao.IlhaEstou][6],24,0]
+                        // Sem ser marinheiro/agente
+                        dis = BlueDistance[localizacao.IlhaEstou][6]
+                        disC = BlueDistanceC[localizacao.IlhaEstou][6]
+                        auxDesgaste = [0,dis,0,0]
+                        if (faccao == 0 || faccao == 3){ // caso marine/agente soma 6 do calm belt
+                            dis = dis + 30 // 6 no calm belt e 24 na paradise
+                            disC = disC + 1 // Ir para o Farol não conta como carona 
+                            auxDesgaste[0] = 6
+                            auxDesgaste[2] = 24
                         }
                     }
                     // Indo para Sabaody
                     else if(localizacao.RotaVou == 8){
-
+                        // Sem ser marinheiro/agente
+                        dis = BlueDistance[localizacao.IlhaEstou][6] + 96
+                        disC = BlueDistanceC[localizacao.IlhaEstou][6] + 7 // Não conta para ir pra sabaody e nem farol
+                        auxDesgaste = [0,BlueDistance[localizacao.IlhaEstou][6],96,0]
+                        if (faccao == 0 || faccao == 3){ // caso marine/agente soma 6 do calm belt
+                            dis = dis + 6 // 6 a mais por causa do calm belt
+                            auxDesgaste[0] = 6
+                        }
                     }
                     // Qualquer outra ilha
                     else{
-
+                        // Sem ser marinheiro/agente
+                        dis = BlueDistance[localizacao.IlhaEstou][6] + 12*(localizacao.IlhaVou + 1)
+                        disC = BlueDistanceC[localizacao.IlhaEstou][6] + localizacao.IlhaVou + 1
+                        auxDesgaste = [0,BlueDistance[localizacao.IlhaEstou][6],12*(localizacao.IlhaVou + 1),0]
+                        if (faccao == 0 || faccao == 3){ // caso marine/agente soma 6 do calm belt
+                            dis = dis + 6 // 6 a mais por causa do calm belt
+                            auxDesgaste[0] = 6
+                        }
                     }
                     break
                 case 2: // Indo para o Novo Mundo
+                    // Indo para a Ilha dos Tritões
+                    if(localizacao.RotaVou == 0){
+                        dis = BlueDistance[localizacao.IlhaEstou][6] + 96
+                        disC = BlueDistanceC[localizacao.IlhaEstou][6] + 7 // Não conta para ir pra sabaody e nem farol
+                        auxDesgaste = [0,BlueDistance[localizacao.IlhaEstou][6],96,0]
+                        if (faccao == 0 || faccao == 3){ // caso marine/agente soma 6 do calm belt
+                            dis = dis + 6 // 6 a mais por causa do calm belt
+                            auxDesgaste[0] = 6
+                        }
+                    }
+                    // Indo para qualquer outra rota
+                    else{
+                        dis = BlueDistance[localizacao.IlhaEstou][6] + 96 + 18*(localizacao.IlhaVou+1)
+                        disC = BlueDistanceC[localizacao.IlhaEstou][6] + 8 + localizacao.IlhaVou // Não conta para ir pra sabaody e nem farol
+                        auxDesgaste = [0,BlueDistance[localizacao.IlhaEstou][6],96,18*(localizacao.IlhaVou+1)]
+                        if (faccao == 0 || faccao == 3){ // caso marine/agente soma 6 do calm belt
+                            dis = dis + 6 // 6 a mais por causa do calm belt
+                            auxDesgaste[0] = 6
+                        }
+                    }
                     break
                 case 3: // Indo para o Calm Belt
+                    dis = BlueDistance[localizacao.IlhaEstou][6] + 6
+                    disC = BlueDistanceC[localizacao.IlhaEstou][6] + 1
+                    auxDesgaste = [6,BlueDistance[localizacao.IlhaEstou][6],0,0]
                     break
             }
             break

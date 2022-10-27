@@ -6,7 +6,7 @@
         'navegacao cozinheiro proficiencias'
         'qualidades defeitos fome';
     font-size: 14px;
-    padding: 20px;
+    padding: 10px;
     width: 100%;
 }
 
@@ -21,6 +21,10 @@
     margin-right: auto;
     height: 150px;
     width: 100%;
+}
+
+#Extras .bloco h4{
+    margin: 5px 0px;
 }
 
 #Extras .navegacao{
@@ -45,4 +49,8 @@
 
 #Extras .Faminto{
     grid-area: fome;
+}
+
+#Extras .bloco input{
+    width: 100px;
 }

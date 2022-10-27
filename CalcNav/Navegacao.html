@@ -89,7 +89,7 @@
                     <input type="radio" id="NavegacaoNao" name="Navegacao" onclick="attNav()" checked="True"><label for="NavegacaoNao">Não</label><br>
     
                     <div id="navegador" style="display: none;">
-                        <h4>Qual o nível deste Jogador/NPC companheiro?</h4><br>
+                        <h4>Qual o nível?</h4><br>
                         <input type="number" id="nivelNavegacao" max="20" min="1" value="1" onchange="attValorNav()">
                     </div>
                 </div>
@@ -99,7 +99,7 @@
                     <input type="radio" id="CozinheiroNao" name="Cozinheiro" onclick="attCoz()" checked="True"><label for="CozinheiroNão">Não</label><br>
     
                     <div id="cozinheiro" style="display: none;">
-                        <h4>Qual o nível deste Jogador/NPC companheiro?</h4><br>
+                        <h4>Qual o nível?</h4><br>
                         <input type="number" id="nivelCozinheiro" max="20" min="1" value="1" onchange="attValorCoz()">
                     </div>
                 </div>
@@ -126,15 +126,15 @@
                     </div><br>
                 </div>
                 <div class="Faminto bloco">
-                    <h4>Meu grupo é louco e aceita passar fome até...</h4><br>
+                    <h4>Limite sem comer...</h4><br>
 
-                    <input type="radio" id="nemtaolouco" name="faminto" onclick="attFam(0)"><label for="nemtaolouco">Tá, talvez não sejamos loucos (viagem normal).</label><br>
-                    <input type="radio" id="poucolouco" name="faminto" onclick="attFam(1)"><label for="poucolouco">Um dia sem comer até vai... né? (um dia sem comer como tolerância)</label><br>
-                    <input type="radio" id="faminto1" name="faminto" onclick="attFam(2)"><label for="faminto1">Quem nunca passou fome uma vez na vida? (ficar com faminto I a cada pausa)</label><br>
-                    <input type="radio" id="faminto2" name="faminto" onclick="attFam(3)"><label for="faminto2">Passar fome ok, mas passar mal de fome foi a primeira vez. (ficar com faminto II a cada pausa)</label><br>
-                    <input type="radio" id="faminto3" name="faminto" onclick="attFam(4)"><label for="faminto3">Estou definhando? Talvez, mas valeu a pena. (ficar com faminto III a cada pausa)</label><br>
-                    <input type="radio" id="faminto4" name="faminto" onclick="attFam(5)"><label for="faminto4">Sou masoquista, gosto da dor de não comer nada. (ficar com faminto IV a cada pausa)</label><br>
-                    <input type="radio" id="faminto5" name="faminto" onclick="attFam(6)"><label for="faminto5">Melhor morrer do que perder a vida (ficar com faminto V a cada pausa)</label><br><br>
+                    <input type="radio" id="nemtaolouco" name="faminto" onclick="attFam(0)"><label for="nemtaolouco">Viagem normal, nenhum dia sem comer</label><br>
+                    <input type="radio" id="poucolouco" name="faminto" onclick="attFam(1)"><label for="poucolouco">Um dia sem comer.</label><br>
+                    <input type="radio" id="faminto1" name="faminto" onclick="attFam(2)"><label for="faminto1">Dois dias sem comer - Faminto I</label><br>
+                    <input type="radio" id="faminto2" name="faminto" onclick="attFam(3)"><label for="faminto2">Três dias sem comer - Faminto II</label><br>
+                    <input type="radio" id="faminto3" name="faminto" onclick="attFam(4)"><label for="faminto3">Quatro dias sem comer - Faminto III</label><br>
+                    <input type="radio" id="faminto4" name="faminto" onclick="attFam(5)"><label for="faminto4">Cinco dias sem comer - Faminto IV</label><br>
+                    <input type="radio" id="faminto5" name="faminto" onclick="attFam(6)"><label for="faminto5">Seis dias sem comer - Faminto V</label><br><br>
                 </div>
             </div>
             <div id="Resultados">

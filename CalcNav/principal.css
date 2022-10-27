@@ -7,7 +7,6 @@
         'estouR vouR'
         'estouI vouI'
         'grupo barco';
-    font-size: 14px;
     height: 600px;
     width: 540px;
 }
@@ -23,10 +22,12 @@
 
 #Principal .bloco h3{
     margin: 10px 0px;
+    font-size: 0.75em;
 }
 
 #Principal .bloco select{
     width: 200px;
+    font-size: 12px;
 }
 
 #Principal .OceanoEstou{
