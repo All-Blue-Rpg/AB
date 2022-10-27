@@ -1,5 +1,4 @@
 #Principal{
-    grid-area: principal;
     display: grid;  
     grid-template-areas:
         'tipo tipo'
@@ -64,6 +63,19 @@
 
 #Principal #barcoSelecao{
     grid-area: barco;
+}
+
+#Principal #barcoSelecao input[type="number"]{
+    width: 50px;
+}
+
+#Principar .noBorder{
+    border-collapse:collapse;
+    border:none;
+}
+
+#Principal .noBorder td{
+    border: none;
 }
 
 #Principal .tipo{

@@ -1,5 +1,5 @@
 #Extras{
-    grid-area: extras;
+    grid-column-end: span 3;
     display: grid;  
     grid-template-areas:
         'titulo titulo titulo'
@@ -53,5 +53,5 @@
 }
 
 #Extras .bloco input[type="number"]{
-    width: 100px;
+    width: 50px;
 }

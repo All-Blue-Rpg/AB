@@ -73,13 +73,16 @@
                         <option value=17>Personalizado</option>
                     </select>
                     <div id="auxBarco">
-                        <table>
+                        <table class = "noBorder">
                             <tr><td><label for="autossuficiencia">Autossuficiência: </label></td><td><input type="number" id="autossuficiencia" min="100" value="150" onchange="attBarcoPersonalizado()"></td></tr>
                             <tr><td><label for="celeridade">Celeridade: </label></td><td><input type="number" id="celeridade" min="0" value="10" onchange="attBarcoPersonalizado()"></td></tr>
                             <tr><td><label for="Estrutura">Estrutura: </label></td><td><input type="number" id="estrutura" min="50" value="50" onchange="attBarcoPersonalizado()"></td></tr>
                         </table>
                     </div><br>
                 </div>
+            </div>
+            <div id="Resultados">
+                Teste
             </div>
             <div id="Extras">
                 <h2>Extras que alteram a viagem</h2>
@@ -136,9 +139,6 @@
                     <input type="radio" id="faminto4" name="faminto" onclick="attFam(5)"><label for="faminto4">Cinco dias sem comer - Faminto IV</label><br>
                     <input type="radio" id="faminto5" name="faminto" onclick="attFam(6)"><label for="faminto5">Seis dias sem comer - Faminto V</label><br><br>
                 </div>
-            </div>
-            <div id="Resultados">
-                Teste 3
             </div>
         </div>
     </body>
