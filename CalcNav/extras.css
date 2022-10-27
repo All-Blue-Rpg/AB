@@ -51,6 +51,6 @@
     grid-area: fome;
 }
 
-#Extras .bloco input{
+#Extras .bloco input[type="number"]{
     width: 100px;
 }
