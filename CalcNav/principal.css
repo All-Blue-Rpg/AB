@@ -26,6 +26,7 @@
 
 #Principal .bloco select{
     width: 200px;
+    height: 20px;
     font-size: 12px;
 }
 
@@ -65,8 +66,17 @@
     grid-area: barco;
 }
 
+#Principal #barcoSelecao select{
+    margin-bottom: 10px;
+}
+
 #Principal #barcoSelecao input[type="number"]{
     width: 50px;
+}
+
+#Principal #barcoSelecao label{
+    text-align: left;
+    width: 22px;
 }
 
 #Principal .noBorder{
