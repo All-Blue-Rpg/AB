@@ -90,4 +90,5 @@
 
 #Principal .tipo{
     grid-area: tipo;
+    font-size: 15px;
 }
