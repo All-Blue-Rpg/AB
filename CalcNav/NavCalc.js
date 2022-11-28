@@ -82,7 +82,7 @@ var duracao = 0
 // Desgaste
 const desgasteTabela = [[250,150,0,0,0,0],[500, 300, 180, 0, 0, 0],[1000,600,300,220,0,0],[3000,1800,1000,600,360,200],[4500,2700,1500,900,600,300]]
 var auxDesgaste = [0, 0, 0, 0] // Desgaste em dias de distância passando por cada localização: calm belt, blues, paradise, novo mundo
-var auxDesgaste2 = [0, 0, 0, 0]
+var redutor = [0, 0, 0, 0] // Auxiliar para contar a redução que vai existir em cada rota
 var desgaste = 0
 
 // Função chamada unicamente ao carregar a página
@@ -273,23 +273,34 @@ function attTempoCarona(){
 }
 
 function attTempoNormal(){
-    duracao = dis - barco.velocidade
-    if (barco.comida <= 0){
+    duracao = dis - barco.velocidade // Calcula a duração total da viagem
+
+    if (barco.comida <= 0){ // Checando se o barco não tem comida negativa
         txtResultado = "Você tem uma estrutura tão ruim que o seu barco não aguenta nem mesmo um único dia para forrar os estômagos dos famintos que convivem com você. Faça algo em relação a isso antes de tentar viajar"
-        document.getElementById('resultado').innerHTML = txtResultado
-        document.getElementById('desgaste').innerHTML = txtDesgaste
-        document.getElementById('extras').innerHTML = txtExtra
+        document.getElementById('Resultados').innerHTML = txtResultado
         return
     }
 
-    posts = Math.ceil(duracao/barco.comida)
+    posts = Math.ceil(duracao/barco.comida) // Precisa completar os dias de viagem
 
-    if (posts < 1){
+    if (posts < 1){ // Não pode ser menos de 1 post
         posts = 1
     }
 
-    calcDesg()
+    calcDesg() // Manda calcular o Desgaste
 
+    txtResultado = resultadoTexto(posts)
+
+    txtDesgaste = desgasteTexto()
+
+    txtExtra = extraTexto()
+
+    document.getElementById('Resultados').innerHTML = txtResultado + txtDesgaste + txtExtra
+}
+
+// Funções Atualização Texto
+
+function resultadoTexto(posts){
     // Texto da Duração
     txtResultado = "<h3>Duração:</h3><br>A distância da sua viagem é de " + dis + " dias<br>"
     txtResultado = txtResultado + "A redução da viagem é de " + barco.velocidade + " dias<br>"
@@ -304,7 +315,7 @@ function attTempoNormal(){
         txtResultado = txtResultado + "<span class='destaque'>Portanto você precisa fazer um único post de viagem</span><br><br>" 
     }
     else if (pes == 0){
-        txtResultado = txtResultado + "Portanto você <span class='destaque'>precisa fazer " + posts + " posts de viagem</span><br><br>"   
+        txtResultado = txtResultado + "<span class='destaque'>Portanto você precisa fazer " + posts + " posts de viagem</span><br><br>"   
     }
     else{
         txtResultado = txtResultado + "Ou a sua comida dura " + (barco.comida+1) + " dias se a pesca rolar 1 dia extra<br>"
@@ -324,7 +335,10 @@ function attTempoNormal(){
         }
         txtResultado = txtResultado + "Portanto você <span class='destaque'>precisa fazer " + posts + "/" + auxPost1 + "/" + auxPost2 + "/" + auxPost3 + " posts de viagem</span><br><br>"
     }
+    return txtResultado
+}
 
+function desgasteTexto(){
     // Texto do Desgaste
     if (desgaste == 0 && dis == 0){
         txtDesgaste = ""
@@ -335,17 +349,17 @@ function attTempoNormal(){
     else{
         txtDesgaste = "<h3>Desgaste:</h3><br>O seu navio se desgastou... vamos aos números<br>"
         txtDesgaste = txtDesgaste + "O seu navio viajou por: <br>"
-        if (auxDesgaste[0] - auxDesgaste2[0] > 0){
-            txtDesgaste = txtDesgaste + (auxDesgaste[0] - auxDesgaste2[0]) + " dias no Calm Belt.<br>"
+        if (auxDesgaste[0] - redutor[0] > 0){
+            txtDesgaste = txtDesgaste + (auxDesgaste[0] - redutor[0]) + " dias no Calm Belt.<br>"
         }
-        if (auxDesgaste[1] - auxDesgaste2[1] > 0){
-            txtDesgaste = txtDesgaste + (auxDesgaste[1] - auxDesgaste2[1]) + " dias nos Blues.<br>"
+        if (auxDesgaste[1] - redutor[1] > 0){
+            txtDesgaste = txtDesgaste + (auxDesgaste[1] - redutor[1]) + " dias nos Blues.<br>"
         }
-        if (auxDesgaste[2] - auxDesgaste2[2] > 0){
-            txtDesgaste = txtDesgaste + (auxDesgaste[2] - auxDesgaste2[2]) + " dias na Paradise.<br>"
+        if (auxDesgaste[2] - redutor[2] > 0){
+            txtDesgaste = txtDesgaste + (auxDesgaste[2] - redutor[2]) + " dias na Paradise.<br>"
         }
-        if (auxDesgaste[3] - auxDesgaste2[3] > 0){
-            txtDesgaste = txtDesgaste + (auxDesgaste[3] - auxDesgaste2[3]) + " dias no Novo Mundo.<br>"
+        if (auxDesgaste[3] - redutor[3] > 0){
+            txtDesgaste = txtDesgaste + (auxDesgaste[3] - redutor[3]) + " dias no Novo Mundo.<br>"
         }
         if(nav == 0){
             txtDesgaste = txtDesgaste + "Isso tudo sem ter alguém que saiba navegar...<br>"
@@ -361,81 +375,85 @@ function attTempoNormal(){
 
     txtDesgaste = txtDesgaste + "<br><br>"
 
-    // Textos Extras
-    txtExtra  = ""
+    return txtDesgaste
+}
 
-    // Trocando de Blues
-    if(localizacao.MarEstou == 0 && localizacao.MarVou == 0 && localizacao.RotaEstou != localizacao.RotaVou){
-        txtExtra = txtExtra + "Lembre-se de pagar a travessia pela Rota da Serpente Carmesim se você não for Agente ou Marinheiro<br>"
-    }
-    // Atravessando a Reverse
-    if(localizacao.MarEstou == 0 && localizacao.MarVou > 0 && (faccao != 0 && faccao != 3)){
-        txtExtra = txtExtra + "Lembre-se de narrar direitinho a travessia na Reverse Mountain ^^<br>"
-    }
-    // Adversidade no primeiro Mar da Paradise
-    if(localizacao.MarEstou == 0 && localizacao.MarVou > 0 && (faccao == 0 || faccao == 3)){
-        txtExtra = txtExtra + "Lembre-se de rolar a adversidade do primeiro mar da Paradise<br>"
-    }
-    // Adversidade no primeiro Mar da Paradise
-    if(localizacao.MarEstou == 1 && localizacao.RotaEstou == 0){
-        txtExtra = txtExtra + "Lembre-se de rolar a adversidade do primeiro mar da Paradise<br>"
-    }
-    // Adversidade Infinitos Corais
-    if (localizacao.RotaEstou == 0 && localizacao.MarEstou == 1 && localizacao.IlhaEstou == 0 && ((localizacao.MarVou == 1 && localizacao.RotaVou == 8) || localizacao.MarVou >= 1) && localizacao.IlhaVou > 0){
-        txtExtra = txtExtra + "Divirta-se narrando o navio passando no mar de corais após a ilha Hasagt Altai<br>"
-    }
-    // Adversidade Frozen Oceans
-    if (localizacao.RotaEstou == 5 && localizacao.MarEstou == 1 && localizacao.IlhaEstou == 1 && ((localizacao.MarVou == 1 && localizacao.RotaVou == 8) || localizacao.MarVou >= 1) && localizacao.IlhaVou > 1){
-        txtExtra = txtExtra + "Divirta-se narrando o navio passando pelo oceano congelado após Pyatidrov<br>"
-    }
-    // Adversidade Florian Triangle
-    if (((localizacao.MarVou == 1 && localizacao.RotaVou == 8) || localizacao.MarVou == 2) && localizacao.RotaEstou > 5 && localizacao.MarEstou == 1){
-        txtExtra = txtExtra + "Divirta-se narrando a névoa densa do Florian Triangle<br>"
-    }
-    // Voltar para os Blues
-    if (localizacao.MarVou == 0 && localizacao.MarEstou > 0){
-        txtExtra = txtExtra + "Só é possível voltar para os Blues com um Vivre Card e é necessário passar no Calm Belt... boa sorte<br>"
-    }
-    // Mudar de rota na Paradise
-    if (localizacao.MarEstou == 1 && localizacao.MarVou == 1 && localizacao.RotaEstou != localizacao.RotaVou){
-        txtExtra = txtExtra + "Só é possível mudar de rota na Paradise por Eternal Pose, Vivre Card ou Mapa Mundi<br>"
-    }
-    // Retroceder na Paradise
-    if (localizacao.MarEstou == 1 && localizacao.MarVou == 1 && (localizacao.IlhaEstou > localizacao.IlhaVou || localizacao.RotaEstou == 8)){
-        txtExtra = txtExtra + "Só é possível retroceder, seja na mesma rota ou não, na Paradise por Eternal Pose, Vivre Card ou Mapa Mundi<br>"
-    }
-    // Retroceder no Novo Mundo
-    if (localizacao.MarEstou == 2 && localizacao.MarVou == 2 && localizacao.IlhaEstou > localizacao.IlhaVou){
-        txtExtra = txtExtra + "Só é possível retroceder, seja na mesma rota ou não, no Novo Mundo por Eternal Pose, Vivre Card ou Mapa Mundi<br>"
-    }
-    switch(fam){
-        case 1:
-            txtExtra = txtExtra + "O seu personagem vai ficar bem perto de faminto... tem certeza que é uma boa escolha?<br>"
-            break
-        case 2:
-            txtExtra = txtExtra + "O seu personagem vai ficar com Faminto I... tem certeza que é uma boa escolha?<br>"    
-            break
-        case 3:
-            txtExtra = txtExtra + "O seu personagem vai ficar com Faminto II... tem certeza que é uma boa escolha?<br>"    
-            break
-        case 4:
-            txtExtra = txtExtra + "O seu personagem vai ficar com Faminto III... tem certeza que é uma boa escolha?<br>"    
-            break
-        case 5:
-            txtExtra = txtExtra + "O seu personagem vai ficar com Faminto IV... tem certeza que é uma boa escolha?<br>"    
-            break
-        case 6:
-            txtExtra = txtExtra + "O seu personagem vai ficar com Faminto V... tem certeza que é uma boa escolha?<br>"    
-            break
-    }
-    if (fam > 0 && gul > 0){
-        txtExtra = txtExtra + "Vai mesmo brincar com faminto tendo guloso na sua tripulação? Tente não matá-lo de fome.<br>"    
-    }
-    if (txtExtra != ""){
-        txtExtra = "<h3>Extras da viagem:</h3><br>" + txtExtra
-    }
+function extraTexto(){
+        // Textos Extras
+        txtExtra  = ""
 
-    document.getElementById('Resultados').innerHTML = txtResultado + txtDesgaste + txtExtra
+        // Trocando de Blues
+        if(localizacao.MarEstou == 0 && localizacao.MarVou == 0 && localizacao.RotaEstou != localizacao.RotaVou){
+            txtExtra = txtExtra + "Lembre-se de pagar a travessia pela Rota da Serpente Carmesim se você não for Agente ou Marinheiro<br>"
+        }
+        // Atravessando a Reverse
+        if(localizacao.MarEstou == 0 && localizacao.MarVou > 0 && (faccao != 0 && faccao != 3)){
+            txtExtra = txtExtra + "Lembre-se de narrar direitinho a travessia na Reverse Mountain ^^<br>"
+        }
+        // Adversidade no primeiro Mar da Paradise
+        if(localizacao.MarEstou == 0 && localizacao.MarVou > 0 && (faccao == 0 || faccao == 3)){
+            txtExtra = txtExtra + "Lembre-se de rolar a adversidade do primeiro mar da Paradise<br>"
+        }
+        // Adversidade no primeiro Mar da Paradise
+        if(localizacao.MarEstou == 1 && localizacao.RotaEstou == 0){
+            txtExtra = txtExtra + "Lembre-se de rolar a adversidade do primeiro mar da Paradise<br>"
+        }
+        // Adversidade Infinitos Corais
+        if (localizacao.RotaEstou == 0 && localizacao.MarEstou == 1 && localizacao.IlhaEstou == 0 && ((localizacao.MarVou == 1 && localizacao.RotaVou == 8) || localizacao.MarVou >= 1) && localizacao.IlhaVou > 0){
+            txtExtra = txtExtra + "Divirta-se narrando o navio passando no mar de corais após a ilha Hasagt Altai<br>"
+        }
+        // Adversidade Frozen Oceans
+        if (localizacao.RotaEstou == 5 && localizacao.MarEstou == 1 && localizacao.IlhaEstou == 1 && ((localizacao.MarVou == 1 && localizacao.RotaVou == 8) || localizacao.MarVou >= 1) && localizacao.IlhaVou > 1){
+            txtExtra = txtExtra + "Divirta-se narrando o navio passando pelo oceano congelado após Pyatidrov<br>"
+        }
+        // Adversidade Florian Triangle
+        if (((localizacao.MarVou == 1 && localizacao.RotaVou == 8) || localizacao.MarVou == 2) && localizacao.RotaEstou > 5 && localizacao.MarEstou == 1){
+            txtExtra = txtExtra + "Divirta-se narrando a névoa densa do Florian Triangle<br>"
+        }
+        // Voltar para os Blues
+        if (localizacao.MarVou == 0 && localizacao.MarEstou > 0){
+            txtExtra = txtExtra + "Só é possível voltar para os Blues com um Vivre Card e é necessário passar no Calm Belt... boa sorte<br>"
+        }
+        // Mudar de rota na Paradise
+        if (localizacao.MarEstou == 1 && localizacao.MarVou == 1 && localizacao.RotaEstou != localizacao.RotaVou){
+            txtExtra = txtExtra + "Só é possível mudar de rota na Paradise por Eternal Pose, Vivre Card ou Mapa Mundi<br>"
+        }
+        // Retroceder na Paradise
+        if (localizacao.MarEstou == 1 && localizacao.MarVou == 1 && (localizacao.IlhaEstou > localizacao.IlhaVou || localizacao.RotaEstou == 8)){
+            txtExtra = txtExtra + "Só é possível retroceder, seja na mesma rota ou não, na Paradise por Eternal Pose, Vivre Card ou Mapa Mundi<br>"
+        }
+        // Retroceder no Novo Mundo
+        if (localizacao.MarEstou == 2 && localizacao.MarVou == 2 && localizacao.IlhaEstou > localizacao.IlhaVou){
+            txtExtra = txtExtra + "Só é possível retroceder, seja na mesma rota ou não, no Novo Mundo por Eternal Pose, Vivre Card ou Mapa Mundi<br>"
+        }
+        switch(fam){
+            case 1:
+                txtExtra = txtExtra + "O seu personagem vai ficar bem perto de faminto... tem certeza que é uma boa escolha?<br>"
+                break
+            case 2:
+                txtExtra = txtExtra + "O seu personagem vai ficar com Faminto I... tem certeza que é uma boa escolha?<br>"    
+                break
+            case 3:
+                txtExtra = txtExtra + "O seu personagem vai ficar com Faminto II... tem certeza que é uma boa escolha?<br>"    
+                break
+            case 4:
+                txtExtra = txtExtra + "O seu personagem vai ficar com Faminto III... tem certeza que é uma boa escolha?<br>"    
+                break
+            case 5:
+                txtExtra = txtExtra + "O seu personagem vai ficar com Faminto IV... tem certeza que é uma boa escolha?<br>"    
+                break
+            case 6:
+                txtExtra = txtExtra + "O seu personagem vai ficar com Faminto V... tem certeza que é uma boa escolha?<br>"    
+                break
+        }
+        if (fam > 0 && gul > 0){
+            txtExtra = txtExtra + "Vai mesmo brincar com faminto tendo guloso na sua tripulação? Tente não matá-lo de fome.<br>"    
+        }
+        if (txtExtra != ""){
+            txtExtra = "<h3>Extras da viagem:</h3><br>" + txtExtra
+        }
+
+        return txtExtra
 }
 
 // Calculando Desgaste
@@ -443,18 +461,18 @@ function calcDesg(){
     sum = 0
     if(dis > 0){
         for(let i = 0; i < 4; i++){
-            auxDesgaste2[i] = Math.ceil(barco.velocidade*auxDesgaste[i]/dis)
-            sum = sum + auxDesgaste2[i]
+            redutor[i] = Math.ceil(barco.velocidade*auxDesgaste[i]/dis) // O redutor de cada oceano depende do tempo que o barco vai andar em cada oceano
+            sum = sum + redutor[i]
         }
     }
     else{
-        auxDesgaste2 = [0,0,0,0]
+        redutor = [0,0,0,0]
     }
 
-    while (sum > barco.velocidade){
+    while (sum > barco.velocidade){ // o redutor total não pode ser maior que a velocidade do barco
         for(let i = 0; i < 4; i++){
-            if(auxDesgaste2[3-i] > 0){
-                auxDesgaste2[3-i] = auxDesgaste2[3-i] - 1
+            if(redutor[3-i] > 0){
+                redutor[3-i] = redutor[3-i] - 1 // falaram para começar a tirar primeiro do novo mundo 
                 sum = sum - 1
             }
             if(sum == barco.velocidade){
@@ -465,88 +483,40 @@ function calcDesg(){
 
     desgaste = 0
     if (nav == 0){
-        desgaste = (auxDesgaste[0] - auxDesgaste2[0])*desgasteTabela[0][0] + (auxDesgaste[1] - auxDesgaste2[1])*desgasteTabela[1][0] + (auxDesgaste[2] - auxDesgaste2[2])*desgasteTabela[2][0] + (auxDesgaste[3] - auxDesgaste2[3])*desgasteTabela[3][0]
-        if(localizacao.MarEstou == 0 && localizacao.MarVou > 0 && (faccao != 0 && faccao != 3)){
-            desgaste = desgaste +  desgasteTabela[4][0]
-        }
-        // Adversidade Infinitos Corais
-        if (localizacao.RotaEstou == 0 && localizacao.MarEstou == 1 && localizacao.IlhaEstou == 0 && localizacao.IlhaVou > 0){
-            desgaste = desgaste + 3*desgasteTabela[2][0]
-        }
-        // Adversidade Frozen Oceans
-        if (localizacao.RotaEstou == 5 && localizacao.MarEstou == 1 && localizacao.IlhaEstou == 1 && localizacao.IlhaVou > 1){
-            desgaste = desgaste + 3*2*desgasteTabela[2][0]
-        }
+        calculoDesgaste(0)
     }
     else if(nav >= 1 && nav <= 4){
-        desgaste = (auxDesgaste[0] - auxDesgaste2[0])*desgasteTabela[0][1] + (auxDesgaste[1] - auxDesgaste2[1])*desgasteTabela[1][1] + (auxDesgaste[2] - auxDesgaste2[2])*desgasteTabela[2][1] + (auxDesgaste[3] - auxDesgaste2[3])*desgasteTabela[3][1]
-        if(localizacao.MarEstou == 0 && localizacao.MarVou > 0 && (faccao != 0 && faccao != 3)){
-            desgaste = desgaste +  desgasteTabela[4][1]
-        }
-        // Adversidade Infinitos Corais
-        if (localizacao.RotaEstou == 0 && localizacao.MarEstou == 1 && localizacao.IlhaEstou == 0 && localizacao.IlhaVou > 0){
-            desgaste = desgaste + 3*desgasteTabela[2][1]
-        }
-        // Adversidade Frozen Oceans
-        if (localizacao.RotaEstou == 5 && localizacao.MarEstou == 1 && localizacao.IlhaEstou == 1 && localizacao.IlhaVou > 1){
-            desgaste = desgaste + 3*2*desgasteTabela[2][1]
-        }
+        calculoDesgaste(1)
     }
     else if(nav >= 5 && nav <= 9){
-        desgaste = (auxDesgaste[0] - auxDesgaste2[0])*desgasteTabela[0][2] + (auxDesgaste[1] - auxDesgaste2[1])*desgasteTabela[1][2] + (auxDesgaste[2] - auxDesgaste2[2])*desgasteTabela[2][2] + (auxDesgaste[3] - auxDesgaste2[3])*desgasteTabela[3][2]
-        if(localizacao.MarEstou == 0 && localizacao.MarVou > 0 && (faccao != 0 && faccao != 3)){
-            desgaste = desgaste +  desgasteTabela[4][2]
-        }
-        // Adversidade Infinitos Corais
-        if (localizacao.RotaEstou == 0 && localizacao.MarEstou == 1 && localizacao.IlhaEstou == 0 && localizacao.IlhaVou > 0){
-            desgaste = desgaste + 3*desgasteTabela[2][2]
-        }
-        // Adversidade Frozen Oceans
-        if (localizacao.RotaEstou == 5 && localizacao.MarEstou == 1 && localizacao.IlhaEstou == 1 && localizacao.IlhaVou > 1){
-            desgaste = desgaste + 3*2*desgasteTabela[2][2]
-        }
+        calculoDesgaste(2)
     }
     else if(nav >= 10 && nav <= 15){        
-        desgaste = (auxDesgaste[0] - auxDesgaste2[0])*desgasteTabela[0][3] + (auxDesgaste[1] - auxDesgaste2[1])*desgasteTabela[1][3] + (auxDesgaste[2] - auxDesgaste2[2])*desgasteTabela[2][3] + (auxDesgaste[3] - auxDesgaste2[3])*desgasteTabela[3][3]
-        if(localizacao.MarEstou == 0 && localizacao.MarVou > 0 && (faccao != 0 && faccao != 3)){
-            desgaste = desgaste +  desgasteTabela[4][3]
-        }
-        // Adversidade Infinitos Corais
-        if (localizacao.RotaEstou == 0 && localizacao.MarEstou == 1 && localizacao.IlhaEstou == 0 && localizacao.IlhaVou > 0){
-            desgaste = desgaste + 3*desgasteTabela[2][3]
-        }
-        // Adversidade Frozen Oceans
-        if (localizacao.RotaEstou == 5 && localizacao.MarEstou == 1 && localizacao.IlhaEstou == 1 && localizacao.IlhaVou > 1){
-            desgaste = desgaste + 3*2*desgasteTabela[2][3]
-        }
+        calculoDesgaste(3)
     }
     else if(nav >= 16 && nav <= 19){        
-        desgaste = (auxDesgaste[0] - auxDesgaste2[0])*desgasteTabela[0][4] + (auxDesgaste[1] - auxDesgaste2[1])*desgasteTabela[1][4] + (auxDesgaste[2] - auxDesgaste2[2])*desgasteTabela[2][4] + (auxDesgaste[3] - auxDesgaste2[3])*desgasteTabela[3][4]
-        if(localizacao.MarEstou == 0 && localizacao.MarVou > 0 && (faccao != 0 && faccao != 3)){
-            desgaste = desgaste +  desgasteTabela[4][4]
-        }
-        // Adversidade Infinitos Corais
-        if (localizacao.RotaEstou == 0 && localizacao.MarEstou == 1 && localizacao.IlhaEstou == 0 && localizacao.IlhaVou > 0){
-            desgaste = desgaste + 3*desgasteTabela[2][4]
-        }
-        // Adversidade Frozen Oceans
-        if (localizacao.RotaEstou == 5 && localizacao.MarEstou == 1 && localizacao.IlhaEstou == 1 && localizacao.IlhaVou > 1){
-            desgaste = desgaste + 3*2*desgasteTabela[2][4]
-        }
+        calculoDesgaste(4)
     }
     else{
-        desgaste = (auxDesgaste[0] - auxDesgaste2[0])*desgasteTabela[0][5] + (auxDesgaste[1] - auxDesgaste2[1])*desgasteTabela[1][5] + (auxDesgaste[2] - auxDesgaste2[2])*desgasteTabela[2][5] + (auxDesgaste[3] - auxDesgaste2[3])*desgasteTabela[3][5]
-        if(localizacao.MarEstou == 0 && localizacao.MarVou > 0 && (faccao != 0 && faccao != 3)){
-            desgaste = desgaste +  desgasteTabela[4][5]
-        }
-        // Adversidade Infinitos Corais
-        if (localizacao.RotaEstou == 0 && localizacao.MarEstou == 1 && localizacao.IlhaEstou == 0 && localizacao.IlhaVou > 0){
-            desgaste = desgaste + 3*desgasteTabela[2][5]
-        }
-        // Adversidade Frozen Oceans
-        if (localizacao.RotaEstou == 5 && localizacao.MarEstou == 1 && localizacao.IlhaEstou == 1 && localizacao.IlhaVou > 1){
-            desgaste = desgaste + 3*2*desgasteTabela[2][5]
-        }
+        calculoDesgaste(5)
+    }
+}
+
+function calculoDesgaste(i){
+    desgaste = (auxDesgaste[0] - redutor[0])*desgasteTabela[0][i] // Parte Calm Belt
+    desgaste = desgaste + (auxDesgaste[1] - redutor[1])*desgasteTabela[1][i] // Parte Blues
+    desgaste = desgaste + (auxDesgaste[2] - redutor[2])*desgasteTabela[2][i] // Parte Paradise
+    desgaste = desgaste + (auxDesgaste[3] - redutor[3])*desgasteTabela[3][i] // Parte Novo Mundo
+    if(localizacao.MarEstou == 0 && localizacao.MarVou > 0 && (faccao != 0 && faccao != 3)){
+        desgaste = desgaste +  desgasteTabela[4][i]
+    }
+    // Adversidade Infinitos Corais
+    if (localizacao.RotaEstou == 0 && localizacao.MarEstou == 1 && localizacao.IlhaEstou == 0 && localizacao.IlhaVou > 0){
+        desgaste = desgaste + 3*desgasteTabela[2][i]
+    }
+    // Adversidade Frozen Oceans
+    if (localizacao.RotaEstou == 5 && localizacao.MarEstou == 1 && localizacao.IlhaEstou == 1 && localizacao.IlhaVou > 1){
+        desgaste = desgaste + 3*2*desgasteTabela[2][i]
     }
 }
 
@@ -645,24 +615,159 @@ function attDis(){
         case 1: // Estando na Paradise
             switch(localizacao.MarVou){
                 case 0: // Indo para os Blues
+                    if(localizacao.RotaEstou == 0){ // Estando no farol
+                        dis = 30 + BlueDistance[6][localizacao.IlhaVou] // 12 dias indo para a primeira ilha, 12 indo para o calm belt, 6 no calm, o resto depende de onde nos blues
+                        disC = 2 + BlueDistanceC[6][localizacao.IlhaVou] 
+                        auxDesgaste = [6,BlueDistance[6][localizacao.IlhaVou],24,0] 
+                    }
+                    else if(localizacao.RotaEstou == 8){ // Estando em Sabaody
+                        dis = 228 + BlueDistance[6][localizacao.IlhaVou] // 210 dias indo para a primeira ilha, 12 indo para o calm belt, 6 no calm, o resto depende de onde nos blues
+                        disC = 8 + BlueDistanceC[6][localizacao.IlhaVou] 
+                        auxDesgaste = [6,BlueDistance[6][localizacao.IlhaVou],222,0] 
+                    }
+                    else{ // Estando em qualquer outra ilha
+                        dis = 18 + 12*localizacao.IlhaEstou + BlueDistance[6][localizacao.IlhaVou] // x dias indo para a primeira ilha, 12 indo para o calm belt, 6 no calm, o resto depende de onde nos blues
+                        disC = localizacao.IlhaEstou + 1 + BlueDistanceC[6][localizacao.IlhaVou] 
+                        auxDesgaste = [6,BlueDistance[6][localizacao.IlhaVou],12*(1+localizacao.IlhaEstou),0] 
+                    }
                     break
                 case 1: // Indo para a Paradise
+                    if(localizacao.RotaEstou == 0){ // Estando no farol
+                        if (localizacao.RotaVou != 0 && localizacao.RotaVou != 8){ // Indo para ilhas normais
+                            dis = 12*(1+localizacao.IlhaVou) // 12 dias indo para a primeira ilha, 12 dias a mais para cada ilha subsequente
+                            disC = 1 + localizacao.IlhaVou
+                            auxDesgaste = [0,0,dis,0] 
+                        }
+                        else if(localizacao.RotaVou == 8){ // Indo para Sabaody
+                            dis = 12*8
+                            disC = 7 // Lembrando que ir para sabaody não conta na carona
+                            auxDesgaste = [0,0,dis,0]                        
+                        }
+                        else{ // Indo para o próprio farol
+                            dis = 0
+                            disC = 0
+                            auxDesgaste = [0,0,0,0]
+                        }
+                    }
+                    else if(localizacao.RotaEstou == 8){ // Estando em Sabaody
+                        if (localizacao.RotaVou != 0 && localizacao.RotaVou != 8){ // Indo para ilhas normais
+                            dis = 12*(7-localizacao.IlhaVou) // 210 dias indo para a primeira ilha, 12 indo para o calm belt, 6 no calm, o resto depende de onde nos blues
+                            disC = 7 - localizacao.IlhaVou 
+                            auxDesgaste = [0,0,dis,0]
+                        }
+                        else if(localizacao.RotaVou == 0){ // Indo para o farol
+                            dis = 12*8
+                            disC = 7 // Lembrando que ir para o farol não conta na carona
+                            auxDesgaste = [0,0,dis,0]                          
+                        }
+                        else{ // Indo para Sabaody
+                            dis = 0
+                            disC = 0
+                            auxDesgaste = [0,0,0,0]
+                        }
+                    }
+                    else{ // Estando em qualquer outra ilha
+                        if (localizacao.RotaVou != 0 && localizacao.RotaVou != 8){ // Indo para ilhas normais
+                            dis = 12*Math.abs(localizacao.RotaEstou - localizacao.RotaVou) // Somando primeiro as trocas de rotas
+                            dis = dis + 12*Math.abs(localizacao.IlhaEstou - localizacao.IlhaVou) // Somando depois os avanços/retornos de ilha
+                            disC = Math.abs(localizacao.RotaEstou - localizacao.RotaVou) // Somando primeiro as trocas de rotas
+                            disC = disC + Math.abs(localizacao.IlhaEstou - localizacao.IlhaVou) // Somando depois os avanços/retornos de ilha
+                            
+                            if (localizacao.RotaEstou != localizacao.RotaVou){ // Caso tenha troca de rota 
+                                if (localizacao.IlhaEstou >= 4 || localizacao.IlhaVou >=4){ // Checando se as ilhas são da 5ª para frente, pois não existe fusão de rotas antes
+                                    if (localizacao.RotaEstou > 6 || localizacao.RotaVou > 6){ // Só tem que subtrair se chegou na rota, dado que a conta da 6 já é a correta
+                                        dis = dis - 12
+                                        disC = disC - 1
+                                    }
+                                    if ((localizacao.RotaEstou < 3 && localizacao.RotaVou >= 3) || (localizacao.RotaEstou >=3 && localizacao.RotaVou < 3)){ // Checando se passou da 2ª pra 3ª ou vice versa
+                                        dis = dis - 12
+                                        disC = disC - 1
+                                    }
+                                }
+                            }
+                            auxDesgaste = [0,0,dis,0]
+                        }
+                        else if(localizacao.RotaVou == 0){ // Indo para o farol
+                            dis = 12*(1 + localizacao.IlhaEstou) // 12 dias indo para a primeira ilha, 12 dias a mais para cada ilha subsequente
+                            disC = localizacao.IlhaEstou // Ir para o farol não conta na carona
+                            auxDesgaste = [0,0,dis,0] 
+                        }
+                        else{
+                            dis = 12*(7 - localizacao.IlhaEstou) // 12 dias indo para a primeira ilha, 12 dias a mais para cada ilha subsequente
+                            disC = 6 - localizacao.IlhaEstou // Ir para sabaody não conta na carona
+                            auxDesgaste = [0,0,dis,0] 
+                        }
+                    }
                     break
                 case 2: // Indo para o Novo Mundo
+                    if (localizacao.RotaEstou == 0){ // Estando no Farol
+                        dis = 12*8 + 18 + 18*localizacao.IlhaVou
+                        disC = 8 + localizacao.IlhaVou // Lembrando que ir para sabaody não conta na carona
+                        auxDesgaste = [0,0,96,18*(1 + localizacao.IlhaVou)]
+                    }
+                    else if(localizacao.RotaEstou == 8){ // Estando em Sabaody
+                        dis = 18*(1 + localizacao.IlhaVou)
+                        disC = 1 + localizacao.IlhaVou
+                        auxDesgaste = [0,0,0,dis]
+                    }
+                    else{ // Estando em qualquer ilha
+                        dis = 12*(7 - localizacao.IlhaEstou) + 18*(1 + localizacao.IlhaVou)// 12 dias indo para a primeira ilha, 12 dias a mais para cada ilha subsequente
+                        disC = 7 - localizacao.IlhaEstou + localizacao.IlhaVou // Ir para sabaody não conta na carona
+                        auxDesgaste = [0,0,12*(7 - localizacao.IlhaEstou),18*(1 + localizacao.IlhaVou)] 
+                    }
                     break
                 case 3: // Indo para o Calm Belt
+                    if (localizacao.RotaEstou == 0){ // Estando no farol
+                        dis = 30
+                        disC = 2
+                        auxDesgaste = [6,0,24,0]
+                    }
+                    else if(localizacao.RotaEstou == 8){ // Estando em Sabaody
+                        dis = 102
+                        disC = 8
+                        auxDesgaste = [6,0,96,0]
+                    }
+                    else{ // Qualquer outra ilha
+                        dis = 12*(1 + localizacao.IlhaEstou) + 6 
+                        disC = localizacao.IlhaEstou + 1
+                        auxDesgaste = [6,0,12*(1 + localizacao.IlhaEstou),0] 
+                    }
                     break
             }
             break
         case 2: // Estando no Novo Mundo
             switch(localizacao.MarVou){
                 case 0: // Indo para os Blues
+                    dis = 18*(localizacao.IlhaEstou + 2) + 12*7 + BlueDistance[6][localizacao.IlhaVou]
+                    disC = 15 - localizacao.IlhaVou + localizacao.IlhaEstou
+                    auxDesgaste = [6,BlueDistance[6][localizacao.IlhaVou],12*8,18*(1+localizacao.IlhaEstou)]
                     break
                 case 1: // Indo para a Paradise
+                    if (localizacao.RotaVou == 0){ // Indo para o Farol
+                        dis = 18*(1+localizacao.IlhaEstou) + 12*8
+                        disC = localizacao.IlhaEstou + 7
+                        auxDesgaste = [0,0,96,18*(1+localizacao.IlhaEstou)]
+                    }
+                    else if(localizacao.RotaVou == 8){ // Indo para Sabaody
+                        dis = 18*(1+localizacao.IlhaEstou)
+                        disC = localizacao.IlhaEstou
+                        auxDesgaste = [0,0,0,dis]
+                    }
+                    else{ // Indo para qualquer outra ilha
+                        dis = 18*(1+localizacao.IlhaEstou) + 12*(7 - localizacao.IlhaVou)
+                        disC = 7 + localizacao.IlhaEstou - localizacao.IlhaVou
+                        auxDesgaste = [0,0,12*(7 - localizacao.IlhaVou),18*(1+localizacao.IlhaEstou)]
+                    }
                     break
                 case 2: // Indo para o Novo Mundo
+                    dis = 12*Math.abs(localizacao.RotaEstou - localizacao.RotaVou) + 18*Math.abs(localizacao.IlhaEstou-localizacao.IlhaVou)
+                    disC = Math.abs(localizacao.RotaEstou - localizacao.RotaVou) + Math.abs(localizacao.IlhaEstou-localizacao.IlhaVou)
+                    auxDesgaste = [0,0,0,dis]
                     break
                 case 3: // Indo para o Calm Belt
+                    dis = 18*(localizacao.IlhaEstou + 2) + 12*7
+                    disC = 8 + localizacao.IlhaEstou
+                    auxDesgaste = [6,0,12*8,18*(1+localizacao.IlhaEstou)]
                     break
             }
             break
@@ -705,220 +810,6 @@ function attDis(){
                         break
                 }
             break
-    }
-
-
-    // Chegando no Farol
-    if(localizacao.MarVou == 1 && localizacao.RotaVou == 0){
-        //Partindo de Sabaody/Tritão
-        if(localizacao.MarEstou == 1 && localizacao.RotaEstou == 8){
-            dis = 12*8
-            disC = 12
-            auxDesgaste = [0,0,dis,0]
-        }
-        // Partindo dos Blues
-        else if(localizacao.MarEstou == 0){
-            if ((faccao != 0 && faccao != 3)){
-                dis = BlueDistance[localizacao.IlhaEstou][6]
-                disC = 7 - localizacao.IlhaEstou
-                auxDesgaste = [0,dis,0,0]
-            }
-            else{
-                dis = BlueDistance[localizacao.IlhaEstou][6] + 6 + 12 + 12
-                disC = 2
-                auxDesgaste = [6,BlueDistance[localizacao.IlhaEstou][6],24,0]
-            }
-        }
-        //Partindo da Paradise
-        else if(localizacao.MarEstou == 1){
-            dis = 12*Math.abs(localizacao.IlhaEstou - 0) + 12
-            disC = localizacao.IlhaEstou + 1
-            auxDesgaste = [0,0,dis,0]
-        }
-        //Partindo do novo mundo
-        else if(localizacao.MarEstou == 2){
-            dis = 12*8 + 18 + 18*localizacao.IlhaEstou
-            disC = 9 + localizacao.IlhaEstou
-            auxDesgaste = [0,0,12*8,18 + 18*localizacao.IlhaEstou]
-        }
-    }
-    //Partindo do próprio Farol
-    else if(localizacao.MarEstou == 1 && localizacao.RotaEstou == 0){
-        // Para o próprio Farol
-        if(localizacao.MarVou == 1 && localizacao.RotaVou == 0){
-            dis = 0
-            disC = 0
-        }
-        // Partindo para Sabaody/Tritão
-        else if(localizacao.MarVou == 1 && localizacao.RotaVou == 8){
-            dis = 12*8
-            disC = 8
-            auxDesgaste = [0,0,dis,0]
-        }
-        // Partindo para os Blues
-        else if(localizacao.MarVou == 0){
-            dis = 12 + 18 + BlueDistance[localizacao.IlhaVou][6]
-            disC = 1 + (6 - localizacao.IlhaVou)
-            auxDesgaste = [6,BlueDistance[localizacao.IlhaVou][6],12+12,0]
-        }
-        // Partindo para a Paradise
-        else if(localizacao.MarVou == 1){
-            dis = 12 + 12*localizacao.IlhaVou
-            disC = localizacao.IlhaVou
-            auxDesgaste = [0,0,dis,0]
-        }
-        // Partindo para o Novo Mundo
-        else if(localizacao.MarVou == 2){
-            dis = 12*8 + 18 + 18*localizacao.IlhaVou
-            disC = 9 + localizacao.IlhaVou
-            auxDesgaste = [0,0,12*8,18+18*localizacao.IlhaVou]
-        }
-    }
-    // Chegando em Sabaody
-    else if(localizacao.MarVou == 1 && localizacao.RotaVou == 8){
-        // Partindo dos Blues
-        if(localizacao.MarEstou == 0){
-            if((faccao != 0 && faccao != 3)){
-                dis = BlueDistance[localizacao.IlhaEstou][6]+ 12*8
-                disC = 15 - localizacao.IlhaEstou
-                auxDesgaste = [0,BlueDistance[localizacao.IlhaEstou][6],12*8,0]
-
-            }
-            else{
-                dis = BlueDistance[localizacao.IlhaEstou][6] + 18 + 12*7
-                disC = 14 - localizacao.IlhaEstou
-                auxDesgaste = [6,BlueDistance[localizacao.IlhaEstou][6],12*8,0]
-            }
-        }
-        //Partindo da Paradise
-        else if(localizacao.MarEstou == 1){            
-            disC = 7 - localizacao.IlhaEstou
-            dis = 12*disC
-            auxDesgaste = [0,0,dis,0]
-        }
-        //Partindo do novo mundo
-        else if(localizacao.MarEstou == 2){
-            dis = 18 + 18*Math.abs(localizacao.IlhaEstou)
-            disC = localizacao.IlhaEstou + 1
-            auxDesgaste = [0,0,0,dis]
-        }
-    }
-    // Partindo de Sabaody
-    else if(localizacao.MarEstou == 1 && localizacao.RotaEstou == 8){
-        //Partindo para Sabaody/Tritão
-        if(localizacao.MarVou == 1 && localizacao.RotaVou == 8){
-            dis = 0
-            disC = 0
-        }
-        //Partindo para os Blues
-        else if(localizacao.MarVou == 0){
-            dis = 12*7 + 18 + BlueDistance[6][localizacao.IlhaVou]
-            disC = 14 - localizacao.IlhaVou
-            auxDesgaste = [6,BlueDistance[6][localizacao.IlhaVou],12*7,0]
-        }
-        //Partindo para a Paradise
-        else if(localizacao.MarVou == 1){
-            disC = 7 - localizacao.IlhaVou
-            dis = 12*disC
-            auxDesgaste = [0,0,dis,0]
-        }
-        //Partindo para o Novo Mundo
-        else if(localizacao.MarVou == 2){
-            dis = 18 + 18*localizacao.IlhaVou
-            disC = localizacao.IlhaVou
-            auxDesgaste = [0,0,0,dis]
-        }
-    }
-    //Situações envolvendo o mesmo mar
-    else if (localizacao.MarEstou == localizacao.MarVou){
-        //Primeiro caso, viagem dos Blues para os Blues
-        if(localizacao.MarEstou == 0){
-            // No mesmo Blue
-            if(localizacao.RotaEstou == localizacao.RotaVou){
-                dis = BlueDistance[localizacao.IlhaEstou][localizacao.IlhaVou]
-                disC = Math.abs(localizacao.IlhaEstou - localizacao.IlhaVou)
-                auxDesgaste = [0,dis,0,0]
-            }
-            // Em Blues diferentes
-            else{
-                dis = BlueDistance[localizacao.IlhaEstou][6] + 10 + BlueDistance[6][localizacao.IlhaVou]
-                disC = 13 - localizacao.IlhaEstou - localizacao.IlhaVou
-                auxDesgaste = [0,dis,0,0]
-            }
-        }
-        //Segundo caso, viagem da Paradise para a Paradise
-        else if(localizacao.MarEstou == 1){ 
-            dis = 12*Math.abs(localizacao.RotaEstou - localizacao.RotaVou) + 12*Math.abs(localizacao.IlhaEstou - localizacao.IlhaVou)
-            disC = Math.abs(localizacao.RotaEstou - localizacao.RotaVou) + Math.abs(localizacao.IlhaEstou - localizacao.IlhaVou)
-            if (localizacao.RotaEstou != localizacao.RotaVou){ // Caso tenha troca de rota
-                if (localizacao.IlhaEstou >= 4 || localizacao.IlhaVou >=4){ // Checando se as ilhas são da 5ª para frente
-                    if((localizacao.RotaEstou > 5 || localizacao.RotaVou > 5) || (localizacao.RotaEstou <= 1 && localizacao.RotaVou >= 2) || (localizacao.RotaVou <= 1 && localizacao.RotaEstou >= 2)){
-                        dis = dis - 12
-                        disC = disC - 1
-                    }
-                }
-            }
-            auxDesgaste = [0,0,dis,0]
-        }
-        //Terceiro caso, viagem do Novo Mundo para o Novo Mundo
-        else if(localizacao.MarEstou == 2){
-            dis = 12*Math.abs(localizacao.RotaEstou - localizacao.RotaVou) + 18*Math.abs(localizacao.IlhaEstou-localizacao.IlhaVou)
-            disC = Math.abs(localizacao.RotaEstou - localizacao.RotaVou) + Math.abs(localizacao.IlhaEstou-localizacao.IlhaVou)
-            auxDesgaste = [0,0,0,dis]
-        }
-    }
-    //Situações envolvendo troca de mares
-    else{
-        //Primeiro caso, viagem dos Blues para a Paradise
-        if (localizacao.MarEstou == 0 && localizacao.MarVou == 1){
-            if((faccao != 0 && faccao != 3)){
-                dis = BlueDistance[localizacao.IlhaEstou][6] + 12 + 12*localizacao.IlhaVou
-                disC = 7 - localizacao.IlhaEstou + localizacao.IlhaVou
-                auxDesgaste = [0,BlueDistance[localizacao.IlhaEstou][6],12+12*localizacao.IlhaVou,0]
-            }
-            else{
-                dis = BlueDistance[localizacao.IlhaEstou][6] + 18 + 12*localizacao.IlhaVou
-                disC = 6 + localizacao.IlhaVou - localizacao.IlhaEstou
-                auxDesgaste = [6,BlueDistance[localizacao.IlhaEstou][6],12+12*localizacao.IlhaVou,0]
-            }
-        }
-        //Segundo caso, viagem dos Blues para o Novo Mundo
-        else if (localizacao.MarEstou == 0 && localizacao.MarVou == 2){
-            if((faccao != 0 && faccao != 3)){
-                dis = BlueDistance[localizacao.IlhaEstou][6] + 12*8 + 18 + 18*localizacao.IlhaVou
-                disC = 15 - localizacao.IlhaEstou + localizacao.IlhaVou
-                auxDesgaste = [0,BlueDistance[localizacao.IlhaEstou][6],12*8,18+18*localizacao.IlhaVou]
-            }
-            else{
-                dis = BlueDistance[localizacao.IlhaEstou][6] + 18 + 12*7 + 18 + 18*localizacao.IlhaVou
-                disC = 14 - localizacao.IlhaEstou + localizacao.IlhaVou
-                auxDesgaste = [6,BlueDistance[localizacao.IlhaEstou][6],12*8,18+18*localizacao.IlhaVou]
-            }
-        }
-        //Terceiro caso, viagem da Paradise para os Blues
-        else if(localizacao.MarEstou == 1 && localizacao.MarVou == 0){
-            dis = BlueDistance[6][localizacao.IlhaVou] + 18 + 12*localizacao.IlhaEstou
-            disC = 7 - localizacao.IlhaVou + localizacao.IlhaEstou
-            auxDesgaste = [6,BlueDistance[6][localizacao.IlhaVou],12*(localizacao.IlhaEstou + 1),0]
-        }
-        //Quarto caso, viagem da Paradise para o Novo Mundo
-        else if(localizacao.MarEstou == 1 && localizacao.MarVou == 2){
-            dis = 12*Math.abs(localizacao.IlhaEstou - 7) + 18 + 18*localizacao.IlhaVou
-            disC = 8 + localizacao.IlhaVou - localizacao.IlhaEstou
-            auxDesgaste = [0,0,12*Math.abs(localizacao.IlhaEstou - 7),18*(1+localizacao.IlhaVou)]
-        }
-        //Quinto caso, viagem do Novo Mundo para os Blues
-        else if(localizacao.MarEstou == 2 && localizacao.MarVou == 0){
-            dis = 18*localizacao.IlhaEstou + 18 + 12*7 + 18 + BlueDistance[6][localizacao.IlhaVou]
-            disC = 15 - localizacao.IlhaVou + localizacao.IlhaEstou
-            auxDesgaste = [6,BlueDistance[6][localizacao.IlhaVou],12*8,18*(1+localizacao.IlhaEstou)]
-        }
-        //Sexto caso, viagem do Novo Mundo para a Paradise
-        else if(localizacao.MarEstou == 2 && localizacao.MarVou == 1){
-            dis = 18*localizacao.IlhaEstou + 18 + 12*Math.abs(7 - localizacao.IlhaVou)
-            disC = 8 + localizacao.IlhaEstou - localizacao.IlhaVou
-            auxDesgaste = [0,0,12*Math.abs(7 - localizacao.IlhaVou),18*(1+localizacao.IlhaEstou)]
-        } 
     }
 
     // Adversidade Florian Triangle
@@ -1182,7 +1073,7 @@ function attFaccao(valor){
     attDis()
 }
 
-// Daqui para baixa são funções dos Extras
+// Daqui para baixo são funções dos Extras
 function attAdm(){
     if (document.getElementById('administracao').checked == true){
         adm = 1

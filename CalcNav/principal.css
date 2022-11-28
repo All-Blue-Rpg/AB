@@ -74,8 +74,8 @@
     width: 50px;
 }
 
-#Principal #barcoSelecao label{
-    text-align: left;
+#Principal #barcoSelecao input[type="number"] label{
+    text-align: right;
     width: 22px;
 }
 
