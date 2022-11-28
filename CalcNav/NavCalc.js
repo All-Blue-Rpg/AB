@@ -204,6 +204,7 @@ function attTempoNormal(){
 
 function resultadoTexto(posts,duracao){
     // Texto da Duração
+    console.log("Oi 2")
     txtResultado = "<h3>Duração:</h3><br>A distância da sua viagem é de " + dis + " dias<br>"
     txtResultado = txtResultado + "A redução da viagem é de " + barco.velocidade + " dias<br>"
     txtResultado = txtResultado + "A sua comida dura " + barco.comida + " dias<br>"
