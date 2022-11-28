@@ -105,6 +105,7 @@ function attTempo(){
 }
 
 function attTempoCarona(){
+    txtResultado = ""
     if (disC == 0){
         txtResultado = "Você já está no seu objetivo, tá nas dorgas mermão?"
         document.getElementById('Resultados').innerHTML = txtResultado 
@@ -113,38 +114,38 @@ function attTempoCarona(){
     if (disC > 1 && (faccao == 1 || faccao == 2 || faccao == 4)){
         txtResultado = "<h3>Aviso:</h3><br>Recomendo que coloque uma única ilha de distância já que está pegando carona sendo caçador/civil/pirata.<br>"
     }
-    txtResultado = txtResultado + "<h3>Duração:</h3><br>A distância da sua viagem é de " + disC + "  ilhas<br>"
+    txtResultado = txtResultado + "<h3>Duração:</h3><br>A distância da sua viagem é de " + disC + "  ilhas.<br>"
     switch(faccao){
         case 0:  // Agente
             if(localizacao.MarEstou == 0 && localizacao.MarVou > 0){
-                caronaTexto("agente",13,Math.ceil(disC/2),Math.ceil(disC/2))
+                txtResultado = txtResultado + caronaTexto("agente",13,Math.ceil(disC/2),Math.ceil(disC/2))
             }
             else{
-                caronaTexto("agente",15,Math.ceil(disC/2),Math.ceil(disC/2))
+                txtResultado = txtResultado + caronaTexto("agente",15,Math.ceil(disC/2),Math.ceil(disC/2))
             }
             break
         case 1:  //Caçador de Recompensas
             if(localizacao.MarEstou == 0 && localizacao.MarVou > 0){
-                caronaTexto("caçador de recompensas",13,disC, 3*(disC-1))
+                txtResultado = txtResultado + caronaTexto("caçador de recompensas",13,disC, 3*(disC-1))
             }
             else{
-                caronaTexto("caçador de recompensas",2,disC, 3*(disC-1))
+                txtResultado = txtResultado + caronaTexto("caçador de recompensas",2,disC, 3*(disC-1))
             }
             break
         case 2:  //Civil
             if(localizacao.MarEstou == 0 && localizacao.MarVou > 0){
-                caronaTexto("civil",13,disC, 2*(disC-1))
+                txtResultado = txtResultado + caronaTexto("civil",13,disC, 2*(disC-1))
             }
             else{
-                caronaTexto("caçador de recompensas",2,disC, 2*(disC-1))
+                txtResultado = txtResultado + caronaTexto("caçador de recompensas",2,disC, 2*(disC-1))
             }
             break
         case 3:  //Marinha
             if(localizacao.MarEstou == 0 && localizacao.MarVou > 0){
-                caronaTexto("marinheiro",13,disC, disC)
+                txtResultado = txtResultado + caronaTexto("marinheiro",13,disC, disC)
             }
             else{
-                caronaTexto("marinheiro",14,disC, disC)
+                txtResultado = txtResultado + caronaTexto("marinheiro",14,disC, disC)
             }
             break
         case 4:  //Pirata
@@ -153,7 +154,7 @@ function attTempoCarona(){
                 document.getElementById('Resultados').innerHTML = txtResultado 
                 return
             }
-            caronaTexto("pirata",2,disC,4*(disC-1))
+            txtResultado = txtResultado + caronaTexto("pirata",2,disC,4*(disC-1))
             break
         case 5:  //Revolucionário
             if(localizacao.RotaEstou == 0 && localizacao.RotaVou > 0){
@@ -161,17 +162,18 @@ function attTempoCarona(){
                 document.getElementById('Resultados').innerHTML = txtResultado 
                 return
             }
-            caronaTexto("revolucionário",16,disC,disC)
+            txtResultado = txtResultado + caronaTexto("revolucionário",16,disC,disC)
             break
         case 6:  //Submundo
             if(localizacao.MarEstou == 0 && localizacao.MarVou > 0){
-                caronaTexto("fdm do submundo",13,disC,disC)
+                txtResultado = txtResultado + caronaTexto("fdm do submundo",13,disC,disC)
             }
             else{
-                caronaTexto("fdm do submundo",2,disC,disC)
+                txtResultado = txtResultado + caronaTexto("fdm do submundo",2,disC,disC)
             }
             break
     }
+    document.getElementById('Resultados').innerHTML = txtResultado
 }
 
 function attTempoNormal(){
@@ -204,6 +206,7 @@ function attTempoNormal(){
 
 function resultadoTexto(posts,duracao){
     // Texto da Duração
+    txtResultado = ""
     txtResultado = "<h3>Duração:</h3><br>A distância da sua viagem é de " + dis + " dias<br>"
     txtResultado = txtResultado + "A redução da viagem é de " + barco.velocidade + " dias<br>"
     txtResultado = txtResultado + "A sua comida dura " + barco.comida + " dias<br>"
@@ -359,21 +362,22 @@ function extraTexto(){
 function caronaTexto(faccao,numeroBarco,viagens,turnos){
     qualBarco(numeroBarco)
     document.getElementById('Barco').value = toString(numeroBarco)
+    auxResultado = ""
     if(localizacao.MarEstou == 0 && localizacao.MarVou > 0){
-        txtResultado = txtResultado + "Por ser um " + faccao + "que está passando pelo Calm Belt, o barco que você está pegando carona é obrigatoriamente um(a)" + barco.Nome + ".<br>"
+        auxResultado = auxResultado + "Por ser um " + faccao + " que está passando pelo Calm Belt, o barco que você está pegando carona é obrigatoriamente um(a) " + barco.Nome + ".<br>"
     }
     else{
-        txtResultado = txtResultado + "Por ser um " + faccao + " que está em uma viagem comum, o barco que você está pegando carona é obrigatoriamente um(a)" + barco.Nome + ".<br>"
+        auxResultado = auxResultado + "Por ser um " + faccao + " que está em uma viagem comum, o barco que você está pegando carona é obrigatoriamente um(a) " + barco.Nome + ".<br>"
     }
-    txtResultado = txtResultado + "Pelo menos você não precisa se preocupar com nada da viagem além de agradar a pessoa que está te dando carona.<br>"
-    txtResultado = txtResultado + "Você vai precisar de " + viagens + " viagens.<br>"
+    auxResultado = auxResultado + "Pelo menos você não precisa se preocupar com nada da viagem além de agradar a pessoa que está te dando carona.<br>"
+    auxResultado = auxResultado + "Você vai precisar de " + viagens + " viagens.<br>"
     if (faccao == "agente" || faccao == "marinheiro" || faccao == "fdm do submundo" || faccao == "revolucionário")
-        txtResultado = txtResultado + "Esse número de viagens na sua facção demora " + turnos + " turnos,.<br>"
+        auxResultado = auxResultado + "Esse número de viagens na sua facção demora " + turnos + " turnos.<br>"
     else{
-        txtResultado = txtResultado + "Esse número de viagens na sua facção demora " + turnos + " aventuras de 20 turnos cada. Lembre-se de viajar logo que as aventuras necessárias acabaram, ou gastará uma aventura a toa.<br>"
+        auxResultado = auxResultado + "Esse número de viagens na sua facção demora " + turnos + " aventuras de 20 turnos cada. Lembre-se de viajar logo que o cooldown das aventuras necessárias para a carona acabaram, ou gastará uma aventura a toa.<br>"
     }
 
-    document.getElementById('Resultados').innerHTML = txtResultado
+    return auxResultado
 }
 
 // Calculando Desgaste
@@ -442,13 +446,6 @@ function calculoDesgaste(i){
 
 // Atualizando Distância
 function attDis(){
-    // console.log("Mar Estou: " + localizacao.MarEstou)
-    // console.log("Rota Estou: " + localizacao.RotaEstou)
-    // console.log("Ilha Estou: " + localizacao.IlhaEstou)
-    // console.log("Mar Vou: " + localizacao.MarVou)
-    // console.log("Rota Vou: " + localizacao.RotaVou)
-    // console.log("Ilha Vou: " + localizacao.IlhaVou)
-    // console.log("\n")
     switch(localizacao.MarEstou){
         case 0: // Estando nos Blues
             switch(localizacao.MarVou){
@@ -869,7 +866,6 @@ function qualMar(identificador, valor){
     localizacao.setLoc(identificador,valor,valorR,0)
 
     qualRota(identificador,valorR)
-    attDis()
 }
 
 function qualRota(identificador, valor){
@@ -978,14 +974,13 @@ function attCarona(){
         document.getElementById("Extras").style.display = "none"
         document.getElementById("barcoSelecao").style.display = "none"
         carona = true
-        attTempoCarona()
     }
     else{
         document.getElementById("Extras").style.display = "grid"
         document.getElementById("barcoSelecao").style.display = "grid"
         carona = false
-        attTempoNormal()
     }
+    attTempo()
 }
 
 function attFaccao(valor){
