@@ -42,9 +42,11 @@
 }
 
 .fundoPepe .dados ul li {
-    font-size: 0.8rem;
+    font-size: 1rem;
+    list-style: circle;
 }
   
 .fundoPepe .dados  ul li li {
-    font-size: 0.7rem;
+    font-size: 0.8rem;
+    list-style: inside;
 }
