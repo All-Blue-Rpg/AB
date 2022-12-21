@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="main.js"></script>
+    <link rel="stylesheet" href="AtrCalc.css">
+    <title>Calculadora de Atributos</title>
+</head>
+<body onload="carregando()">
+    <div class="nav_bar nav_main">
+        <a href="javascript:soAtributos()">Calcular Atributos</a>            
+        <a href="javascript:fichaToda()">Ficha Nova</a>
+    </div>
+    <div class="nav_bar nav_secundaria">
+        <a id="DownAtrFic" href="javascript:DownloadAtributosFicha()">Baixar Atributos para Ficha</a>
+        <a id="DownAtrFut" href="javascript:DownloadAtributosFuturo()">Baixar Atributos para Uso Futuro</a>
+        <label for="upload" id="labelUpload"><a>Upload dos Atributos</a></label><input type="file" id="upload" onchange="UploadAtributos()" style="display:none;">
+        <a id="DownFic" href="javascript:DownloadFicha()" style="display: none;">Baixar Ficha Completa</a>             
+    </div>
+    <div class="atributos">
+        <div class="tabela">
+            <p>Atributo</p>
+            <p>Bruto</p>
+            <p>Racial</p>
+            <p>EDC</p>
+            <p>Arma</p>
+            <p>Caminho</p>
+            <p>Outros</p>
+            <span> </span>
+            <p>Total</p>
+            <p>Força</p>
+            <div id="forcaBruto"><input type="number" id="BrutoForca" min="0" value="0" max="400" onchange="somaBruto()"></div>
+            <div id="forcaRaca" class="racaTabela">0</div>
+            <div id="forcaEDC" class="edcTabela">0</div>
+            <div id="forcaArma" class="armaTabela">0</div>
+            <div id="forcaCaminho" class="caminhoTabela">0</div> 
+            <div id="forcaOutros" class="outrosTabela">0</div>
+            <span>=</span>
+            <div id="forcaTotal" class="totalTabela">0</div> 
+            <p>Destreza</p>
+            <div id="destrezaBruto"><input type="number" id="BrutoDestreza" min="0" value="0" max="400" onchange="somaBruto()"></div>
+            <div id="destrezaRaca" class="racaTabela">0</div>
+            <div id="destrezaEDC" class="edcTabela">0</div>
+            <div id="destrezaArma" class="armaTabela">0</div>
+            <div id="destrezaCaminho" class="caminhoTabela">0</div> 
+            <div id="destrezaOutros" class="outrosTabela">0</div>
+            <span>=</span>
+            <div id="destrezaTotal" class="totalTabela">0</div> 
+            <p>Acerto</p>
+            <div id="acertoBruto"><input type="number" id="BrutoAcerto" min="0" value="0" max="400" onchange="somaBruto()"></div>
+            <div id="acertoRaca" class="racaTabela">0</div>
+            <div id="acertoEDC" class="edcTabela">0</div>
+            <div id="acertoArma" class="armaTabela">0</div>
+            <div id="acertoCaminho" class="caminhoTabela">0</div> 
+            <div id="acertoOutros" class="outrosTabela">0</div>
+            <span>=</span>
+            <div id="acertoTotal" class="totalTabela">0</div> 
+            <p>Reflexo</p>
+            <div id="reflexoBruto"><input type="number" id="BrutoReflexo" min="0" value="0" max="400" onchange="somaBruto()"></div>
+            <div id="reflexoRaca" class="racaTabela">0</div>
+            <div id="reflexoEDC" class="edcTabela">0</div>
+            <div id="reflexoArma" class="armaTabela">0</div>
+            <div id="reflexoCaminho" class="caminhoTabela">0</div> 
+            <div id="reflexoOutros" class="outrosTabela">0</div>
+            <span>=</span>
+            <div id="reflexoTotal" class="totalTabela">0</div> 
+            <p>Constituição</p>
+            <div id="constBruto"><input type="number" id="BrutoConstituicao" min="0" value="0" max="400" onchange="somaBruto()"></div>
+            <div id="constRaca" class="racaTabela">0</div>
+            <div id="constEDC" class="edcTabela">0</div>
+            <div id="constArma" class="armaTabela">0</div>
+            <div id="constCaminho" class="caminhoTabela">0</div> 
+            <div id="constOutros" class="outrosTabela">0</div>
+            <span>=</span>
+            <div id="constTotal" class="totalTabela">0</div> 
+        </div>
+        <div class="experiencia"> 
+            <label for="expInput">Experiência:</label>
+            <input type="number" id="expInput" name="expInput" min="400" value="400" max="20000" onchange="attXP()">
+            <div id="faltaXP"></div>
+        </div>
+        <div class="raca">
+            <label for="raca">Selecione sua raça:</label>
+            <select name="raca" id="raca" onchange="changeVariacao(value)">
+                <option value=0>Humano</option>
+                <option value=1>Mink</option>
+                <option value=2>Anão</option>
+                <option value=3>Homem-Peixe</option>
+                <option value=4>Tritão</option>
+                <option value=5>Híbrido</option>
+            </select>
+            <label for="variacao" id="labelVariacao">Variação Racial:</label>
+            <select name="variacao" id="variacao" onchange="changeOptionRaca(value)"></select>
+            <div id="humanoPontoRaca">
+                <label for="RacaForca">Força:</label>
+                <input type="number" id="RacaForca" name="RacaForca" min="0" value="0" max="160" onchange="somaRacial()">
+                <label for="RacaDestreza">Destreza:</label>
+                <input type="number" id="RacaDestreza" name="RacaDestreza" min="0" value="0" max="160" onchange="somaRacial()">
+                <label for="RacaAcerto">Acerto:</label>
+                <input type="number" id="RacaAcerto" name="RacaAcerto" min="0" value="0" max="160" onchange="somaRacial()">
+                <label for="RacaReflexo">Reflexo:</label>
+                <input type="number" id="RacaReflexo" name="RacaReflexo" min="0" value="0" max="160" onchange="somaRacial()">
+                <label for="RacaConstituicao">Constituição:</label>
+                <input type="number" id="RacaConstituicao" name="RacaConstituicao" min="0" value="0" max="160" onchange="somaRacial()">
+            </div>
+            <div id="seletorPontoRaca">
+                <label for="forca">Força:</label>
+                <input type="radio" name="danoRaca" id="SeletorForca" checked onchange="attSeletorRacial()">
+                <label for="destreza">Destreza:</label>
+                <input type="radio" name="danoRaca" onchange="attSeletorRacial()">
+            </div>
+        </div>
+        <div class="edc">
+            <label for="edc">Selecione seu EDC:</label>
+            <select name="edc" id="edc" onchange="chooseEDC(value)">
+                <option value=0>40x em 3</option>
+                <option value=1>60x em 2</option>
+                <option value=2>Personalizado</option>
+            </select>
+            <div class="checkEDC">
+                <input type="checkbox" id="EDCForca" name="EDCForca" onchange="attAtributoEDC('EDCForca',0)">
+                <label for="EDCForca">Força</label>
+                <input type="checkbox" id="EDCDestreza" name="EDCDestreza" onchange="attAtributoEDC('EDCDestreza',1)">
+                <label for="EDCDestreza">Destreza</label>
+                <input type="checkbox" id="EDCAcerto" name="EDCAcerto" onchange="attAtributoEDC('EDCAcerto',2)">
+                <label for="EDCAcerto">Acerto</label>
+                <input type="checkbox" id="EDCReflexo" name="EDCReflexo" onchange="attAtributoEDC('EDCReflexo',3)">
+                <label for="EDCReflexo">Reflexo</label>
+            </div>
+            <div id="personalizadoEDC" class="visually-hidden">
+                <label for="EDCForcaInput">Força:</label>
+                <input type="number" id="EDCForcaInput" name="EDCForcaInput" min="0" value="0" max="120" onchange="somaEDC()">
+                <label for="EDCDestrezaInput">Destreza:</label>
+                <input type="number" id="EDCDestrezaInput" name="EDCDestrezaInput" min="0" value="0" max="120" onchange="somaEDC()">
+                <label for="EDCAcertoInput">Acerto:</label>
+                <input type="number" id="EDCAcertoInput" name="EDCAcertoInput" min="0" value="0" max="120" onchange="somaEDC()">
+                <label for="EDCReflexoInput">Reflexo:</label>
+                <input type="number" id="EDCReflexoInput" name="EDCReflexoInput" min="0" value="0" max="120" onchange="somaEDC()">
+            </div>
+        </div>
+        <div class="arma"></div>
+        <div class="caminho"></div>
+        <div class="outros">
+            <div class="rokushiki"></div>
+            <div class="haki"></div>
+        </div>
+    </div>
+</body>
+</html>
