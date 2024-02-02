@@ -45,6 +45,9 @@ document.addEventListener("DOMContentLoaded", () => {
         .abFicha b, .abFicha strong, .abFicha i, .abFicha s, .abFicha u {
           display: inline-block;
         }
+        .abFicha .spoiler, .abFicha .spoiler * {
+          transition: none;
+        }
         .abFicha:hover .abfNome .abfAvatar {
           --xp: var(--b);
         }
