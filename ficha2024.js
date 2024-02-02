@@ -3,13 +3,13 @@ document.addEventListener("DOMContentLoaded", () => {
     
     const query = (selector) => {return document.querySelector(selector)},
     queryAll = (selector) => {return document.querySelectorAll(selector)},
-    resize = (size , text) => {
+    resize = (size , text, max, amount) => {
         if (size == 1) return;
-        if (text.scrollWidth > 363){
+        if (text.scrollWidth > max){
             requestAnimationFrame(() =>
                 requestAnimationFrame(function(){
                     text.style.fontSize = size + 'px';
-                    resize(size - 0.5 , text);
+                    resize(size - amount , text, max, amount);
             }))
         }
         return
@@ -89,10 +89,10 @@ document.addEventListener("DOMContentLoaded", () => {
           font-weight: 700;
           line-height: 100%;
           text-transform: uppercase;
+          white-space: nowrap;
         }
         .abfNome p:nth-child(1) {
           font-size: 42px;
-          white-space: nowrap;
         }
         .abfNome p:nth-child(2) {
           font-size: 16px;
@@ -817,7 +817,8 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log(construtorDeFicha());
         console.log(construtorCss());
 
-        resize(41 , query('.abfNome span p'));
+        resize(42 , query('.abfNome span p'), 367, 0.5);
+        resize(16 , query('.abfNome span p+p'), 400, 0.1);
     
         queryAll('.abfButtons button').forEach((element) => element.onclick = () => {
             let target = '#' + element.innerText.toLowerCase();
