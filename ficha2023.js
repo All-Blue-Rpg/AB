@@ -82,6 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         .abfNome p {
           margin: auto 0;
+          font-family: "Poppins", sans-serif;
           font-weight: 700;
           line-height: 100%;
           text-transform: uppercase;
@@ -349,6 +350,7 @@ document.addEventListener("DOMContentLoaded", () => {
           gap: 20px;
           width: calc(50% - 5px);
           position: relative;
+          height: 45px;
           font-size: 16px;
           font-weight: 700;
           text-transform: uppercase;
@@ -412,6 +414,7 @@ document.addEventListener("DOMContentLoaded", () => {
           background-color: #151515;
           margin: 10px 0px 0px 0px;
           padding: 20px;
+          border-radius: 0px 0px 3px 3px;
         }
         .abfSection header {
           width: 100%;
@@ -495,7 +498,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         </style>`
 
-        query('head').insertAdjacentHTML("afterend", css);
+        query('head').insertAdjacentHTML('beforeend', css);
         return 'Css OK';
     }
 
@@ -588,6 +591,8 @@ document.addEventListener("DOMContentLoaded", () => {
         let campoUm = query('campoUm').innerText;
         let campoDoisNome = query('campoDoisNome').innerText;
         let campoDois = query('campoDois').innerText;
+        let campoTresNome = query('campoTresNome').innerText;
+        let campoTres = query('campoTres').innerText;
         let alcunhas = query('alcunhas').innerText;
         
         let inventario = query('inventario').innerHTML;
@@ -603,7 +608,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="abfBanner" style="--abfBanner: url(${imagemBanner});"></div>
             <div class="abfNome">
                 <span>
-                    <p id="canvas">${nome}</p>
+                    <p>${nome}</p>
                     <p>${subNome}</p>
                 </span>
                 <div class="abfAvatar" style="--abfAvatar: url(${imagemIcone}); --b: calc((${xpAtual}/${xpProxLvl}) * 360deg)"><div><span>Lvl ${level}</span>${xpAtual}/${xpProxLvl}</div></div>
@@ -772,6 +777,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <span><b>Título</b> ${titulo}</span>
                     <span><b>${campoUmNome}</b> ${campoUm}</span>
                     <span><b>${campoDoisNome}</b> ${campoDois}</span>
+                    <span><b>${campoTresNome}</b> ${campoTres}</span>
                     <span><b>Alcunhas</b> ${alcunhas}</span>
                 </div>
             </section>
@@ -800,7 +806,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </section>
         </div>`
 
-        query('.fichaAllBlue').parentElement.innerHTML = ficha;
+        query('.fichaAllBlue').insertAdjacentHTML('beforebegin', ficha);
         return "Html Ok";
     }
 
