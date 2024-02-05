@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("Rodando Ficha ver. 1.0");
+    console.log("Rodando Ficha ver. 1.1");
     
     const query = (selector) => {return document.querySelector(selector)},
     queryAll = (selector) => {return document.querySelectorAll(selector)},
@@ -13,7 +13,38 @@ document.addEventListener("DOMContentLoaded", () => {
             }))
         }
         return
-    };
+    },
+
+    text = (selector) => {
+      try{
+        return query(selector).innerText;
+      }catch{
+        console.log('Não foi possível identificar ' + selector);
+        return '';
+      }
+    },
+
+    html = (selector) => {
+      try{
+        return query(selector).innerHTML;
+      }catch{
+        console.log('Não foi possível identificar ' + selector);
+        return '';
+      }
+    },
+
+    grupoCampos = () => {
+      let html = '';
+      let matrix = [queryAll('campoNome'),queryAll('campoInfo')];
+
+      for (let i = 0; i < matrix[0].length; i++) {
+        try{
+          html += `<span><b>${matrix[0][i].innerText}</b> ${matrix[1][i].innerText}</span>`;
+        }catch(e){console.log('Não foi possível identificar ' + e);}
+      }
+
+      return html;
+    }
 
     function construtorCss(){
         let css = `<style>
@@ -82,6 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
           flex-flow: column;
           padding: 20px;
           width: 62%;
+          line-height: normal;
         }
         .abfNome p {
           margin: auto 0;
@@ -389,6 +421,7 @@ document.addEventListener("DOMContentLoaded", () => {
           width: 35px;
           order: 3;
           font-weight: 500;
+          text-align: right;
         }
         .atributo span:nth-child(3) {
           display: flex;
@@ -506,105 +539,105 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function construtorDeFicha(){
-        let imagemBanner = query('imagemBanner').innerText;
-        let imagemIcone = query('imagemIcone').innerText;
-        let corFicha = query('corFicha').innerText;
+        let imagemBanner = text('imagemBanner');
+        let imagemIcone = text('imagemIcone');
+        let corFicha = text('corFicha');
 
-        let nome = query('nome').innerText;
-        let subNome = query('subNome').innerText;
+        let nome = text('nome');
+        let subNome = html('subNome');
 
-        let idade = query('idade').innerText;
-        let genero = query('genero').innerText;
-        let maoPredominante = query('maoPredominante').innerText;
-        let risada = query('risada').innerText;
-        let altura = query('altura').innerText;
-        let peso = query('peso').innerText;
-        let raca = query('raca').innerText;
-        let origem = query('origem').innerText;
-        let localizacao = query('localizacao').innerText;
-        let grupo = query('grupo').innerText;
+        let idade = text('idade');
+        let genero = text('genero');
+        let maoPredominante = text('maoPredominante');
+        let risada = text('risada');
+        let altura = text('altura');
+        let peso = text('peso');
+        let raca = text('raca');
+        let origem = text('origem');
+        let localizacao = text('localizacao');
+        let grupo = text('grupo');
 
-        let level = query('level').innerText;
-        let xpAtual = query('xpAtual').innerText;
-        let xpProxLvl = query('xpProxLvl').innerText;
+        let level = text('level');
+        let xpAtual = text('xpAtual');
+        let xpProxLvl = text('xpProxLvl');
 
-        let forca = query('forca').innerText;
-        let forcaMod = query('forcaMod').innerText;
-        let forcaCalc = query('forcaCalc').innerHTML;
-        let destreza = query('destreza').innerText;
-        let destrezaMod = query('destrezaMod').innerText;
-        let destrezaCalc = query('destrezaCalc').innerHTML;
-        let agilidade = query('agilidade').innerText;
-        let agilidadeMod = query('agilidadeMod').innerText;
-        let agilidadeCalc = query('agilidadeCalc').innerHTML;
-        let inteligencia = query('inteligencia').innerText;
-        let inteligenciaMod = query('inteligenciaMod').innerText;
-        let inteligenciaCalc = query('inteligenciaCalc').innerHTML;
-        let constituicao = query('constituicao').innerText;
-        let constituicaoMod = query('constituicaoMod').innerText;
-        let constituicaoCalc = query('constituicaoCalc').innerHTML;
-        let carisma = query('carisma').innerText;
-        let carismaMod = query('carismaMod').innerText;
-        let carismaCalc = query('carismaCalc').innerHTML;
-        let pontosDeVida = query('pontosDeVida').innerText;
-        let espirito = query('espirito').innerText;
-        let stamina = query('stamina').innerText;
-        let iniciativa = query('iniciativa').innerText;
-        let iniciativaCalc = query('iniciativaCalc').innerHTML;
-        let acerto = query('acerto').innerText;
-        let acertoCalc = query('acertoCalc').innerHTML;
-        let reflexo = query('reflexo').innerText;
-        let reflexoCalc = query('reflexoCalc').innerHTML;
-        let opa = query('opa').innerText;
-        let danoCaC = query('danoCaC').innerHTML;
-        let danoCaCCalc = query('danoCaCCalc').innerHTML;
-        let danoAD = query('danoAD').innerText;
-        let danoADCalc = query('danoADCalc').innerHTML;
-        let armadura = query('armadura').innerText;
-        let armaduraCalc = query('armaduraCalc').innerHTML;
-        let penetracao = query('penetracao').innerText;
-        let penetracaoCalc = query('penetracaoCalc').innerHTML;
+        let forca = text('forca');
+        let forcaMod = text('forcaMod');
+        let forcaCalc = html('forcaCalc');
+        let destreza = text('destreza');
+        let destrezaMod = text('destrezaMod');
+        let destrezaCalc = html('destrezaCalc');
+        let agilidade = text('agilidade');
+        let agilidadeMod = text('agilidadeMod');
+        let agilidadeCalc = html('agilidadeCalc');
+        let inteligencia = text('inteligencia');
+        let inteligenciaMod = text('inteligenciaMod');
+        let inteligenciaCalc = html('inteligenciaCalc');
+        let constituicao = text('constituicao');
+        let constituicaoMod = text('constituicaoMod');
+        let constituicaoCalc = html('constituicaoCalc');
+        let carisma = text('carisma');
+        let carismaMod = text('carismaMod');
+        let carismaCalc = html('carismaCalc');
+        let pontosDeVida = text('pontosDeVida');
+        let espirito = text('espirito');
+        let stamina = text('stamina');
+        let iniciativa = text('iniciativa');
+        let iniciativaCalc = html('iniciativaCalc');
+        let acerto = text('acerto');
+        let acertoCalc = html('acertoCalc');
+        let reflexo = text('reflexo');
+        let reflexoCalc = html('reflexoCalc');
+        let opa = text('opa');
+        let danoCaC = html('danoCaC');
+        let danoCaCCalc = html('danoCaCCalc');
+        let danoAD = text('danoAD');
+        let danoADCalc = html('danoADCalc');
+        let armadura = text('armadura');
+        let armaduraCalc = html('armaduraCalc');
+        let penetracao = text('penetracao');
+        let penetracaoCalc = html('penetracaoCalc');
 
-        let armaImagem = query('armaImagem').innerText;
-        let armaNome = query('armaNome').innerText;
-        let armaQualidade = query('armaQualidade').innerText;
-        let armaTipo = query('armaTipo').innerText;
-        let armaDano = query('armaDano').innerText;
-        let armaDesc = query('armaDesc').innerHTML;
+        let armaImagem = text('armaImagem');
+        let armaNome = text('armaNome');
+        let armaQualidade = text('armaQualidade');
+        let armaTipo = text('armaTipo');
+        let armaDano = text('armaDano');
+        let armaDesc = html('armaDesc');
 
-        let edc = query('edc').innerHTML;
-        let caminho = query('caminho').innerHTML;
-        let haki = query('haki').innerHTML;
-        let tecnicas = query('tecnicas').innerHTML;
+        let edc = html('edc');
+        let caminho = html('caminho');
+        let haki = html('haki');
+        let tecnicas = html('tecnicas');
 
-        let aparencia = query('aparencia').innerHTML;
-        let personalidade = query('personalidade').innerHTML;
-        let historia = query('historia').innerHTML;
+        let aparencia = html('aparencia');
+        let personalidade = html('personalidade');
+        let historia = html('historia');
 
-        let vanRacial = query('vanRacial').innerHTML;
-        let desRacial = query('desRacial').innerHTML;
-        let vanGerais = query('vanGerais').innerHTML;
-        let desGerais = query('desGerais').innerHTML;
+        let vanRacial = html('vanRacial');
+        let desRacial = html('desRacial');
+        let vanGerais = html('vanGerais');
+        let desGerais = html('desGerais');
 
-        let pericias = query('pericias').innerHTML;
-        let profissoes = query('profissoes').innerHTML;
+        let pericias = html('pericias');
+        let profissoes = html('profissoes');
 
-        let titulo = query('titulo').innerText;
-        let campoUmNome = query('campoUmNome').innerText;
-        let campoUm = query('campoUm').innerText;
-        let campoDoisNome = query('campoDoisNome').innerText;
-        let campoDois = query('campoDois').innerText;
-        let campoTresNome = query('campoTresNome').innerText;
-        let campoTres = query('campoTres').innerText;
-        let alcunhas = query('alcunhas').innerText;
+        let titulo = text('titulo');
+        //let campoUmNome = text('campoUmNome');
+        //let campoUm = text('campoUm');
+        //let campoDoisNome = text('campoDoisNome');
+        //let campoDois = text('campoDois');
+        //let campoTresNome = text('campoTresNome');
+        //let campoTres = text('campoTres');
+        let alcunhas = text('alcunhas');
         
-        let inventario = query('inventario').innerHTML;
-        let barcos = query('barcos').innerHTML;
-        let mascotes = query('mascotes').innerHTML;
-        let aventuras = query('aventuras').innerHTML;
-        let anexos = query('anexos').innerHTML;
-        let anotacoes = query('anotacoes').innerHTML;
-        let projetos = query('projetos').innerHTML;
+        let inventario = html('inventario');
+        let barcos = html('barcos');
+        let mascotes = html('mascotes');
+        let aventuras = html('aventuras');
+        let anexos = html('anexos');
+        let anotacoes = html('anotacoes');
+        let projetos = html('projetos');
 
         let ficha = `
         <div class="abFicha" style="--corFicha: ${corFicha};">
@@ -778,9 +811,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="abfAbout">
                     <span><b>Grupo</b> ${grupo}</span>
                     <span><b>Título</b> ${titulo}</span>
-                    <span><b>${campoUmNome}</b> ${campoUm}</span>
-                    <span><b>${campoDoisNome}</b> ${campoDois}</span>
-                    <span><b>${campoTresNome}</b> ${campoTres}</span>
+                    ${grupoCampos()}
                     <span><b>Alcunhas</b> ${alcunhas}</span>
                 </div>
             </section>
