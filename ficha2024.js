@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("Rodando Ficha ver. 1.1");
+    console.log("Rodando Ficha ver. 1.2, The builds Update");
     
     const query = (selector) => {return document.querySelector(selector)},
     queryAll = (selector) => {return document.querySelectorAll(selector)},
@@ -33,6 +33,24 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     },
 
+    textAll = (selector, index) => {
+      try{
+        return queryAll(selector)[index].innerText;
+      }catch{
+        console.log('Não foi possível identificar ' + selector);
+        return '';
+      }
+    },
+
+    htmlAll = (selector, index) => {
+      try{
+        return queryAll(selector)[index].innerHTML;
+      }catch{
+        console.log('Não foi possível identificar ' + selector);
+        return '';
+      }
+    },
+
     grupoCampos = () => {
       let html = '';
       let matrix = [queryAll('campoNome'),queryAll('campoInfo')];
@@ -44,7 +62,133 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       return html;
-    }
+    },
+
+    activeClass = (index) => {
+      if(index == 0) return 'active';
+      else return '';
+    },
+
+    ciborgue = (campo) => {
+      if (query('fuel') && campo == 'style') return 'style="gap: 5px;"';
+      else if (query('fuel') && campo == 'recurso') return '<div><span>Fuel</span><span>' + text('fuel') + '</span></div>';
+      else return '';
+    },
+
+    builds = () => {
+      let html = '';
+      for (let index = 0; index < queryAll('nome').length; index++) {
+        html += `<section class="abfBuild ${activeClass(index)}">
+          <div class="abfStats">
+              <div class="abfAtt">
+                  <span>For</span>
+                  <span>${textAll('forca',index)}</span>
+                  <span>${textAll('forcaMod',index)}</span>
+                  <span class="calculos">${htmlAll('forcaCalc',index)}</span>
+              </div>
+              <div class="abfAtt">
+                  <span>Des</span>
+                  <span>${textAll('destreza',index)}</span>
+                  <span>${textAll('destrezaMod',index)}</span>
+                  <span class="calculos">${htmlAll('destrezaCalc',index)}</span>
+              </div>
+              <div class="abfAtt">
+                  <span>Agi</span>
+                  <span>${textAll('agilidade',index)}</span>
+                  <span>${textAll('agilidadeMod',index)}</span>
+                  <span class="calculos">${htmlAll('agilidadeCalc',index)}</span>
+              </div>
+              <div class="abfAtt">
+                  <span>Int</span>
+                  <span>${textAll('inteligencia',index)}</span>
+                  <span>${textAll('inteligenciaMod',index)}</span>
+                  <span class="calculos">${htmlAll('inteligenciaCalc',index)}</span>
+              </div>
+              <div class="abfAtt">
+                  <span>Con</span>
+                  <span>${textAll('constituicao',index)}</span>
+                  <span>${textAll('constituicaoMod',index)}</span>
+                  <span class="calculos">${htmlAll('constituicaoCalc',index)}</span>
+              </div>
+              <div class="abfAtt">
+                  <span>Car</span>
+                  <span>${textAll('carisma',index)}</span>
+                  <span>${textAll('carismaMod',index)}</span>
+                  <span class="calculos">${htmlAll('carismaCalc',index)}</span>
+              </div>
+          </div>
+          <div class="abfStats2">
+              <div class="recursos" ${ciborgue('style')}>
+                  <div>
+                      <span>Pdv</span>
+                      <span>${textAll('pontosDeVida',index)}</span>
+                  </div>
+                  <div>
+                      <span>Esp</span>
+                      <span>${textAll('espirito',index)}</span>
+                  </div>
+                  <div>
+                      <span>Sta</span>
+                      <span>${textAll('stamina',index)}</span>
+                  </div>
+                  ${ciborgue('recurso')}
+              </div>
+              <div class="secundarios">
+                  <div class="atributo">
+                      <span>Iniciativa</span>
+                      <span>${textAll('iniciativa',index)}</span>
+                      <span>${htmlAll('iniciativaCalc',index)}</span>
+                  </div>
+                  <div class="atributo">
+                      <span>Acerto</span>
+                      <span>${textAll('acerto',index)}</span>
+                      <span>${htmlAll('acertoCalc',index)}</span>
+                  </div>
+                  <div class="atributo">
+                      <span>Reflexo</span>
+                      <span>${textAll('reflexo',index)}</span>
+                      <span>${htmlAll('reflexoCalc',index)}</span>
+                  </div>
+                  <div class="atributo">
+                      <span>OPA</span>
+                      <span>${textAll('opa',index)}</span>
+                      <span>Oportunidade de Ataque</span>
+                  </div>
+                  <div class="atributo">
+                      <span>Dano CaC</span>
+                      <span>${htmlAll('danoCaC',index)}</span>
+                      <span>${htmlAll('danoCaCCalc',index)}</span>
+                  </div>
+                  <div class="atributo">
+                      <span>Dano AD</span>
+                      <span>${textAll('danoAD',index)}</span>
+                      <span>${htmlAll('danoADCalc',index)}</span>
+                  </div>
+                  <div class="atributo">
+                      <span>Armadura</span>
+                      <span>${textAll('armadura',index)}</span>
+                      <span>${htmlAll('armaduraCalc',index)}</span>
+                  </div>
+                  <div class="atributo">
+                      <span>Pen</span>
+                      <span>${textAll('penetracao',index)}</span>
+                      <span>${htmlAll('penetracaoCalc',index)}</span>
+                  </div>
+              </div>
+          </div>
+        </section>`;
+      }
+      if (queryAll('nome').length > 1){
+        html += '<div class="buildButtons">'
+        for (let index = 0; index < queryAll('nome').length; index++) {
+          const element = queryAll('nome')[index];
+          if (index == 0) html += '<button class="active">Base</button>';
+          else html += `<button>${element.innerText}</button>`;
+        }
+        html += '</div>';
+      }
+      return html;
+    };
 
     function construtorCss(){
         let css = `<style>
@@ -193,7 +337,7 @@ document.addEventListener("DOMContentLoaded", () => {
           z-index: 15;
         }
         
-        .abfButtons {
+        .abfButtons, .buildButtons {
           width: 100%;
           height: 38px;
           display: flex;
@@ -201,7 +345,7 @@ document.addEventListener("DOMContentLoaded", () => {
           gap: 10px;
           margin: 10px 0px 0px 0px;
         }
-        .abfButtons button {
+        .abfButtons button, .buildButtons button {
           flex: 1;
           height: 100%;
           border: none;
@@ -214,16 +358,26 @@ document.addEventListener("DOMContentLoaded", () => {
           opacity: 70%;
           cursor: pointer;
         }
-        .abfButtons button:hover, .abfButtons button:focus, .abfButtons button.active {
+        .abfButtons button:hover, .abfButtons button:focus, .abfButtons button.active, .buildButtons button:hover, .buildButtons button:focus, .buildButtons button.active {
           opacity: 100%;
         }
-        .abfButtons button:active {
+        .abfButtons button:active, .buildButtons button:active {
           opacity: 100%;
           box-shadow: inset 0px 0px 2px #000;
           font-size: 15.5px;
         }
-        .abfButtons button.active {
+        .abfButtons button.active, .buildButtons button.active {
           background-color: var(--corFicha);
+        }
+        
+        .buildButtons {
+          gap: 5px;
+          flex-flow: row wrap;
+          height: auto;
+        }
+        .buildButtons button {
+          height: 38px;
+          white-space: nowrap;
         }
         
         .abfStats {
@@ -298,6 +452,13 @@ document.addEventListener("DOMContentLoaded", () => {
           flex-flow: column;
         }
         .abfContainer.active {
+          display: block;
+        }
+        
+        .abfBuild {
+          display: none;
+        }
+        .abfBuild.active {
           display: block;
         }
         
@@ -503,9 +664,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         .abFicha .spoiler .spoiler_content {
           border: solid 1px #fff;
+          background: none;
+          border-left: none;
+          border-right: none;
+          padding: 10px 5px;
+        }
+        .abFicha .spoiler .spoiler_content.hidden {
+          padding: 0;
         }
         .abFicha .spoiler dd {
           margin: 0;
+          background-color: transparent;
         }
         
         .abfAbout {
@@ -561,43 +730,6 @@ document.addEventListener("DOMContentLoaded", () => {
         let xpAtual = text('xpAtual');
         let xpProxLvl = text('xpProxLvl');
 
-        let forca = text('forca');
-        let forcaMod = text('forcaMod');
-        let forcaCalc = html('forcaCalc');
-        let destreza = text('destreza');
-        let destrezaMod = text('destrezaMod');
-        let destrezaCalc = html('destrezaCalc');
-        let agilidade = text('agilidade');
-        let agilidadeMod = text('agilidadeMod');
-        let agilidadeCalc = html('agilidadeCalc');
-        let inteligencia = text('inteligencia');
-        let inteligenciaMod = text('inteligenciaMod');
-        let inteligenciaCalc = html('inteligenciaCalc');
-        let constituicao = text('constituicao');
-        let constituicaoMod = text('constituicaoMod');
-        let constituicaoCalc = html('constituicaoCalc');
-        let carisma = text('carisma');
-        let carismaMod = text('carismaMod');
-        let carismaCalc = html('carismaCalc');
-        let pontosDeVida = text('pontosDeVida');
-        let espirito = text('espirito');
-        let stamina = text('stamina');
-        let iniciativa = text('iniciativa');
-        let iniciativaCalc = html('iniciativaCalc');
-        let acerto = text('acerto');
-        let acertoCalc = html('acertoCalc');
-        let reflexo = text('reflexo');
-        let reflexoCalc = html('reflexoCalc');
-        let opa = text('opa');
-        let danoCaC = html('danoCaC');
-        let danoCaCCalc = html('danoCaCCalc');
-        let danoAD = text('danoAD');
-        let danoADCalc = html('danoADCalc');
-        let armadura = text('armadura');
-        let armaduraCalc = html('armaduraCalc');
-        let penetracao = text('penetracao');
-        let penetracaoCalc = html('penetracaoCalc');
-
         let armaImagem = text('armaImagem');
         let armaNome = text('armaNome');
         let armaQualidade = text('armaQualidade');
@@ -623,12 +755,6 @@ document.addEventListener("DOMContentLoaded", () => {
         let profissoes = html('profissoes');
 
         let titulo = text('titulo');
-        //let campoUmNome = text('campoUmNome');
-        //let campoUm = text('campoUm');
-        //let campoDoisNome = text('campoDoisNome');
-        //let campoDois = text('campoDois');
-        //let campoTresNome = text('campoTresNome');
-        //let campoTres = text('campoTres');
         let alcunhas = text('alcunhas');
         
         let inventario = html('inventario');
@@ -656,102 +782,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <button>Extras</button>
             </div>
             <div class="abfContainer active" id="combate">
-                <div class="abfStats">
-                    <div class="abfAtt">
-                        <span>For</span>
-                        <span>${forca}</span>
-                        <span>${forcaMod}</span>
-                        <span class="calculos">${forcaCalc}</span>
-                    </div>
-                    <div class="abfAtt">
-                        <span>Des</span>
-                        <span>${destreza}</span>
-                        <span>${destrezaMod}</span>
-                        <span class="calculos">${destrezaCalc}</span>
-                    </div>
-                    <div class="abfAtt">
-                        <span>Agi</span>
-                        <span>${agilidade}</span>
-                        <span>${agilidadeMod}</span>
-                        <span class="calculos">${agilidadeCalc}</span>
-                    </div>
-                    <div class="abfAtt">
-                        <span>Int</span>
-                        <span>${inteligencia}</span>
-                        <span>${inteligenciaMod}</span>
-                        <span class="calculos">${inteligenciaCalc}</span>
-                    </div>
-                    <div class="abfAtt">
-                        <span>Con</span>
-                        <span>${constituicao}</span>
-                        <span>${constituicaoMod}</span>
-                        <span class="calculos">${constituicaoCalc}</span>
-                    </div>
-                    <div class="abfAtt">
-                        <span>Car</span>
-                        <span>${carisma}</span>
-                        <span>${carismaMod}</span>
-                        <span class="calculos">${carismaCalc}</span>
-                    </div>
-                </div>
-                <div class="abfStats2">
-                    <div class="recursos">
-                        <div>
-                            <span>Pdv</span>
-                            <span>${pontosDeVida}</span>
-                        </div>
-                        <div>
-                            <span>Esp</span>
-                            <span>${espirito}</span>
-                        </div>
-                        <div>
-                            <span>Sta</span>
-                            <span>${stamina}</span>
-                        </div>
-                    </div>
-                    <div class="secundarios">
-                        <div class="atributo">
-                            <span>Iniciativa</span>
-                            <span>${iniciativa}</span>
-                            <span>${iniciativaCalc}</span>
-                        </div>
-                        <div class="atributo">
-                            <span>Acerto</span>
-                            <span>${acerto}</span>
-                            <span>${acertoCalc}</span>
-                        </div>
-                        <div class="atributo">
-                            <span>Reflexo</span>
-                            <span>${reflexo}</span>
-                            <span>${reflexoCalc}</span>
-                        </div>
-                        <div class="atributo">
-                            <span>OPA</span>
-                            <span>${opa}</span>
-                            <span>Oportunidade de Ataque</span>
-                        </div>
-                        <div class="atributo">
-                            <span>Dano CaC</span>
-                            <span>${danoCaC}</span>
-                            <span>${danoCaCCalc}</span>
-                        </div>
-                        <div class="atributo">
-                            <span>Dano AD</span>
-                            <span>${danoAD}</span>
-                            <span>${danoADCalc}</span>
-                        </div>
-                        <div class="atributo">
-                            <span>Armadura</span>
-                            <span>${armadura}</span>
-                            <span>${armaduraCalc}</span>
-                        </div>
-                        <div class="atributo">
-                            <span>Pen</span>
-                            <span>${penetracao}</span>
-                            <span>${penetracaoCalc}</span>
-                        </div>
-                    </div>
-                </div>
+                ${builds()}
                 <section class="abfSection">
                     <header>Arma Favorita</header>
                     <div class="armaFavorita" style="--armaBg: url(${armaImagem});">
@@ -845,18 +876,27 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if(query('.fichaAllBlue')){
-        console.log(construtorDeFicha());
-        console.log(construtorCss());
+      console.log(construtorDeFicha());
+      console.log(construtorCss());
 
-        resize(42 , query('.abfNome span p'), 367, 0.5);
-        resize(16 , query('.abfNome span p+p'), 400, 0.1);
-    
-        queryAll('.abfButtons button').forEach((element) => element.onclick = () => {
-            let target = '#' + element.innerText.toLowerCase();
-            
-            queryAll('.abFicha .active').forEach((removeTarget) => removeTarget.classList.toggle('active'));
-            element.classList.toggle('active');
-            query(target).classList.toggle('active');
-        });
+      resize(42 , query('.abfNome span p'), 367, 0.5);
+      resize(16 , query('.abfNome span p+p'), 400, 0.1);
+  
+      queryAll('.abfButtons button').forEach((element) => element.onclick = () => {
+          let target = '#' + element.innerText.toLowerCase();
+          
+          queryAll('.abfContainer.active,.abfButtons button.active').forEach((removeTarget) => removeTarget.classList.toggle('active'));
+          element.classList.toggle('active');
+          query(target).classList.toggle('active');
+      });
+
+      let buildButton = queryAll('.buildButtons button');
+      for (let index = 0; index < buildButton.length; index++) {
+          buildButton[index].onclick = () =>{
+              queryAll('.buildButtons button.active, .abfBuild.active').forEach((removeTarget) => removeTarget.classList.toggle('active'));
+              buildButton[index].classList.toggle('active');
+              queryAll('.abfBuild')[index].classList.toggle('active');
+          }
+      }
     }
 });
