@@ -218,7 +218,7 @@ document.addEventListener("DOMContentLoaded", () => {
           display: block;
           transition: ease 0.2s;
         }
-        .abFicha b, .abFicha strong, .abFicha i, .abFicha s, .abFicha u {
+        .abFicha b, .abFicha strong, .abFicha i, .abFicha s, .abFicha u, .abFicha a {
           display: inline-block;
         }
         .abFicha .spoiler, .abFicha .spoiler * {
