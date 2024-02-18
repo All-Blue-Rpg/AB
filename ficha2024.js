@@ -211,6 +211,7 @@ document.addEventListener("DOMContentLoaded", () => {
           font-family: "Poppins", sans-serif;
           color: #fff;
           font-size: 14px;
+          text-align: justify;
         }
         .abFicha * {
           box-sizing: border-box;
