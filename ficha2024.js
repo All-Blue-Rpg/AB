@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       for (let i = 0; i < matrix[0].length; i++) {
         try{
-          html += `<span><b>${matrix[0][i].innerText}</b> ${matrix[1][i].innerText}</span>`;
+          html += `<span><b>${matrix[0][i].innerText}</b> ${matrix[1][i].innerHTML}</span>`;
         }catch(e){console.log('Não foi possível identificar ' + e);}
       }
 
