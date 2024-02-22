@@ -637,6 +637,7 @@ document.addEventListener("DOMContentLoaded", () => {
           gap: 30px;
           margin-bottom: 20px;
           overflow: hidden;
+          min-height: 130px;
         }
         .armaFavorita::before {
           content: "";
